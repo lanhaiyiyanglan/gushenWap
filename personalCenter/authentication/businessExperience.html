@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>从业经历</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/authentication.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="index.html" class="back"><img src="../../style/img/back.png"></a>
+        <h1>从业经历</h1>
+    </header>
+</div>
+<div class="addFirm" id="addFirm1">
+    <div class="addEle"><img style="position: relative;top: .5rem;" src="../../style/img/add.png" alt=""><input type="button" value="添加从业经历"></div>
+</div>
+<script src="../../style/js/jquery-1.7.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://open.zhengjuan.com/api/app',
+            type: 'POST',
+            dataType: 'jsonp',
+            data: {
+                module: 'auth',
+                do: 'job',
+                user_id: $.cookie('user_id')
+            },
+            success: function (data) {
+                console.log(data)
+                for(i=0;i<data.data.length;i++){
+                    var html='';
+                    html+='<div class="addFirmA1"><span style="display:none;">'+data.data[i].job_id+'</span><div><span>从业经历' + arr[i] + '</span>';
+                    if(data.data[i].status==1){
+                        html+='<img class="otherImg" src="../../style/img/shenhe.png" style="">';
+                    }else if(data.data[i].status==2){
+                        html+='<img class="otherImg" src="../../style/img/green1.png" style="">';
+                    }else if(data.data[i].status==3){
+                        html+='<img class="otherImg" src="../../style/img/pass1.png" style="">';
+                    }
+                    html+='<img class="otherRight" src="../../style/img/right.png" alt=""></div></div>';
+                    $('#addFirm1').append(html);
+                }
+                $('.addEle').on('click', function () {
+                    if ($('.addFirmA1').length < 5) {
+                        window.location.href="experienceEditing.html?accountName=从业经历"+arr[i]+"&index="+i+"&jobid=";
+                    } else {
+                        layer.msg('您最多可以添加5个从业经历！')
+                    }
+                });
+            }
+        });
+        var arr = ['一', '二', '三', '四', '五'];
+        var n = 0;
+        var i = 0;
+        var accountName = '';
+    })
+    $(document).on('click','.addFirmA1',function(){
+        var jobid=$(this).children('span').html()
+        var accountName = $(this).children('div').children('span:nth-child(1)').html();
+        var index=$(this).index()-1;
+        window.location.href="experienceEditing.html?accountName="+accountName+'&index='+index+'&jobid='+jobid;
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+<title>媒体报道</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/settings1.css" type="text/css">
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>媒体报道</h1>
+</header>
+<!--usercenterbox-->
+<ul class="userManual">
+  <li><a href="mediaDetail.html"><div class="infoText">我司首席未来学家在联合国谈共享经</div><div class="infoTime">2016-02-05</div></a></li>
+</ul>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

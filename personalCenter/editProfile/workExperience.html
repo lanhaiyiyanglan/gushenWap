@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>从业经历</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<script src="../../style/js/personal.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<!--独有-->
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+</head>
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>从业经历</h1>
+   <span class="operationBtn"><input type="button" value="完成" id="workExperienceBtn"></span>
+</header>
+<!--form-->
+<form id="workExperienceForm">
+    <ul class="xi_list">
+         <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>工作经历</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input type="text"  id="workExperienceText" name="workExperienceText" value=""></div>
+                <div class="forEditor"><img src="../../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+         <li>
+           <div class="infobox">
+              <span>就职状态</span>
+              <div class="infoInput">
+                  <ul>
+                    <li><input name="workStatus" type="radio" id="radio_b1" class="radio_1" value="在职" checked><label for="radio_b1"></label><i>在职</i></li>
+                    <li><input name="workStatus" type="radio" id="radio_b2" class="radio_1" value="自由职业"><label for="radio_b2"></label><i>自由职业</i></li>
+                  </ul>
+              </div>
+          </div>
+         </li>
+         <li class="workCompaner" onClick="showHide('wrapper3','wrapper1')">
+          <div class="infobox">
+              <span>就职公司简介</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input type="text" id="workCompanyText" name="workCompanyText"  value=""></div>
+                <div class="forEditor"><img src="../../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+         <li onClick="showHide('wrapper4','wrapper1')">
+          <div class="infobox">
+              <span>媒体报道</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input type="text" id="mediaReportText" name="mediaReportText"  value=""></div>
+                 <div class="forEditor"><img src="../../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+         <li  onClick="showHide('wrapper5','wrapper1')">
+          <div class="infobox">
+              <span>发表文章</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input type="text" id="publishText" name="publishText" value=""></div>
+                <div class="forEditor"><img src="../../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+         <li onClick="showHide('wrapper6','wrapper1')">
+          <div class="infobox">
+              <span>个人荣誉</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input type="text" id="honorText" name="honorText" value=""></div>
+                 <div class="forEditor"><img src="../../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+     </ul>
+</form>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>工作经历</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="workExperienceTextarea" placeholder="请输入您的工作经历..." onKeyUp='feedIn("workExperienceTextarea","workExperienceTips",1000)' onKeyDown='remainSub("workExperienceTextarea","workExperienceTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="workExperienceTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper2','wrapper1','workExperienceTextarea','workExperienceText')">
+</div>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>就职公司简介</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="workCompanyTextarea" placeholder="请输入您的就职公司简介..." onKeyUp='feedIn("workCompanyTextarea","workCompanyTips",1000)' onKeyDown='remainSub("workCompanyTextarea","workCompanyTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="workCompanyTips"><font>10000</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper3','wrapper1','workCompanyTextarea','workCompanyText')">
+</div>
+</div>
+<!---->
+<!--wrapper4-->
+<div id="wrapper4" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper4','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>媒体报道</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="mediaReportTextarea" placeholder="请输入媒体报道..." onKeyUp='feedIn("mediaReportTextarea","mediaReportTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="mediaReportTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存"  onClick="sure1('wrapper4','wrapper1','mediaReportTextarea','mediaReportText')">
+</div>
+</div>
+<!--wrapper5-->
+<div id="wrapper5" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper5','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>发表文章</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="publishTextarea" placeholder="请输入发表文章..." onKeyUp='feedIn("publishTextarea","publishTips",1000)' onKeyDown='remainSub("publishTextarea","publishTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="publishTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper5','wrapper1','publishTextarea','publishText')">
+</div>
+</div>
+<!--wrapper6-->
+<div id="wrapper6" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper6','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>个人荣誉</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="honorTextarea" placeholder="请输入个人荣誉..." onKeyUp='feedIn("honorTextarea","honorTips",1000)' onKeyDown='remainSub("honorTextarea","honorTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="honorTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper6','wrapper1','honorTextarea','honorText')">
+</div>
+</div>
+</body>
+</html>

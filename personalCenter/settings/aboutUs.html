@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>关于我们</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/settings.css" type="text/css">
+</head>
+
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>关于我们</h1>
+</header>
+<div class="aboutInfo">
+    <div class="aboutUs">
+       <span>我们的初衷 ：</span>
+       <p>股神交友网，是融亿集团实践“共享经济”理论的创新投资理财社交服务平台。首创“直连+认证”模式, 致力于通过互联网方</p>
+    </div>
+    <div class="aboutUs">
+       <span>我们的愿景 ：</span>
+       <p>汇聚高手与富豪，打造双赢平台，实现彼此价值。</p>
+    </div>
+    <div class="aboutUs">
+       <span>我们的定位  ：</span>
+       <p>国内一流的直连+认证投资理财社交服务平台。</p>
+       <span>我们的理念  ：</span>
+       <p>共享创造财富，联络传递价值。</p>
+    </div>
+    <div class="aboutUs">
+       <span>我们的使命 ：</span>
+       <p>引领“共享经济”实践，为用户、员工、合作伙伴、股</p>
+    </div>
+    <div class="aboutUs">
+       <span>我们打造的四大价值 </span>
+       <p>1、高手富豪直接对话</p>
+       <p>在我们网站，高手和富豪可实现直接对接，省去中介环节，无中间费用。</p>
+       <p>2、会员信息层层认证</p>
+       <p>用户实名认证、高手实盘认证、富豪实力认证等完善的认证机制，为您打造信任的铜墙铁壁。</p>
+       <p>3、合作方式丰富实用</p>
+       <p>我们建议高手与富豪的合作形式，包括专户理财，远程喊单，现场喊单，带盘指导，炒股培训，发行资管产品。</p>
+       <p>4、线上线下互动性强</p>
+       <p>股神交友采取线上线下相结合的方式，拟在未来3年内，每年将在国内100多个城市内举办百场活动。</p>
+    </div>
+    <div class="identity">
+      <p>Copyright @2015-2016</p>
+      <p>杭州融亿网络科技股份有限公司</p>
+    </div>
+</div>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>日志详情</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/logManagement.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<script>
+    function x(tm) {
+        tm = parseInt(tm);
+        var date = new Date(tm); //转换成时间对象，这就简单了
+        var year = date.getFullYear();  //获取年
+        var mouth = date.getMonth() + 1 ;
+        var data = date.getDate();
+        if (date.getMonth() < 10) {
+            mouth = '0' + (date.getMonth()+1);
+        } else {
+            data = date.getDate();
+        }
+
+        if(date.getDate()<10) {
+            data = '0' + date.getDate();
+        }else{
+            data = date.getDate();
+        }
+        return year+'-'+mouth+'-'+data;
+    }
+    if (typeof($.cookie('password')) == 'undefined') {
+        window.location.href = '../../logRegPassword/index.html'
+    } else {
+    }
+    var urlinfo = window.location.href;
+    var blog_id = urlinfo.split("?")[1].split("&")[0].split('=')[1];
+    var userid = urlinfo.split("?")[1].split("&")[1].split('=')[1];
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getWeblogDetail',
+                blog_id:blog_id
+            },
+            success:function(data){
+                $('.logContent').html(data.data[0].text);
+                $('.logTime').html(x(data.data[0].create_time*1000));
+                $('.logTitle').text(data.data[0].title);
+                if(userid!== $.cookie('user_id')){
+                    $('.linkOperate').hide()
+                }
+            }
+        })
+        $('.linkOperate').click(function(){
+            console.log('asdfasdfs')
+            var url = "newPost.html";
+            window.open(encodeURI(url + "?blog_id=" + blog_id),'_self');
+        })
+    })
+</script>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>日志详情</h1>
+   <a class="linkOperate"><span>修改</span></a>
+</header>
+<!--日志详情-->
+<div class="logDetail">
+    <div class="logTitle">谋转型 信托卡位新三板</div>
+    <div class="logTime">2016-02-19</div>
+    <div class="logContent">
+
+    </div>
+</div>
+</body>
+</html>

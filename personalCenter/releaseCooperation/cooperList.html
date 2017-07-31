@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>我的合作</title>
+    <!--公共样式和js文件-->
+    <script src="../../style/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <script src="../../style/js/layer.js"></script>
+    <!--独立的-->
+    <link rel="stylesheet" href="../../style/css/fbCooperation.css" type="text/css">
+    <script src="../../style/js/jquery.cookie.js"></script>
+    <script src="../../style/js/layer.js"></script>
+</head>
+
+<body>
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+    <h1>我的合作</h1>
+    <a href="fbCooperation.html" class="linkOperate"><span>发布合作</span></a>
+</header>
+<!--合作列表-->
+<div class="cooperTitles"><span class="span1">合作标题</span><span class="span2">合作模式</span></div>
+<ul class="cooperlist">
+</ul>
+<div class="loading">
+    <img src="../../style/img/loading.gif" alt="">
+    <span>正在加载中...</span>
+</div>
+<ul class="deleteLog">
+    <li>删除日志</li>
+    <li>取消</li>
+</ul>
+<div class="ceng"></div>
+<script>
+    $(document).ready(function(){
+        if (typeof($.cookie('password')) == 'undefined') {
+            window.location.href = '../../logRegPassword/index.html'
+        } else {
+        }
+        var num=0;
+        console.log(num)
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getCoopList',
+                creator_id: $.cookie('user_id'),
+                page:num++*15,
+                pagesize:15
+            },
+            success:function(data){
+                var html='';
+                for(var i=0;i<data.data.length;i++){
+                    html+='<li class="line-wrapper"><div class="line-scroll-wrapper"><a href="#">';
+                    html+='<div class="cooperInfo line-normal-wrapper">'+data.data[i].subject+'</div>';
+                    html+='<div class="cooperStyle">'+data.data[i].type+'</div>';
+                    html+='<div class="line-btn-delete" style="display:inline-block;"><button>删除</button><input class="hidden_id" type="text" style="display:none;" value="'+data.data[i].coop_id+'"></div>';
+                    html+='</a></div></li>';
+                }
+                $('.cooperlist').append(html);
+                console.log(data);
+
+                var delBtn=$('.line-btn-delete').children('button');
+                for(var d=0;d<delBtn.length;d++){
+                    $($(delBtn[d])).on('click',function(){
+                        $('.ceng').fadeIn(500);
+                        $('.deleteLog').fadeIn(500)
+                        var cooperVal=$(this).next('input').val();
+                        console.log(cooperVal)
+                        $('.deleteLog li:nth-child(1)').click(function(){
+                            console.log($(delBtn[d]))
+                            layer.open({
+                                        title: false,
+                                        skin: 'demo-class',
+                                        closeBtn: 0,
+                                        content: '确定要删除合作吗',
+                                        area: ['60%', '25rem'],
+                                        btn: ['取消', '确定'], //按钮
+                                        cancel: function () {
+                                            //do something
+                                            $.ajax({
+                                                url: 'http://open.zhengjuan.com/api/app',
+                                                type: 'POST',
+                                                dataType: 'jsonp',
+                                                data: {
+                                                    module: 'user',
+                                                    do: 'delCoop',
+                                                    coop_id :cooperVal
+                                                },
+                                                success: function (data) {
+                                                    console.log(data)
+                                                    $('.ceng').hide();
+                                                    $('.deleteLog').fadeOut(500);
+                                                    layer.closeAll();
+                                                    history.go(0);
+                                                }
+                                            })
+                                        },
+                                        yes: function (index, layero) {
+                                            layer.close(index);
+                                            $('.ceng').hide();
+                                            $('.deleteLog').fadeOut(500);
+                                            layer.closeAll();
+                                        }
+                                    }
+                            );
+                        })
+                        $('.deleteLog li:nth-child(2)').click(function(){
+                            $('.ceng').hide();
+                            $('.deleteLog').slideToggle(500);
+                            layer.closeAll();
+                        })
+                    })
+                }
+                $(".line-scroll-wrapper").width($(".line-wrapper").width() + $(".line-btn-delete").width());
+                // 设定常规信息区域宽度=屏幕宽度
+                $(".line-normal-wrapper").width($(".line-wrapper").width());
+                // 设定文字部分宽度（为了实现文字过长时在末尾显示...）
+                $(".line-normal-msg").width($(".line-normal-wrapper").width() - 180);
+                // 获取所有行，对每一行设置监听
+                var lines = $(".line-normal-wrapper");
+                var len = lines.length;
+                var lastX, lastXForMobile;
+                // 用于记录被按下的对象
+                var pressedObj;  // 当前左滑的对象
+                var lastLeftObj; // 上一个左滑的对象
+
+                // 用于记录按下的点
+                var start;
+
+                // 网页在移动端运行时的监听
+                for (var i = 0; i < len; ++i) {
+                    (function (p) {
+                        var abc = $(lines[p]).parent('a').next('.line-btn-delete').children('button');
+                        abc.click(function () {
+                            event.stopPropagation();
+
+                        })
+                    })(i);
+                    lines[i].addEventListener('touchstart', function (e) {
+                        lastXForMobile = e.changedTouches[0].pageX;
+                        pressedObj = this; // 记录被按下的对象
+
+                        // 记录开始按下时的点
+                        var touches = event.touches[0];
+                        start = {
+                            x: touches.pageX, // 横坐标
+                            y: touches.pageY  // 纵坐标
+                        };
+                    });
+
+                    lines[i].addEventListener('touchmove', function (e) {
+                        // 计算划动过程中x和y的变化量
+                        var touches = event.touches[0];
+                        delta = {
+                            x: touches.pageX - start.x,
+                            y: touches.pageY - start.y
+                        };
+
+                        // 横向位移大于纵向位移，阻止纵向滚动
+                        if (Math.abs(delta.x) > Math.abs(delta.y)) {
+                            event.preventDefault();
+                        }
+                    });
+
+                    lines[i].addEventListener('touchend', function (e) {
+                        var diffX = e.changedTouches[0].pageX - lastXForMobile;
+                        if (diffX < -150) {
+                            $(pressedObj).animate({marginLeft: "-220px"}, 500); // 左滑
+                            lastLeftObj && lastLeftObj != pressedObj &&
+                            $(lastLeftObj).animate({marginLeft: "0"}, 500); // 已经左滑状态的按钮右滑
+                            lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                        } else if (diffX > 150) {
+                            $(pressedObj).animate({marginLeft: "0"}, 500); // 右滑
+                            lastLeftObj = null; // 清空上一个左滑的对象
+                        }
+                    });
+                }
+
+                // 网页在PC浏览器中运行时的监听
+                for (var i = 0; i < len; ++i) {
+                    $(lines[i]).bind('mousedown', function (e) {
+                        lastX = e.clientX;
+                        pressedObj = this; // 记录被按下的对象
+                    });
+
+                    $(lines[i]).bind('mouseup', function (e) {
+                        var diffX = e.clientX - lastX;
+                        if (diffX < -132) {
+                            $(pressedObj).animate({marginLeft: "-220px"}, 500); // 左滑
+                            lastLeftObj && lastLeftObj != pressedObj &&
+                            $(lastLeftObj).animate({marginLeft: "0"}, 500); // 已经左滑状态的按钮右滑
+                            lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                        } else if (diffX > 132) {
+                            $(pressedObj).animate({marginLeft: "0"}, 500); // 右滑
+                            lastLeftObj = null; // 清空上一个左滑的对象
+                        }
+                    });
+                }
+            }
+        })
+        $(window).scroll(function(){
+            var height1=$(document).height();
+            var height2=$(window).height();
+            if($(window).scrollTop()+1==(height1-height2)){
+                $('.loading').show();
+                $.ajax({
+                    url:'http://open.zhengjuan.com/api/app',
+                    type:'POST',
+                    dataType:'jsonp',
+                    data:{
+                        module:'user',
+                        do:'getCoopList',
+                        creator_id: $.cookie('user_id'),
+                        page:(num+=1)*15,
+                        pagesize:15
+                    },
+                    success:function(data){
+                        if(data.data.length!==0){
+                            console.log(num)
+                            console.log(data)
+                            var html='';
+                            for(var i=0;i<data.data.length;i++){
+                                html+='<li class="line-wrapper"><div class="line-scroll-wrapper"><a href="#">';
+                                html+='<div class="cooperInfo line-normal-wrapper">'+data.data[i].subject+'</div>';
+                                html+='<div class="cooperStyle">'+data.data[i].type+'</div>';
+                                html+='<div class="line-btn-delete" style="display:inline-block;"><button>删除</button><input class="hidden_id" type="text" style="display:none;" value="'+data.data[i].coop_id+'"></div>';
+                                html+='</a></div></li>';
+                            }
+                            $('.cooperlist').append(html);
+                            var delBtn=$('.line-btn-delete').children('button');
+                            for(var d=0;d<delBtn.length;d++){
+                                $($(delBtn[d])).on('click',function(){
+                                    $('.ceng').fadeIn(500);
+                                    $('.deleteLog').fadeIn(500)
+                                    var cooperVal=$(this).next('input').val();
+                                    console.log(cooperVal)
+                                    $('.deleteLog li:nth-child(1)').click(function(){
+                                        console.log($(delBtn[d]))
+                                        layer.open({
+                                                    title: false,
+                                                    skin: 'demo-class',
+                                                    closeBtn: 0,
+                                                    content: '确定要删除合作吗',
+                                                    area: ['60%', '25rem'],
+                                                    btn: ['取消', '确定'], //按钮
+                                                    cancel: function () {
+                                                        //do something
+                                                        $.ajax({
+                                                            url: 'http://open.zhengjuan.com/api/app',
+                                                            type: 'POST',
+                                                            dataType: 'jsonp',
+                                                            data: {
+                                                                module: 'user',
+                                                                do: 'delCoop',
+                                                                coop_id :cooperVal
+                                                            },
+                                                            success: function (data) {
+                                                                console.log(data)
+                                                                $('.ceng').hide();
+                                                                $('.deleteLog').fadeOut(500);
+                                                                layer.closeAll();
+                                                                history.go(0);
+                                                            }
+                                                        })
+                                                    },
+                                                    yes: function (index, layero) {
+                                                        layer.close(index);
+                                                        $('.ceng').hide();
+                                                        $('.deleteLog').fadeOut(500);
+                                                        layer.closeAll();
+                                                    }
+                                                }
+                                        );
+                                    })
+                                    $('.deleteLog li:nth-child(2)').click(function(){
+                                        $('.ceng').hide();
+                                        $('.deleteLog').slideToggle(500);
+                                        layer.closeAll();
+                                    })
+                                })
+                            }
+                            $(".line-scroll-wrapper").width($(".line-wrapper").width() + $(".line-btn-delete").width());
+                            // 设定常规信息区域宽度=屏幕宽度
+                            $(".line-normal-wrapper").width($(".line-wrapper").width());
+                            // 设定文字部分宽度（为了实现文字过长时在末尾显示...）
+                            $(".line-normal-msg").width($(".line-normal-wrapper").width() - 180);
+                            // 获取所有行，对每一行设置监听
+                            var lines = $(".line-normal-wrapper");
+                            var len = lines.length;
+                            var lastX, lastXForMobile;
+                            // 用于记录被按下的对象
+                            var pressedObj;  // 当前左滑的对象
+                            var lastLeftObj; // 上一个左滑的对象
+
+                            // 用于记录按下的点
+                            var start;
+
+                            // 网页在移动端运行时的监听
+                            for (var i = 0; i < len; ++i) {
+                                (function (p) {
+                                    var abc = $(lines[p]).parent('a').next('.line-btn-delete').children('button');
+                                    abc.click(function () {
+                                        event.stopPropagation();
+
+                                    })
+                                })(i);
+                                lines[i].addEventListener('touchstart', function (e) {
+                                    lastXForMobile = e.changedTouches[0].pageX;
+                                    pressedObj = this; // 记录被按下的对象
+
+                                    // 记录开始按下时的点
+                                    var touches = event.touches[0];
+                                    start = {
+                                        x: touches.pageX, // 横坐标
+                                        y: touches.pageY  // 纵坐标
+                                    };
+                                });
+
+                                lines[i].addEventListener('touchmove', function (e) {
+                                    // 计算划动过程中x和y的变化量
+                                    var touches = event.touches[0];
+                                    delta = {
+                                        x: touches.pageX - start.x,
+                                        y: touches.pageY - start.y
+                                    };
+
+                                    // 横向位移大于纵向位移，阻止纵向滚动
+                                    if (Math.abs(delta.x) > Math.abs(delta.y)) {
+                                        event.preventDefault();
+                                    }
+                                });
+
+                                lines[i].addEventListener('touchend', function (e) {
+                                    var diffX = e.changedTouches[0].pageX - lastXForMobile;
+                                    if (diffX < -150) {
+                                        $(pressedObj).animate({marginLeft: "-220px"}, 500); // 左滑
+                                        lastLeftObj && lastLeftObj != pressedObj &&
+                                        $(lastLeftObj).animate({marginLeft: "0"}, 500); // 已经左滑状态的按钮右滑
+                                        lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                                    } else if (diffX > 150) {
+                                        $(pressedObj).animate({marginLeft: "0"}, 500); // 右滑
+                                        lastLeftObj = null; // 清空上一个左滑的对象
+                                    }
+                                });
+                            }
+
+                            // 网页在PC浏览器中运行时的监听
+                            for (var i = 0; i < len; ++i) {
+                                $(lines[i]).bind('mousedown', function (e) {
+                                    lastX = e.clientX;
+                                    pressedObj = this; // 记录被按下的对象
+                                });
+
+                                $(lines[i]).bind('mouseup', function (e) {
+                                    var diffX = e.clientX - lastX;
+                                    if (diffX < -132) {
+                                        $(pressedObj).animate({marginLeft: "-132px"}, 500); // 左滑
+                                        lastLeftObj && lastLeftObj != pressedObj &&
+                                        $(lastLeftObj).animate({marginLeft: "0"}, 500); // 已经左滑状态的按钮右滑
+                                        lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                                    } else if (diffX > 132) {
+                                        $(pressedObj).animate({marginLeft: "0"}, 500); // 右滑
+                                        lastLeftObj = null; // 清空上一个左滑的对象
+                                    }
+                                });
+                            }
+                        }else{
+                            $('.loading').children('img').hide();
+                            $('.loading').children('span').html('没有更多了');
+                        }
+                    }
+                })
+            }else{
+                $('.loading').hide();
+            }
+        });
+        $(document).on('click','.line-normal-wrapper',function(){
+            event.stopPropagation();
+            var url = "cooperDetail.html";
+            var cooper_id = $(this).next('div').next('div').children('input').val();
+            window.open(encodeURI(url + "?cooper_id=" + cooper_id),'_self');
+            console.log(cooper_id)
+            //encodeURI编码
+        });
+    })
+</script>
+</body>
+</html>

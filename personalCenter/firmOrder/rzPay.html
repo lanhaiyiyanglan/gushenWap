@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>认证支付</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>认证支付</h1>
+</header>
+</div>
+<ul id="payTime">
+  <li><span>周赛</span><input type="hidden"  id="zs"></li><div class="noClick"></div>
+  <li  class="on"><span>月赛</span><input type="hidden"  id="ys"></li>
+  <li><span>季赛</span><input type="hidden"  id="js"></li>
+  <li><span>年赛</span><input type="hidden" id="ns"></li>
+</ul>
+<div class="payMoney">支付金额：<span id="howMuch"></span><span>元</span></div>
+<div class="payType">选择支付方式</div>
+   <input type="hidden" value="" name="pay_type" id="pay_type">
+   <ul class="payList">
+     <li id="zhifubao">
+        <a href="javascript:void(0);" onClick="pay(this);">
+          <div class="payIncon"><img src="../../style/img/vipZ.png"></div>
+          <div class="payText">支付宝</div>
+        </a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" onClick="pay(this);">
+          <div class="payIncon"><img src="../../style/img/vipY.png"></div>
+          <div class="payText">中国银联</div>
+        </a>
+    </li>
+   </ul>
+<!--vip小贴士-->
+<div class="tieshi"><img src="../../style/img/rzTies.png"></div>
+<script>
+$(function(){
+	if(is_weixin()){
+		$('#zhifubao').hide();
+	}else{
+		$('#zhifubao').show();
+	}
+	function is_weixin(){
+		var ua = navigator.userAgent.toLowerCase();
+		if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+   $("#payTime li").click(function(){
+	  $(this).addClass("on").siblings().removeClass("on");
+	  var money=$(this).find("input").val();
+	  $("#howMuch").text(money);  
+   });
+    $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'getFeeInfo'
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				 if(data.code==1){
+					 $("#zs").val(data.data.zj_week);
+					 $("#ys").val(data.data.zj_month);
+					 $("#js").val(data.data.zj_season);
+					 $("#ns").val(data.data.zj_year);
+					 $("#howMuch").text(data.data.zj_month);
+				  }else{
+					console.log(data.code);
+				  }
+              }
+    })
+});
+function pay(obj){
+   var payType=$(obj).find(".payText").text();
+   var account_type=$("#payTime li.on").find("span").text();
+   if(account_type=="周赛"){
+	  account_type=1;
+   }else if(account_type=="月赛"){
+	  account_type=2;  
+   }else if(account_type=="季赛"){
+	  account_type=3; 
+   }else{
+	 account_type=4;  
+   }
+   if(payType=="支付宝"){
+	  var url="http://user.shipan.zhengjuan.com/pay/alipay?app="+2+'&account_type='+account_type+'&login_user_id='+$.cookie('user_id');
+	  window.location.href=url;
+   }else{
+	  var url="http://user.shipan.zhengjuan.com/pay/unionpay?app="+2+'&account_type='+account_type+'&login_user_id='+$.cookie('user_id');
+	  window.location.href=url;
+   }
+}
+</script>
+</body>
+</html>

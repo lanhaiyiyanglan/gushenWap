@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>个人中心</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>编辑资料</h1>
+</header>
+<!--perLog-->
+<div class="perLog">
+    <div class="perImg"><img src="../../image/pp.png"><i class="vipIncon"></i></div>
+    <div class="nameRoler"><span class="username"></span><span class="roler">高手</span></div>
+</div>
+<!--usercenterbox-->
+<ul class="baseList">
+  <li><a href="basicInformation.html"><div>基本资料<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a><div>投资信息<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="workExperience.html"><div>从业经历<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="educationExperience.html"><div>教育经历<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="friendsData.html"><div>交友资料<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+</ul>
+<script>
+    $(document).ready(function(){
+        if (typeof($.cookie('password')) == 'undefined') {
+            window.location.href = '../../logRegPassword/index.html'
+        } else {
+        }
+        $('.perImg').on('click',function(){
+            window.open('../editHeader/avatarManagement.html','_self');
+        })
+        var username= $.cookie('username');
+        var password= $.cookie('password');
+        var udid= $.cookie('udid');
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                username:username,
+                password:password,
+                udid:udid,
+                module:'user',
+                do:'login'
+            },
+            success:function(data){
+                console.log(data)
+                console.log(data.data)
+                if(data.data.role==1){
+                    $('.roler').html('高手')
+                    $('.baseList').children('li:nth-child(2)').children('a').attr('href','investmentInfo.html');
+                }else{
+                    $('.roler').html('金主')
+                    $('.baseList').children('li:nth-child(2)').children('a').attr('href','investmentInfo2.html');
+                }
+                $('.perImg img').attr('src',data.data.usericon)
+                $('.username').html(data.data.username);
+                if(new Date(data.data.vip_finish_time).getTime()>0&&new Date(data.data.vip_finish_time).getTime()>new Date().getTime()){
+                    $('.vipIncon').css('display','block');
+                }else{
+                    $('.vipIncon').css('display','none');
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

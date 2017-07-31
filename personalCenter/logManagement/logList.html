@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>日志管理</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <link rel="stylesheet" href="../../style/css/logList.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+    <script src="../../style/js/dropload.js"></script>
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+        <header class="bar bar-nav">
+            <a href="javascript:window.history.back();" class=" pull-left "><img src="../../style/img/back.png" alt=""></a>
+            <h1 class="title pull-center">日志管理</h1>
+            <div class="more pull-right" id="more" ><a>发表</a></div>
+        </header>
+        <div class="content" id="content">
+                <ul class="list-container">
+                    </ul>
+        </div>
+
+    </div>
+    <ul class="deleteLog">
+        <li>删除日志</li>
+        <li>取消</li>
+    </ul>
+    <div class="ceng"></div>
+    <div id="journal">
+        <header class="bar bar-nav">
+            <a class="pull-left"><img src="../../style/img/back.png" alt=""></a>
+            <h1 class="title pull-center">发表日志</h1>
+        </header>
+        <div class="content content1">
+            <textarea name="topTip" id="topTip" maxlength="20" placeholder="请填写文章标题..."></textarea>
+            <span class="pull-right">标题不得超过20字</span>
+            <textarea name="articleContent" id="articleContent" maxlength="1000" placeholder="请填写文章具体内容..."></textarea>
+            <span class="pull-right">内容不得超过1000字</span>
+            <button class="article_btn">保存</button>
+        </div>
+    </div>
+</div>
+<script src="../../style/js/logList.js"></script>
+</body>
+</html>

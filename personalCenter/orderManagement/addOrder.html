@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>发布晒单</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <script src="../../style/js/upfile.js"></script>
+    <!---->
+    <script src="../../style/js/orders.js"></script>
+    <link rel="stylesheet" href="../../style/css/orders.css" type="text/css">
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+   <a href="orderManage.html" class="back"><img src="../../style/img/back.png"></a>
+   <h1>发布晒单</h1>
+</header>
+<form id="addOrder">
+    <div class="editorText">
+        <textarea name="albumTit" id="albumTit" placeholder="晒单描述..."  onKeyDown='remainSub2("albumTit",500)'></textarea>
+        <div class="albumValid"></div><!--验证-->
+    </div>
+    <div class="InputTips">发布晒单不得超过500字</div>
+    <!--图片上传-->
+ <div class="addBox">
+    <ul id="addImg">
+       <li id="addBtn">
+         <img src="../../style/img/addAlbum.png" id="imagesAdd">
+         <input type="file" name="upfile" onchange="upload(event)" id="upfile" accept="image/*" />
+       </li>
+    </ul>
+</div>
+    <div class="sureBtn">
+           <input type="button" value="发布晒单" id="addAlbumSure1">
+    </div>
+</form>
+<script>
+    if (typeof($.cookie('password')) == 'undefined') {
+        window.location.href = '../../logRegPassword/index.html'
+    } else {
+    }
+</script>
+</body>
+</html>

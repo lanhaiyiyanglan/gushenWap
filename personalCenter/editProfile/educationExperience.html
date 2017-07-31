@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>教育经历</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<!--独有-->
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+<script src="../../style/js/personal.js"></script>
+<link rel="stylesheet" href="../../style/css/mobiscroll.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/mobiscroll_date.css" type="text/css">
+<script src="../../style/expand/mobiscroll_date.js"></script>
+<script src="../../style/expand/mobiscroll.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>教育经历</h1>
+   <span class="operationBtn"><input type="button" value="完成" id="eduBtn"></span>
+</header>
+<!--form-->
+<form id="eduForm">
+    <ul class="xi_list">
+        <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>最高学历毕业学校</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input type="text"  value="最高学历毕业学校" name="topEduText" id="topEduText"></div>
+                <span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li>
+           <div class="likeWhat">最高学历</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="highestEducation" type="radio" id="radio_a1" class="radio_1" value="博士"><label for="radio_a1"></label><i>博士</i></li>
+                    <li><input name="highestEducation" type="radio" id="radio_a2" class="radio_1" value="硕士" checked><label for="radio_a2"></label><i>硕士</i></li>
+                    <li><input name="highestEducation" type="radio" id="radio_a3" class="radio_1" value="本科"><label for="radio_a3"></label><i>本科</i></li>
+                    <li><input name="highestEducation" type="radio" id="radio_a4" class="radio_1" value="大专"><label for="radio_a4"></label><i>大专</i></li>
+                    <li><input name="highestEducation" type="radio" id="radio_a5" class="radio_1" value="其他"><label for="radio_a5"></label><i>其他</i></li>
+                </ul>
+            </div>
+         </li>
+         <li>
+           <div class="likeWhat">最高学历所学专业</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="highestSpecialty" type="checkbox" id="checkbox_a1" class="chk_1" value="无"><label for="checkbox_a1"></label><i>无</i></li>
+                    <li><input name="highestSpecialty" type="checkbox" id="checkbox_a2" class="chk_1" value="金融行业相关"><label for="checkbox_a2"></label><i>金融行业相关</i></li>
+                    <li><input name="highestSpecialty" type="checkbox" id="checkbox_a3" class="chk_1" value="会计类专业"><label for="checkbox_a3"></label><i>会计类专业</i></li>
+                    <li><input name="highestSpecialty" type="checkbox" id="checkbox_a4" class="chk_1" value="计算机类专业"><label for="checkbox_a4"></label><i>计算机类专业</i></li>
+                    <li><input name="highestSpecialty" type="checkbox" id="checkbox_a5" class="chk_1" value="其他专业"><label for="checkbox_a5"></label><i>其他专业</i></li>
+                 </ul>
+            </div>
+         </li>
+         <li>
+          <div class="infobox">
+              <span>最高学历起止时间</span>
+              <div class="infoInput edu_time">
+                <input type="text" name="start_time1" class="start_time" id="start_time1" readonly placeholder=" 教育初始时间" value="">至
+                <input type="text" name="end_time1" class="end_time" id="end_time1" readonly placeholder=" 末" value="">
+              </div>
+          </div>
+         </li>
+         <li onClick="showHide('wrapper3','wrapper1')">
+          <div class="infobox">
+              <span>本科毕业学校</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input type="text" name="undergraduateText"  value="毕业学校" id="undergraduateText"></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+         </li>
+         <li>
+           <div class="likeWhat">本科所学专业</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="major" type="radio" id="radio_b1" class="radio_1" value="无"><label for="radio_b1"></label><i>无</i></li>
+                    <li><input name="major" type="radio" id="radio_b2" class="radio_1" value="金融行业相关"><label for="radio_b2"></label><i>金融行业相关</i></li>
+                    <li><input name="major" type="radio" id="radio_b3" class="radio_1" value="会计类专业"><label for="radio_b3"></label><i>会计类专业</i></li>
+                    <li><input name="major" type="radio" id="radio_b4" class="radio_1" value="计算机类专业"><label for="radio_b4"></label><i>计算机类专业</i></li>
+                    <li><input name="major" type="radio" id="radio_b5" class="radio_1" value="其他专业"><label for="radio_b5"></label><i>其他专业</i></li>
+                </ul>
+            </div>
+         </li>
+         <li>
+          <div class="infobox">
+              <span>本科学历起止时间</span>
+              <div class="infoInput edu_time">
+                 <input type="text" name="start_time2" class="start_time" id="start_time2" readonly placeholder=" 教育初始时间" value="">至
+                 <input type="text" name="end_time2" class="end_time" id="end_time2" readonly placeholder=" 末" value="">
+              </div>
+          </div>
+         </li>
+         <!--高手有培训经历，富豪没有-->
+         <li class="peixun" onClick="showHide('wrapper4','wrapper1')">
+          <div class="infobox">
+              <span>培训经历</span>
+              <div class="infoInput">
+                <div   class="eidtorWhere"><input type="text" value="培训经历" name="trainingText" id="trainingText"></div>
+                <span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+         </li>
+         <li>
+           <div class="likeWhat">从业资质</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="workAptitudes" type="checkbox" id="checkbox_b1" class="chk_1" value="期货从业资格"><label for="checkbox_b1"></label><i>期货从业资格</i></li>
+                    <li><input name="workAptitudes" type="checkbox" id="checkbox_b2" class="chk_1" value="证券从业资格"><label for="checkbox_b2"></label><i>证券从业资格</i></li>
+                    <li><input name="workAptitudes" type="checkbox" id="checkbox_b3" class="chk_1" value="证券投资咨询"><label for="checkbox_b3"></label><i>证券投资顾问</i></li>
+                    <li><input name="workAptitudes" type="checkbox" id="checkbox_b4" class="chk_1" value="资格CEA"><label for="checkbox_b4"></label><i>资格CEA</i></li>
+                    <li><input name="workAptitudes" type="checkbox" id="checkbox_b5" class="chk_1" value="其他"><label for="checkbox_b5"></label><i>其他</i></li>
+                </ul>
+            </div>
+         </li>
+     </ul>
+</form>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>最高学历毕业学校</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="topEduTextarea" placeholder="请输入最高学历毕业学校..." onKeyUp='feedIn("topEduTextarea","topEduTips",140)' onKeyDown='remainSub("topEduTextarea","topEduTips",140)'></textarea>
+</div>
+<div class="InputTips" id="topEduTips"><font>0</font>/140</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper2','wrapper1','topEduTextarea','topEduText')">
+</div>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>本科毕业学校</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="undergraduateTextarea" placeholder="请输入本科毕业学校..." onKeyUp='feedIn("undergraduateTextarea","undergraduateTips",140)' onKeyDown='remainSub("undergraduateTextarea","undergraduateTips",140)'></textarea>
+</div>
+<div class="InputTips" id="undergraduateTips"><font>0</font>/140</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper3','wrapper1','undergraduateTextarea','undergraduateText')">
+</div>
+</div>
+<!--wrapper4-->
+<div id="wrapper4" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper4','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>培训经历</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="trainingTextarea" placeholder="请输入培训经历..." onKeyUp='feedIn("trainingTextarea","trainingTips",1000)' onKeyDown='remainSub("trainingTextarea","trainingTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="trainingTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper4','wrapper1','trainingTextarea','trainingText')">
+</div>
+</div>
+<script>
+    $(function(){
+        if (typeof($.cookie('password')) == 'undefined') {
+            window.location.href = '../../logRegPassword/index.html'
+        } else {
+        }
+        var currYear = (new Date()).getFullYear();//起始时间和结束时间的选择
+        var opt={};
+        opt.date = {preset : 'date'};
+        opt.datetime = {preset : 'datetime'};
+        opt.time = {preset : 'time'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 50, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+        $(".start_time").mobiscroll($.extend(opt['date'], opt['default']));
+        $(".end_time").mobiscroll($.extend(opt['date'], opt['default']));
+        /*保存培训经历*/
+        $("#eduBtn").click(function(){
+            var count='';
+            $(".edu_time").each(function(){
+                var startTime=$(this).find(".start_time").val();
+                var start=new Date(startTime.replace("-", "/").replace("-", "/"));
+                var endTime=$(this).find(".end_time").val();
+                var end=new Date(endTime.replace("-", "/").replace("-", "/"));
+                if(end<start){
+                    count++;
+                }
+            })
+            if(count>0){
+                layer.msg("开始时间不能大于结束时间", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+                return false;
+            }
+            var highestSpecialty=[];
+            for(var high=0;high<$('input[name=highestSpecialty]:checked').length;high++){
+                highestSpecialty.push($($('input[name=highestSpecialty]:checked')[high]).val());
+            }
+            var highestSpecialty=highestSpecialty.join('\n');
+            for(var cer2= 0,certificate=[];cer2<$('input[name=workAptitudes]:checked').length;cer2++){
+                certificate.push($($('input[name=workAptitudes]:checked')[cer2]).val());
+            }
+            var certificate=certificate.join('\n');
+            var data={
+                school:$('#topEduText').val(),
+                education:$('input[name=highestEducation]:checked').val(),
+                profession:highestSpecialty,
+                top_starttime:$('#start_time1').val(),
+                top_endtime:$('#end_time1').val(),
+                college_profession:$('input[name=major]:checked').val(),
+                college_school:$('#undergraduateText').val(),
+                certificate:certificate,
+                college_starttime:$('#start_time2').val(),
+                college_endtime:$('#end_time2').val(),
+                training_experience:$('#trainingText').val(),
+                module:'user',
+                do:'updateSchoolinfo',
+                user_id: $.cookie('user_id')
+            };
+            $.ajax({
+                type: "POST",
+                url: "http://open.zhengjuan.com/api/app",
+                dataType: "jsonp",
+                data:data,
+                success: function(data) {
+                    console.log(data)
+                    if (data.code!==0) {
+                        layer.msg('保存成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    } else {
+                        layer.msg("保存失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+                    }
+                },
+                error: function(x, e) {},
+                complete: function(x) {}
+            });
+        });
+    });
+</script>
+</body>
+</html>

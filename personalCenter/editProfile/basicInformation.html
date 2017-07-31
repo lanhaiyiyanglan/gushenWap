@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>基本资料</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/baseInfo.js"></script>
+<script src="../../style/js/layer.js"></script>
+
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/sm.css">
+<link rel="stylesheet" href="../../style/css/sm-extend.css">
+<script src="../../style/js/jquery.cookie.js"></script>
+    <style>
+        #userBasicForm{
+            margin-top:10rem;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>基本资料</h1>
+   <span class="operationBtn"><input type="button" value="完成" id="userBaiscBtn"></span>
+</header>
+<!--form-->
+<form id="userBasicForm">
+   <ul class="xi_list">
+        <li>
+          <div class="infobox">
+              <span>用户名</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input type="text" name="userName" value="" readonly></div>
+              </div>
+          </div>
+        </li>
+         <li>
+          <div class="infobox">
+              <span>性别</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere">
+                   <input type="text" name="gender" value="" readonly>
+                 </div>
+              </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+              <span>出生年月日</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="birthday"  value="" type="text"  id='birthday'></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+              <span>所在地区</span>
+              <div class="infoInput">
+                      <div  class="eidtorWhere"><input name="address" type="text" id='city-picker' value="北京 东城区" /></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+         <li>
+          <div class="infobox">
+              <span>手机号码</span>
+              <div class="infoInput"><a href="../safe/bindPhone.html" class="bindPhone">点击绑定</a></div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+              <span>邮箱</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input type="text" name="emailNum" id="emailNum"  value=""></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+              <span>QQ号码</span>
+              <div onclick="showHide('wrapper3','wrapper1');" class="infoInput">
+                <div  class="eidtorWhere"><input type="text" name="qqNum" id="qqNum" value=""></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+    </ul>
+</form>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+        <h1>邮箱</h1>
+    </header>
+    <div class="editorText">
+    <textarea class="textarea" id="emailTextarea" placeholder="请输入您的邮箱号..."></textarea>
+    </div>
+    <div class="sureBtn">
+       <input type="button" value="确认保存" id="emailSure">
+    </div>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../../style/img/back.png"></a>
+        <h1>QQ</h1>
+    </header>
+    <div class="editorText">
+    <textarea class="textarea" id="qqTextarea" placeholder="请输入您的QQ号..." onKeyUp='feedIn("qqTextarea","qqTips",12)' onKeyDown='remainSub("qqTextarea","qqTips",12)'></textarea>
+    </div>
+    <div class="InputTips" id="qqTips"><font>0</font>/12</div>
+    <div class="sureBtn">
+       <input type="button" value="确认保存" id="qqSure">
+    </div>
+</div>
+<script type='text/javascript'  src="../../style/expand/zepto.js" charset='utf-8'></script>
+<script type='text/javascript' src="../../style/expand/sm.js" charset='utf-8'></script>
+<script type='text/javascript'  src="../../style/expand/sm-extend.js" charset='utf-8'></script>
+<script type="text/javascript" src="../../style/expand/sm-city-picker.js" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+<title>合作伙伴</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/settings1.css" type="text/css">
+</head>
+
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>合作伙伴</h1>
+</header>
+<div class="cooperPaterner">
+  <div class="cooperInfo">
+     <div><img src="../../image/cp1.png"></div>
+     <p>蚂蚁财经网是一个专注于传播股票资讯、分析股票行情、分享投资经验的交流平台。网站以“服务散户”为建站宗旨，致力于为广大中小投资者提供安全、便捷、即时、实用的信息沟通渠道，具有资料丰富、内容翔实、题材新颖、氛围活跃的特征。</p>
+  </div>
+  <div class="cooperInfo">
+     <div><img src="../../image/cp2.png"></div>
+     <p>盛博股票学习网是可量化股票知识在线教育平台，主要提供炒股的各类基础知识，为基础薄弱的中小投资者提供一站式精准服务，是学习股票入门知识最好的网站之一。</p>
+  </div>
+  <div class="cooperInfo">
+     <div><img src="../../image/cp3.png"></div>
+     <p>鑫股网是股票资讯类网站。网站从中小投资者的视角出发，针对中小投资者在投资过程中遇到的诸多难题，如上班时间无暇盯盘，技术知识晦涩难懂，缺乏对信息精准的把控，盲目操作被套牢等，提供解决方案。网站竭力提供最具价值的参考信息，为广大股民提供最新最热的产经资讯，而且深入挖掘高潜力的概念题材。</p>
+  </div>
+  <div class="cooperInfo">
+     <div><img src="../../image/cp4.png"></div>
+     <p>中国贵金属网为广大用户提供贵金属行情、动态、政策法规、数据热点等行业资讯；第一时间发布各交易所的动态、信息及招聘情况；分享投资技巧、解答投资疑惑。网站致力于成为客户了解行业动态、政策走向、维护客户关系及拓展商务机会的互动平台。</p>
+  </div>
+</div>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

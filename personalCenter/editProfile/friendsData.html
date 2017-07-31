@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>交友资料</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<!--独有-->
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+<script src="../../style/js/personal.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>交友资料</h1>
+   <span class="operationBtn"><input type="button" value="完成" id="friendsDataBtn"></span>
+</header>
+<!--form-->
+<form id="friendsDataForm">
+   <ul class="xi_list">
+        <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>交友宣言</span>
+              <div class="infoInput">
+               <div  class="eidtorWhere"><input type="text" name="datingText" id="datingText" value=""></div>
+               <span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li>
+            <div class="likeWhat">性格</div>
+            <div class="whatList">
+                <ul>
+                    <li><input name="character" type="checkbox" id="checkbox_b1" class="chk_1" value="冒险/疯狂"><label for="checkbox_b1"></label><i>冒险/疯狂</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b2" class="chk_1" value="稳重"><label for="checkbox_b2"></label><i>稳重</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b3" class="chk_1" value="浪漫脱俗"><label for="checkbox_b3"></label><i>浪漫脱俗</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b4"  class="chk_1" value="好斗"><label for="checkbox_b4"></label><i>好斗</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b5" class="chk_1" value="幽默/机智"><label for="checkbox_b5"></label><i>幽默/机智</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b6" class="chk_1" value="敏感"><label for="checkbox_b6"></label><i>敏感</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b7" class="chk_1" value="自由"><label for="checkbox_b7"></label><i>自由</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b8" class="chk_1" value="聪明"><label for="checkbox_b8"></label><i>聪明</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b9" class="chk_1" value="认真/负责"><label for="checkbox_b9"></label><i>认真/负责</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b10" class="chk_1" value="爽快"><label for="checkbox_b10"></label><i>爽快</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b11" class="chk_1" value="艺术气质"><label for="checkbox_b11"></label><i>艺术气质</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b19" class="chk_1" value="简单"><label for="checkbox_b19"></label><i>简单</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b12" class="chk_1" value="武断/霸道"><label for="checkbox_b12"></label><i>武断/霸道</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b13" class="chk_1" value="冲动"><label for="checkbox_b13"></label><i>冲动</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b14" class="chk_1" value="保守"><label for="checkbox_b14"></label><i>保守</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b15" class="chk_1" value="深沉"><label for="checkbox_b15"></label><i>深沉</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b16" class="chk_1" value="理想主义"><label for="checkbox_b16"></label><i>理想主义</i></li>
+                    <li><input name="character" type="checkbox" id="checkbox_b18" class="chk_1" value="踏实/实际"><label for="checkbox_b18"></label><i>踏实/实际</i></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+                <div class="likeWhat">爱好</div>
+                <div class="whatList">
+                <ul>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c1" class="chk_1" value="情感"><label for="checkbox_c1"></label><i>情感</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c2" class="chk_1" value="文学"><label for="checkbox_c2"></label><i>文学</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c3" class="chk_1" value="时尚"><label for="checkbox_c3"></label><i>时尚</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c4" class="chk_1" value="读书"><label for="checkbox_c4"></label><i>读书</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c5" class="chk_1" value="家庭"><label for="checkbox_c5"></label><i>家庭</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c6" class="chk_1" value="休闲"><label for="checkbox_c6"></label><i>休闲</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c7" class="chk_1" value="灌水"><label for="checkbox_c7"></label><i>灌水</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c8" class="chk_1" value="IT"><label for="checkbox_c8"></label><i>IT</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c9" class="chk_1" value="笑话"><label for="checkbox_c9"></label><i>笑话</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c10" class="chk_1" value="校园"><label for="checkbox_c10"></label><i>校园</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c11" class="chk_1" value="性爱"><label for="checkbox_c11"></label><i>性爱</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c12" class="chk_1" value="图片"><label for="checkbox_c12"></label><i>图片</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c13" class="chk_1" value="娱乐"><label for="checkbox_c13"></label><i>娱乐</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c14" class="chk_1" value="职业"><label for="checkbox_c14"></label><i>职业</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c15" class="chk_1" value="交友活动"><label for="checkbox_c15"></label><i>交友活动</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c16" class="chk_1" value="爱情故事"><label for="checkbox_c16"></label><i>爱情故事</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c17" class="chk_1" value="健康"><label for="checkbox_c17"></label><i>健康</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c18" class="chk_1" value="旅游"><label for="checkbox_c18"></label><i>旅游</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c19" class="chk_1" value="聚会"><label for="checkbox_c19"></label><i>聚会</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c20" class="chk_1" value="音乐"><label for="checkbox_c20"></label><i>音乐</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c21" class="chk_1" value="公益"><label for="checkbox_c21"></label><i>公益</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c22" class="chk_1" value="运动"><label for="checkbox_c22"></label><i>运动</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c23" class="chk_1" value="商业"><label for="checkbox_c23"></label><i>商业</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c24" class="chk_1" value="生活"><label for="checkbox_c24"></label><i>生活</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c25" class="chk_1" value="影视"><label for="checkbox_c25"></label><i>影视</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c26" class="chk_1" value="K歌"><label for="checkbox_c26"></label><i>K歌</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c27" class="chk_1" value="摄影"><label for="checkbox_c27"></label><i>摄影</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c28" class="chk_1" value="八卦"><label for="checkbox_c28"></label><i>八卦</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c29" class="chk_1" value="游戏"><label for="checkbox_c29"></label><i>游戏</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c30" class="chk_1" value="美食"><label for="checkbox_c30"></label><i>美食</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c31" class="chk_1" value="酒吧"><label for="checkbox_c31"></label><i>酒吧</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c32" class="chk_1" value="购物"><label for="checkbox_c32"></label><i>购物</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c33" class="chk_1" value="厨艺"><label for="checkbox_c33"></label><i>厨艺</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c34" class="chk_1" value="聊天"><label for="checkbox_c34"></label><i>聊天</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c35" class="chk_1" value="网恋"><label for="checkbox_c35"></label><i>网恋</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c36" class="chk_1" value="书法"><label for="checkbox_c36"></label><i>书法</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c37" class="chk_1" value="志愿者"><label for="checkbox_c37"></label><i>志愿者</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c38" class="chk_1" value="追星"><label for="checkbox_c38"></label><i>追星</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c39" class="chk_1" value="彩票"><label for="checkbox_c39"></label><i>彩票</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c40" class="chk_1" value="股票基金"><label for="checkbox_c40"></label><i>股票基金</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c41" class="chk_1" value="车友"><label for="checkbox_c41"></label><i>车友</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c42" class="chk_1" value="宠物"><label for="checkbox_c42"></label><i>宠物</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c43" class="chk_1" value="钓鱼"><label for="checkbox_c43"></label><i>钓鱼</i></li>
+                    <li><input name="hobby" type="checkbox" id="checkbox_c44" class="chk_1" value="外语"><label for="checkbox_c44"></label><i>外语</i></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+                <div class="likeWhat">初次见面地点</div>
+                <div class="whatList">
+                <ul>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a1" class="chk_1" value="咖啡厅"><label for="checkbox_a1"></label><i>咖啡厅</i></li>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a2" class="chk_1" value="茶馆"><label for="checkbox_a2"></label><i>茶馆</i></li>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a3" class="chk_1" value="餐厅"><label for="checkbox_a3"></label><i>餐厅</i></li>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a4" class="chk_1" value="酒店"><label for="checkbox_a4"></label><i>酒店</i></li>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a5" class="chk_1" value="办公室"><label for="checkbox_a5"></label><i>办公室</i></li>
+                    <li><input name="changingAddress" type="checkbox" id="checkbox_a6"  class="chk_1" value="其他"><label for="checkbox_a6"></label><i>其他</i></li>
+                </ul>
+            </div>
+       </li>
+    </ul>
+</form>
+</div>
+<div id="wrapper2" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>交友宣言</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="datingTextarea" placeholder="请输入交友宣言..." onKeyUp='feedIn("datingTextarea","datingTips",140)' onKeyDown='remainSub("datingTextarea","datingTips",140)'></textarea>
+</div>
+<div class="InputTips" id="datingTips"><font>0</font>/140</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper2','wrapper1','datingTextarea','datingText')">
+</div>
+</div>
+<script>
+    function sure1(objNow,objOdd,objTextarea,objText){
+        if($('#'+objTextarea).val().length>0){
+            showHide(objNow,objOdd);
+            $('#'+objText).val($('#'+objTextarea).val());
+            $('#'+objTextarea).val('');
+            $(".InputTips font").text("0").attr("color","#b1b1b1");
+        }else{
+            var msg=$("#"+objNow).find("h1").text();
+            layer.msg(msg+"不能为空", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+        }
+    }
+</script>
+</body>
+</html>

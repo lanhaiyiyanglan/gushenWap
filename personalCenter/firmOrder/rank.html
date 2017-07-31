@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>比赛排名</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style//img/back.png"></a>
+   <h1>比赛排名</h1>
+</header>
+<ul id="rankList">
+</ul>
+<div class="loading">
+      <img src="../../style//img/loading.gif" alt="">
+      <span>正在加载中...</span>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+var page=1;
+$(function(){
+	var Paiming=1;
+          $.ajax({
+              url:'http://broker.shipan.zhengjuan.com/rank/game',
+              data:{
+                  app:1,
+				  login_user_id:$.cookie('uid'),
+				  page:(page++)*1,
+                  game:GetQueryString("rank_id")
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+                 var html='';
+                  for (var i=0;i<data.data.players.length;i++){
+					        Paiming=i+1;
+					        html+='<li id='+data.data.players[i].user_id+'>';
+						    html+='<div class="rankNum"><span>'+Paiming+'</span></div>';
+						    html+='<div class="rankInfo">';
+							html+='<div class="rankNames"><a href="otherFirm/otherFirm.html?uid='+data.data.players[i].uid+'&user_id='+data.data.players[i].user_id+'" class="otherName">'+data.data.players[i].username+'</a>';
+							/*if(data.data.players[i].isfocus==0){
+							 html+='<a href="javascript:void(0);" class="dy" onClick="relation(this)" title="add">订阅</a>';	
+							}else{
+							 html+='<a href="javascript:void(0);" class="ydy" onClick="relation(this)" title="del">已订阅</a>';	
+							}*/
+							html+='</div><ul>';
+							if(data.data.players[i].ratio>=0){
+							  html+='<li>收益率 ：<span class="red">'+(data.data.players[i].ratio*100).toFixed(2)+'%</span></li>';	
+							}else{
+							  html+='<li>收益率 ：<span class="green">'+(data.data.players[i].ratio*100).toFixed(2)+'%</span></li>';	
+							}
+							if(data.data.players[i].nianhua>=0){
+							  html+='<li>年化收益率 ：<span class="red">'+(data.data.players[i].nianhua*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>年化收益率 ：<span class="green">'+(data.data.players[i].nianhua*100).toFixed(2)+'%</span></li>';	
+							}
+							if(data.data.players[i].huiche>=0){
+							  html+='<li>回撤率 ：<span class="red">'+(data.data.players[i].huiche*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>回撤率 ：<span class="green">'+(data.data.players[i].huiche*100).toFixed(2)+'%</span></li>';
+							}
+							if(data.data.players[i].shengzhi>=0){
+							  html+='<li>升值率 ：<span class="red">'+(data.data.players[i].shengzhi*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>升值率 ：<span class="green">'+(data.data.players[i].shengzhi*100).toFixed(2)+'%</span></li>';
+							}
+							if(data.data.players[i].chenggong>=0){
+							  html+='<li>成功率 ：<span class="red">'+(data.data.players[i].chenggong*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>成功率 ：<span class="green">'+(data.data.players[i].chenggong*100).toFixed(2)+'%</span></li>';
+							}
+							html+='<li>交易次数 ：'+data.data.players[i].zonghesuan+'</li>';
+						    html+='<li>期初资产 ：<span class="red">'+data.data.players[i].begin_money+'</span></li>';
+							html+='<li>业绩截止日 ：'+timeChange(data.data.players[i].end_date)+'</li>';
+							html+='</ul>';
+						    html+='</div>';
+					        html+='</li>';
+                  }
+                 $("#rankList").append(html);
+              }
+          })
+		$(window).scroll(function(){
+          var height1=$(document).height();
+          var height2=$(window).height();
+          if($(window).scrollTop()+1==(height1-height2)){
+              $('.loading').show();
+              $.ajax({
+                  url:'http://broker.shipan.zhengjuan.com/rank/game',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid'),
+					  page:(page++)*1,
+					  game:GetQueryString("rank_id")
+				  },
+                  dataType:'jsonp',
+                  type:'POST',
+                  success:function(data){
+                      var html='';
+                      for (var i=0;i<data.data.players.length;i++){
+						    Paiming+=1;
+                           html+='<li id='+data.data.players[i].user_id+'>';
+						    html+='<div class="rankNum"><span>'+Paiming+'</span></div>';
+						    html+='<div class="rankInfo">';
+							html+='<div class="rankNames"><a href="otherFirm/otherFirm.html?uid='+data.data.players[i].uid+'&user_id='+data.data.players[i].user_id+'" class="otherName">'+data.data.players[i].username+'</a>';
+							if(data.data.players[i].isfocus==0){
+							 html+='<a href="javascript:void(0);" class="dy" onClick="relation(this)" title="add">订阅</a></div>';	
+							}else{
+							 html+='<a href="javascript:void(0);" class="ydy" onClick="relation(this)" title="del">已订阅</a></div>';	
+							}
+							html+='<ul>';
+							if(data.data.players[i].ratio>=0){
+							  html+='<li>收益率 ：<span class="red">'+(data.data.players[i].ratio*100).toFixed(2)+'%</span></li>';	
+							}else{
+							  html+='<li>收益率 ：<span class="green">'+(data.data.players[i].ratio*100).toFixed(2)+'%</span></li>';	
+							}
+							if(data.data.players[i].nianhua>=0){
+							  html+='<li>年化收益率 ：<span class="red">'+(data.data.players[i].nianhua*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>年化收益率 ：<span class="green">'+(data.data.players[i].nianhua*100).toFixed(2)+'%</span></li>';	
+							}
+							if(data.data.players[i].huiche>=0){
+							  html+='<li>回撤率 ：<span class="red">'+(data.data.players[i].huiche*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>回撤率 ：<span class="green">'+(data.data.players[i].huiche*100).toFixed(2)+'%</span></li>';
+							}
+							if(data.data.players[i].shengzhi>=0){
+							  html+='<li>升值率 ：<span class="red">'+(data.data.players[i].shengzhi*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>升值率 ：<span class="green">'+(data.data.players[i].shengzhi*100).toFixed(2)+'%</span></li>';
+							}
+							if(data.data.players[i].chenggong>=0){
+							  html+='<li>成功率 ：<span class="red">'+(data.data.players[i].chenggong*100).toFixed(2)+'%</span></li>';
+							}else{
+							  html+='<li>成功率 ：<span class="green">'+(data.data.players[i].chenggong*100).toFixed(2)+'%</span></li>';
+							}
+							html+='<li>交易次数 ：'+data.data.players[i].zonghesuan+'</li>';
+						    html+='<li>期初资产 ：<span class="red">'+data.data.players[i].begin_money+'</span></li>';
+							html+='<li>业绩截止日 ：'+timeChange(data.data.players[i].end_date)+'</li>';
+							html+='</ul>';
+						    html+='</div>';
+					        html+='</li>';
+                      }
+                      $("#rankList").append(html);	
+                      if(data.data.length==0){
+                          $('.loading span').html('没有更多了...')
+                          $('.loading img').remove();
+                      }
+                  }
+              });
+          }else{
+              $('.loading').hide();
+          }
+      });
+});
+function timeChange(time){
+  return time.replace(/(\d{4})(\d{2})/,'$1.$2.');	
+}
+//订阅/取消订阅
+ /*function relation(obj){
+	var fid=$(obj).parent().parent().parent().attr("id");
+	var operate=$(obj).attr("title");
+	var that=$(obj);
+	$.ajax({
+              url:'http://rank.shipan.zhengjuan.com/api/follow',
+              data:{
+                  app:1,
+				  login_user_id:$.cookie('uid'),
+				  fid:fid,
+				  operate:operate
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(data.code==1){
+					  if(operate=="add"){
+						that.attr("title","del");
+					  }else{
+						that.attr("title","add");
+					  }
+					  if(that.text()=="订阅"){
+						 that.text("已订阅");
+						 that.attr("class","ydy");
+					  }else{
+						that.text("订阅"); 
+						that.attr("class","dy"); 
+					  }
+					  layer.msg(data.data, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.reload();});
+				  }else{
+					  layer.msg(data.errormsg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+				  }
+              }
+   }) 
+ }*/
+</script>
+</body>
+</html>

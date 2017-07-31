@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>屏蔽字段</title>
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <link rel="stylesheet" href="../../style/css/imgword.css">
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+    <h1>屏蔽字段</h1>
+    <a href="addShield.html"><span class="operationBtn"><input type="button" value="添加" id="userBaiscBtn"></span></a>
+</header>
+<ul id="shield">
+    <li>
+        <span>黑社会</span>
+        <img class="shieldDelete" src="../../style/img/Del.png" alt="">
+    </li>
+    <li>
+        <span>入室抢劫</span>
+        <img class="shieldDelete" src="../../style/img/Del.png" alt="">
+    </li>
+    <li>
+        <span>你傻啊</span>
+        <img class="shieldDelete" src="../../style/img/Del.png" alt="">
+    </li>
+    <li>
+        <span>瞎说</span>
+        <img class="shieldDelete" src="../../style/img/Del.png" alt="">
+    </li>
+</ul>
+<script>
+    $(document).on('click','.shieldDelete',function(){
+        mythis=$(this);
+        layer.confirm('您确定要将此字段移出吗？', {
+            btn: ['取消','确定'], //按钮
+            closeBtn: 0,
+            skin:'demo-class',
+            title:false,
+            area:['50%','20rem']
+        }, function(){
+            layer.closeAll();
+        }, function(){
+            alert('发起ajax请求');
+            mythis.parent().remove();
+        });
+    })
+
+</script>
+</body>
+</html>

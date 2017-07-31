@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>添加相册</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/upfile.js"></script>
+<script src="../../style/js/addAlbum.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!---->
+<link rel="stylesheet" href="../../style/css/album.css" type="text/css">
+</head>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>添加相册</h1>
+</header>
+<form id="addAlbumForm">
+    <div class="editorText">
+        <input type="text" name="albumTit" id="albumTit" placeholder="请填写相册名称..."  onKeyDown='remainSub2("albumTit",10)'>
+        <div class="albumValid"></div><!--验证-->
+    </div>
+    <div class="InputTips">相册名称不得超过10个字</div>
+    
+    <!--图片上传-->
+    <!--<div class="addBox">
+        <ul id="addImg">
+           <li id="addBtn">
+             <img src="../../style/img/addAlbum.png" id="imagesAdd">
+             <input id="file" type="file"  onChange="upload(event)">
+           </li>
+        </ul>
+    </div>-->    
+   <div class="sureBtn">
+           <input type="button" value="保存" id="addAlbumSure">
+    </div>
+</form>
+</body>
+</html>

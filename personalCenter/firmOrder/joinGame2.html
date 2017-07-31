@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>报名参赛</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div id="wrapper1">
+    <header class="top">
+        <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+        <h1>选择账号</h1>
+        <span class="operationBtn"><input type="button" value="完成" onClick="resetVal('wrapper2','wrapper1','jionAccount','joinAccountItem');"></span>
+    </header>
+    <ul class="joinInfoList" id="joinAccountItem">
+    </ul>
+    <div class="sureBtn">
+        <a href="javascript:void(0);">添加新账号</a>
+    </div>
+</div>
+<!--wrapper2-->
+<div id="wrapper2"  style="display:none;">
+    <div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>报名参赛</h1>
+       <span class="operationBtn"><input type="button" value="确认"  onClick="addItem();"></span>
+    </header>
+    </div>
+    <ul class="joinType">
+        <li>
+          <input placeholder="请选择需要参加排行的账号" id="jionAccount">
+        </li>
+        <li>
+          <input value="" id="byWhat">
+        </li>
+    </ul>
+</div>
+<input type="hidden" value="" id="accountAid">
+<input type="hidden" value="" id="accountBid">
+<input type="hidden" value="" id="gameType">
+<script>
+/*显示隐藏*/
+function showHide(page1,page2){
+	$("#"+page1).toggle();	
+    $("#"+page2).toggle();	
+}
+function resetVal(objNow,objOdd,objTo,objFrom){
+	var objFrom=$("#"+objFrom).find(".on").text();
+	showHide(objNow,objOdd);
+	$("#"+objTo).val(objFrom);
+}
+$(function(){
+   $(".joinInfoList li").click(function(){
+	  $(this).addClass("on").siblings().removeClass("on");  
+   });
+   $.ajax({
+				  url:'http://rank.shipan.zhengjuan.com/api/account',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==1){
+						  var html='';
+						  for(var i=0;i<data.data.length;i++){
+							 html+='<li onClick="hiddenSet(this);">'+data.data[i].name+'： '+data.data[i].code+'<input type="hidden" value='+data.data[i].aid+' class="aid"><input type="hidden" value='+data.data[i].bid+' class="bid">';
+							 if(data.data[i].account_type==1){
+								 html+='(<span class="gameType">周赛</span>)';
+							 }else if(data.data[i].account_type==2){
+								 html+='(<span class="gameType">月赛</span>)';
+							 }else if(data.data[i].account_type==3){
+								 html+='(<span class="gameType">季赛</span>)';
+							 }else{
+								 html+='(<span class="gameType">年赛</span>)';
+							 }
+							 html+='</li>';  
+						  }
+						  $("#joinAccountItem").append(html);
+						  $(".joinInfoList li").click(function(){
+							  $(this).addClass("on").siblings().removeClass("on");  
+						  });
+						}
+				  }
+	 })	
+});
+function hiddenSet(obj){
+  var that=$(obj);
+  var accountAid=that.find(".aid").val();
+  $("#accountAid").val(accountAid);
+  var accountBid=that.find(".bid").val();
+  $("#accountBid").val(accountBid);
+  var gameType=that.find(".gameType").text();
+  if(gameType=="周赛"){
+	  $("#gameType").val(7);
+	  $("#byWhat").text("周业绩排名");
+  }else if(gameType=="月赛"){
+	  $("#gameType").val(30);
+	  $("#byWhat").val("月业绩排名");
+  }else if(gameType=="季赛"){
+	  $("#gameType").val(91);
+	  $("#byWhat").val("季业绩排名");
+  }else{
+	  $("#gameType").val(365);
+	  $("#byWhat").val("年业绩排名");
+  }
+}
+function addItem(){
+	if($("#jionAccount").val()==''){
+		layer.msg("请选择需要参加排行的账号", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+		return false;
+	}else{
+		$.ajax({
+					  url:'http://rank.shipan.zhengjuan.com/join_new',
+					  data:{
+						  app:1,
+						  login_user_id:$.cookie('uid'),
+						  aid:$("#accountAid").val(),
+						  bid:$("#accountBid").val(),
+						  type:$("#gameType").val()
+					  },
+					  type:'POST',
+					  dataType:'jsonp',
+					  success:function(data){
+						if(data.code==-1){
+							layer.confirm(data.errormsg, {btn: ['确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false},function(){layer.closeAll();});
+						}else{
+						    layer.confirm(data.msg, {btn: ['确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false},function(){layer.closeAll();});
+						}
+					  }
+		 })		
+	}
+}
+$(function(){
+  $(".sureBtn > a").click(function(){
+		   $.ajax({
+				  url:'http://user.shipan.zhengjuan.com/account',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==1){
+							  window.location.href="addAccount.html";
+						}else{
+							 window.location.href="rzPay.html";
+						}
+				  }
+	     })	
+    });	
+});
+</script>
+</body>
+</html>

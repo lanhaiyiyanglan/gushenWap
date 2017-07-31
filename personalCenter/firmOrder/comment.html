@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>写评论</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>写评论</h1>
+   <span class="operationBtn"><input type="button" value="发布"  onClick="comment();"></span>
+</header>
+</div>
+<ul class="zonghe">
+   <li>
+      <div class="infobox">
+          <span>总体评价：</span>
+          <div class="infoInput">
+              <ul>
+                <li><input name="commentScore" type="radio" id="radio_b1" class="radio_1" value="3" checked=""><label for="radio_b1"></label><i>好评</i></li>
+                <li><input name="commentScore" type="radio" id="radio_b2" class="radio_1" value="6"><label for="radio_b2"></label><i>中评</i></li>
+                <li><input name="commentScore" type="radio" id="radio_b3" class="radio_1" value="9"><label for="radio_b3"></label><i>差评</i></li>
+              </ul>
+          </div>
+      </div>
+  </li>
+</ul>
+<div class="problem_tip">
+    <div class="problem_tip_con">
+        <span>券商实力：</span>
+        <input name="power" type="hidden" value="0" class="hideinput" id="power">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>交易佣金：</span>
+        <input name="fee" type="hidden" value="0" class="hideinput" id="fee">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>交易软件：</span>
+        <input name="soft" type="hidden" value="0" class="hideinput" id="soft">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>开户渠道：</span>
+        <input name="open" type="hidden" value="0" class="hideinput" id="open">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>财经资讯：</span>
+        <input name="info" type="hidden" value="0" class="hideinput" id="info">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>特色服务：</span>
+        <input name="special" type="hidden" value="0" class="hideinput" id="special">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>客户服务：</span>
+        <input name="customer" type="hidden" value="0" class="hideinput" id="customer">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+    <div class="problem_tip_con">
+        <span>理财产品：</span>
+        <input name="product" type="hidden" value="0" class="hideinput" id="product">
+        <span class="minstar"><i title="1星"></i><i title="2星"></i><i title="3星"></i><i title="4星"></i><i title="5星"></i></span>
+    </div>
+</div>
+<div class="editorText">
+<textarea class="textarea"  id="comment" placeholder="输入内容不得超过250字..." onKeyDown='remainSub2("comment",250)'></textarea>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+/*五星*/
+	$(".minstar").each(function() {
+		$(this).hover(function(){
+			rate = $(this).children("i");
+			w = rate.width();
+			n = rate.length; 
+			me = this;
+			for (var i = 0; i < n; i++) {
+				rate.eq(i).css({
+					'width': w * (i + 1),
+					'z-index': n - i
+				});
+			} 
+			rate.hover(function() {
+				var S = $(this).children("i.select");
+				$(this).addClass("hover").siblings().removeClass("hover");
+				if ($(this).index() > S.index()) {
+					S.addClass("hover");
+				}
+			},
+			function() {
+				rate.removeClass("hover");
+			})
+			rate.click(function() {
+				rate.removeClass("select hover");
+				$(this).addClass("select");
+				me.Index = $(this).index() + 1;
+				$(this).parent('span').siblings("input").val(me.Index);
+				return me.Index;
+			})   
+		});
+	});
+/*字符截取2*/
+function remainSub2(whatIn,number){
+	    whatIn="#"+whatIn;
+		if ($(whatIn).val().length>=number){
+			$(whatIn).val($(whatIn).val().substr(0,number-1));
+		}
+}
+function comment(){
+	if($("#comment").val()==''){
+		layer.msg("请输入评价内容",{time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+		return false;
+	}else{
+		var data=
+            $.ajax({
+              url:'http://broker.shipan.zhengjuan.com/api/save_review',
+              data:{
+                  app:1,
+				  login_user_id:$.cookie('uid'),
+				  broker:GetQueryString("broker_id"),
+				  tacontent:$("#comment").val(),
+				  uevaluation:$('input[name=commentScore]:checked').val(),
+				  power:$("#power").val(),
+				  fee:$("#fee").val(),
+				  soft:$("#soft").val(),
+				  "open":$("#open").val(),
+				  info:$("#info").val(),
+				  special:$("#special").val(),
+				  customer:$("#customer").val(),
+				  product:$("#product").val()
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(data.code==1){
+					 layer.msg(data.data,{icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"}); 
+				  }else{
+					 layer.msg("您已评论过，请不要重复评论", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"}); 
+				  }
+              }
+          })
+	}
+}
+</script>
+</body>
+</html>

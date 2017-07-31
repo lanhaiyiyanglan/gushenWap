@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>从业经历</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/authentication.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+</head>
+<body>
+<style>
+    body .demo-class{
+        border-radius: 20px;
+        height: 25rem;
+    }
+</style>
+<div class="topWrapper">
+    <header class="top">
+        <a href="businessExperience.html" class="back"><img src="../../style/img/back.png"></a>
+        <h1>从业经历</h1>
+        <span class="submitAll">删除</span>
+        <span class="zhegai"></span>
+    </header>
+</div>
+<ul class="editingAll">
+    <li class="editingName">
+        <div>公司名称</div>
+        <div><input type="text" placeholder="某某公司"></div>
+    </li>
+    <li class="editingTime">
+        <div>从业时间</div>
+        <div><input type="text" id="editingTime1" placeholder="2010-08-10"><span>至</span><input type="text"  id="editingTime2"  placeholder="2014-08-10"></div>
+    </li>
+</ul>
+<div class="orcer_img">
+    <p class="orcer_p">相关证明：</p>
+    <ul id="orcer_img">
+        <li id="file_btn" class="file_btn">
+            <img src="../../style/img/btn_bt.png" alt="">
+            <input id="upfile" onchange="upload(event)" type="file">
+        </li>
+    </ul>
+</div>
+<button class="article_btn">保存</button>
+<div class="tipFooter">
+    <p>示例</p>
+    <span>劳动合同（需包括：劳动合同第一页、合同公章页、劳动合同证明页）、工作证、工作名片、社保原件照片等，均可单独或部分或全部。</span>
+</div>
+<ul class="delete">
+    <li class="del">删除</li>
+    <li class="close">取消</li>
+</ul>
+<div class="ceng"></div>
+<script src="../../style/js/jquery-1.7.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/upfile.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script>
+    function x(tm) {
+        tm = parseInt(tm);
+        var date = new Date(tm); //转换成时间对象，这就简单了
+        var year = date.getFullYear();  //获取年
+        var mouth = date.getMonth() + 1 ;
+        var data = date.getDate();
+        if (date.getMonth() < 10) {
+            mouth = '0' + (date.getMonth()+1);
+        } else {
+            data = date.getDate();
+        }
+
+        if(date.getDate()<10) {
+            data = '0' + date.getDate();
+        }else{
+            data = date.getDate();
+        }
+        return year+'-'+mouth+'-'+data;
+    }
+    $('.article_btn').click(function(){
+        var imgs=$('#orcer_img').children('li').not('#file_btn').children('img');
+        var arr=[];
+        for(var i=0;i<imgs.length;i++){
+            arr.push($(imgs[i]).attr('src'));
+        }
+        console.log(arr)
+        console.log(imgs)
+        var star=$('#editingTime1').val().replace(/\-/g, "/");
+        var end=$('#editingTime2').val().replace(/\-/g, "/");
+        console.log(star+'-'+end)
+        if($('.editingName input').val==''){
+            layer.msg('公司名称不能为空！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            return false;
+        }else if($('#editingTime1').val()==''){
+            layer.msg('起始时间不能为空！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            return false;
+        }else if($('#editingTime2').val()==''){
+            layer.msg('结束时间不能为空！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            return false;
+        }else if($('#orcer_img').children('li').not('#file_btn').length<=0){
+            layer.msg('证明照片不能为空！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            return false;
+        }else if(new Date(star)>new Date(end)){
+            layer.msg('结束时间不能大于开始时间！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            return false;
+        }else{
+            var data={
+                module:'auth',
+                do:'job_edit',
+                user_id: $.cookie('user_id'),
+                company:$('.editingName input').val(),
+                images:arr.join(';'),
+                begin_time:$('#editingTime1').val(),
+                end_time:$('#editingTime2').val()
+            };
+            if(url.indexOf('jobid')!==''){
+                data.job_id=jobid;
+            }else{
+                delete data.job_id;
+            }
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data:data,
+                success:function(data){
+                    layer.msg(data.data.msg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    console.log(data)
+                    if(data.code==1){
+                        setTimeout('window.location.href="../authentication/businessExperience.html"',2000);
+                    }
+                }
+            })
+        }
+    })
+
+    var url=window.location.href;
+    var accountName = url.split("?")[1].split("&")[0].split('=')[1];
+    var index = url.split("?")[1].split("&")[1].split('=')[1];
+    var jobid = url.split("?")[1].split("&")[2].split('=')[1];
+    $('.top h1').html(decodeURI(accountName));
+    var tempStr = $('.top').children('h1').html();
+    var bool = tempStr.indexOf('模拟');
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data: {
+                user_id: $.cookie('user_id'),
+                module: 'auth',
+                do: 'job'
+            },
+            success:function(data){
+                console.log(data)
+                console.log(index)
+                if(jobid!==''){
+                    $('.editingName').children('div').children('input').val(data.data[index].company);
+                    $('#editingTime1').val(x(data.data[index].begin_time*1000));
+                    $('#editingTime2').val(x(data.data[index].end_time*1000));
+                    var imgarr=data.data[index].images.split(';');
+                    console.log(imgarr)
+                    if(imgarr.length!==0){
+                        var html='';
+                        for(var i=0;i<imgarr.length;i++){
+                            html+='<li><img src="'+imgarr[i]+'"><i onclick="del(this);"></i></li>';
+                        }
+                        $('#file_btn').before(html);
+                        if($('#orcer_img').children('li').length>7){
+                            $('#file_btn').hide();
+                        }else{
+                            $('#file_btn').show();
+                        }
+                    }else{}
+                    if(data.data[0].status==1||data.data[0].status==2){
+                        $('input[type=text]').attr('disabled','disabled');
+                        $('#file_btn').hide();
+                        $('#orcer_img').children('li').children('i').hide();
+                        $('.article_btn').hide();
+                    }
+                }
+                }
+        })
+    })
+    $('.submitAll').click(function(){
+        $('.ceng').fadeIn(100);
+        $('.delete').slideToggle();
+        $('.zhegai').show();
+    });
+    $('.ceng').click(function(){
+        $(this).fadeOut(500);
+        $('.delete').slideToggle(500);
+        $('.zhegai').hide();
+    })
+    $('.del').click(function(){
+        $('.ceng').fadeOut();
+        $('.delete').slideToggle();
+        layer.confirm('确定要删除此信息吗？', {
+            btn: ['取消','确定'],
+            closeBtn:false,
+            title:0,
+            skin:'demo-class',
+            area:['60%']
+        }, function(){
+            var index = layer.confirm();
+            layer.close(index);
+            $('.zhegai').hide()
+        }, function(){
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data: {
+                    user_id: $.cookie('user_id'),
+                    module: 'auth',
+                    do: 'job_del',
+                    job_id:jobid
+                },
+                success:function(data){
+                    window.location.href='businessExperience.html';
+                }
+            })
+        });
+    })
+    $('.close').click(function(){
+        $('.delete').slideToggle();
+        $('.ceng').fadeOut(100);
+        $('.zhegai').hide();
+    })
+    var uploader = uploadJSSDK;
+
+    function upload(e) {
+        var files = e.target.files;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '20480000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn");
+                    } else {
+                        layer.msg('图片大小不能超过2M！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    }
+                    if ($("#orcer_img li").length <= 5) {//限制图片张数
+                        $("#file_btn").show();
+                    } else {
+                        $("#file_btn").hide();
+                    }
+                }
+            });
+        }
+    }
+    function del(obj) {
+        if ($("#orcer_img li").length<=6) {//限制图片张数
+            $("#file_btn").show();
+        } else {
+            $("#file_btn").hide();
+        }
+        $(obj).parent().remove();
+    }
+</script>
+<link href="../../style/css/mobiscroll.css" rel="stylesheet"/>
+<link href="../../style/css/mobiscroll_data.css" rel="stylesheet"/>
+<script src="../../style/js/mobiscroll_data.js"></script>
+<script src="../../style/js/mobiscroll.js"></script>
+<script>
+    $(function () {
+        var currYear = (new Date()).getFullYear();
+        var opt={};
+        opt.date = {preset : 'date'};
+        opt.datetime = {preset : 'datetime'};
+        opt.time = {preset : 'time'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 50, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+
+        $("#editingTime1").mobiscroll($.extend(opt['date'], opt['default']));
+
+    });
+    $(function () {
+        var currYear = (new Date()).getFullYear();
+        var opt={};
+        opt.date = {preset : 'date'};
+        opt.datetime = {preset : 'datetime'};
+        opt.time = {preset : 'time'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 50, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+
+        $("#editingTime2").mobiscroll($.extend(opt['date'], opt['default']));
+
+    });
+
+</script>
+<script>
+</script>
+
+
+</body>
+</html>

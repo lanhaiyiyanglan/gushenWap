@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>实盘大赛</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>实盘大赛</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li class="on"><a href="javascript:void(0);">比赛记录</a></li>
+      <li><a href="approve.html">我的认证</a></li>
+    </ul>
+    <ul id="gameList">
+
+    </ul>
+    <div class="sureBtn" onClick="joinGame();">
+       <a href="javascript:void(0);">报名参赛</a>
+    </div>
+</div>
+<script>
+var data={
+	module:'moni',
+	do:'get_select',
+	select_type:'game'
+};
+$(function(){
+          $.ajax({
+              url:'http://user.shipan.zhengjuan.com/game',
+              data:{
+				  app:1,
+				  login_user_id:$.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                   var html='';
+                   for (var i=0;i<data.data.games.length;i++){
+					      html+='<li><a href="rank.html?rank_id='+data.data.games[i].rank_id+'">';
+						  html+='<div class="gameLeft">';
+   					      if(parseInt(data.data.games[i].ratio)>=0){
+							 html+='<div class="sylRed">'+(data.data.games[i].ratio*100).toFixed(2)+'%</div>';
+						  }else{
+							 html+='<div class="sylGreen">'+(data.data.games[i].ratio*100).toFixed(2)+'%</div>'; 
+						  }
+						  html+='<div class="gameText">收益率</div>';
+						  if(data.data.games[i].rank==0){
+							html+='<div class="paiM">'+data.data.games[i].rank_site+'</div>';  
+						  }else{
+							html+='<div class="paiM">'+data.data.games[i].rank+'</div>';  
+						  }
+						  html+='<div class="gameText">排名</div>';
+						  html+='</div>';
+						  html+='<div class="gameRight">';
+						  html+='<div class="gameName">'+data.data.games[i].broker_name+'';
+						  if(data.data.games[i].type==7){
+							html+='-周赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else if(data.data.games[i].type==30){
+							html+='-月赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else if(data.data.games[i].type==91){
+							html+='-季赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else{
+							html+='-年赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }
+						  html+='</div>';
+						  html+='<p>参赛账号：<span>'+data.data.games[i].broker_name2+'</span></p>';
+						  html+='<p>参数人数：<span>'+data.data.games[i].count_player+'</span>人</p>';
+						  html+='<p>开始时间：<span>'+timeChange(data.data.games[i].begin_date)+'</span></p>';
+						  html+='<p>结束时间：<span>'+timeChange(data.data.games[i].end_date)+'</span></p>';
+						  html+='</div>';
+						  html+='</a></li>';
+                  }
+                 $("#gameList").append(html);	
+              }
+          })
+});
+function timeChange(time){
+  return time.replace(/(\d{4})(\d{2})/,'$1.$2.');	
+}
+function joinGame(){
+	 $.ajax({
+				  url:'http://rank.shipan.zhengjuan.com/api/account',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==-1){
+							layer.confirm(data.errormsg, {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+								}, function(){
+									layer.closeAll();
+								}, function(){
+				                  window.location.href="approve.html";
+							});
+						}else{
+						     window.location.href="joinType.html";
+						}
+				  }
+	 })
+}
+</script>
+</body>
+</html>

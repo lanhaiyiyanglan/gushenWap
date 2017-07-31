@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>我的认证</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/authentication.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <script src="../../style/js/jquery-1.7.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<style>
+    .layui-layer-shade{
+        margin-top:9rem;
+    }
+    .layui-layer-msg{
+        background: rgba(0,0,0,.6);
+        color:#fff;
+    }
+    .layui-layer-dialog .layui-layer-content{
+        text-align: center!important;
+        line-height:7rem;
+        font-family: '黑体';
+        font-size: 3rem;
+    }
+    .layui-layer-dialog .layui-layer-content .layui-layer-ico{
+        top:36%;
+        left:35%;
+    }
+    body .demo-class{
+        border-radius: 12px;
+        background: rgba(0,0,0,.6);
+        color: #fff;
+        height:auto!important;
+    }
+    body .demo-class .layui-layer-content{
+        padding-top:0!important;
+        line-height:9rem!important;
+        color:#fff!important;
+        padding:0!important;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="../../index.html" class="back"><img src="../../style/img/back.png"></a>
+        <h1>我的认证</h1>
+    </header>
+</div>
+<div class="container">
+    <p class="serverState">您当前服务状态：<span class="statusType"></span></p>
+    <p class="serverData">认证到期时间: <span class="endTime"></span></p>
+    <ul class="authenticationList">
+        <li><div><img src="../../style/img/server_touzi.png" alt=""></div><div>投资业绩</div><div><img src="../../style/img/server_right.png" alt=""></div></li>
+        <li><div><img src="../../style/img/zijin.png" alt=""></div><div>资金实力</div><div><img src="../../style/img/server_right.png" alt=""></div></li>
+        <li><div><img src="../../style/img/server_shenfen.png" alt=""></div><div>身份认证</div><div><img src="../../style/img/server_right.png" alt=""></div></li>
+        <li><div><img src="../../style/img/server_congye.png" alt=""></div><div>从业经历</div><div><img src="../../style/img/server_right.png" alt=""></div></li>
+        <li><div><img src="../../style/img/server_jiaoyu.png" alt=""></div><div class="tipName">教育/培训</div><div><img src="../../style/img/server_right.png" alt=""></div></li>
+    </ul>
+    <div class="serverButton">
+        <input type="button" value="提交认证">
+    </div>
+</div>
+
+<script>
+    function x(tm) {
+        tm = parseInt(tm);
+        var date = new Date(tm); //转换成时间对象，这就简单了
+        var year = date.getFullYear();  //获取年
+        var mouth = date.getMonth() + 1 ;
+        var data = date.getDate();
+        if (mouth < 10) {
+            mouth = '0' + (mouth);
+        } else {
+            mouth = mouth;
+        }
+        if(data<10) {
+            data = '0' +data;
+        }else{
+            data = data;
+        }
+        return year+'-'+mouth+'-'+data;
+    }
+    $(document).ready(function(){
+        if($.cookie('role')==2){
+            $('.authenticationList').children('li:nth-child(2)').show();
+            $('.authenticationList').children('li:nth-child(1)').hide();
+            $('.authenticationList').children('li:nth-child(4)').hide();
+        }else{
+            $('.authenticationList').children('li:nth-child(2)').hide();
+            $('.authenticationList').children('li:nth-child(1)').show();
+            $('.authenticationList').children('li:nth-child(4)').show();
+            $('.tipName').html('教育/培训/从业资格');
+        }
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'auth',
+                do:'auth_info',
+                user_id: $.cookie('user_id')
+            },
+            success:function(data){
+                console.log(data)
+                console.log(data.data.status!=='0')
+                if(data.data.type==0){
+                    $('.statusType').html('未开通认证服务');
+                    $('.serverData').hide();
+                    $('.serverButton').bind('click',type0)
+                }else if(data.data.type==2){
+                    $('.statusType').html('认证服务已过期');
+                    $('.serverData').show();
+                    $('.endTime').html(x(data.data.end_time*1000));
+                    $('.serverButton').bind('click',type0)
+                }else{
+                    $('.statusType').html('已开通认证服务');
+                    $('.serverData').show();
+                    $('.endTime').html(x(data.data.end_time*1000));
+                    $('.serverButton').bind('click',type)
+                }
+                    $('.authenticationList li:nth-child(1) div:nth-child(2)').click(function(){
+                        if(data.data.status!=='0') {
+                            window.location.href = 'InvestmentPerformance.html';
+                        }else{
+                            layer.msg('正在审核中，请耐心等待！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                        }
+                    })
+                    $('.authenticationList li:nth-child(2) div:nth-child(2)').click(function(){
+                        if(data.data.status!=='0') {
+                            window.location.href='../../goldAuthentication/financialStrength.html';
+                        }else{
+                            layer.msg('正在审核中，请耐心等待！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+
+                        }
+                    })
+                    $('.authenticationList li:nth-child(3) div:nth-child(2)').click(function(){
+                        if(data.data.status!=='0') {
+                        window.location.href='identityAuthentication.html';
+                        }else{
+                            layer.msg('正在审核中，请耐心等待！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+
+                        }
+                    })
+                    $('.authenticationList li:nth-child(4) div:nth-child(2)').click(function(){
+                        if(data.data.status!=='0') {
+                        window.location.href='businessExperience.html';
+                        }else{
+                            layer.msg('正在审核中，请耐心等待！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+
+                        }
+                    })
+                    $('.authenticationList li:nth-child(5) div:nth-child(2)').click(function(){
+                        if(data.data.status!=='0') {
+                        window.location.href='occupationalRequirements.html';
+                        }else{
+                            layer.msg('正在审核中，请耐心等待！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+
+                        }
+                    })
+            }
+        })
+    })
+    function type0(){
+        window.location.href='authPay.html';
+    }
+    function type(){
+        layer.msg('提交成功！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+    }
+</script>
+</body>
+</html>

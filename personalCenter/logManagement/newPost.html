@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>修改日志</title>
+<!--公共样式和js文件-->
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<script src="../../style/js/layer.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/logManagement.css" type="text/css">
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>修改日志</h1>
+</header>
+<!--tit-->
+<form id="logpostForm">
+<div class="editorText">
+    <textarea class="textareaTitle" name="logTit" id="logTit" placeholder="请填写文章具体内容..." maxlength="20"></textarea>
+</div>
+<div class="cooperationValid"></div><!--验证-->
+<div class="InputTips" id="logtitTips">标题不得超过20字</div>
+<!--content-->
+<div class="editorText">
+    <textarea class="textarea" name="logTextarea" id="logTextarea" placeholder="请填写文章具体内容..." maxlength="1000"></textarea>
+</div>
+<div class="cooperationValid"></div><!--验证-->
+<div class="InputTips" id="logTips">日志不得超过1000字</div>
+<div class="sureBtn">
+   <input type="button" value="修改并保存" id="logSure">
+</div>
+</form>
+<script>
+    if (typeof($.cookie('password')) == 'undefined') {
+        window.location.href = '../../logRegPassword/index.html'
+    } else {
+    }
+    var urlinfo = window.location.href;
+    var blog_id = urlinfo.split("?")[1].split("=")[1];
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getWeblogDetail',
+                blog_id:blog_id
+            },
+            success:function(data){
+                $('#logTit').val(data.data[0].title);
+                $('#logTextarea').val(data.data[0].text);
+                console.log(data)
+            }
+        })
+        $('#logSure').click(function(){
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data:{
+                    module:'user',
+                    do:'saveWeblogDetail',
+                    blog_id:blog_id,
+                    title:$('#logTit').val(),
+                    content:$('#logTextarea').val()
+                },
+                success:function(data){
+                    if(data.code!==0){
+                        layer.msg('日志修改成功！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                        setTimeout("window.open(encodeURI('logDetail.html?blog_id=' + blog_id+'&userid='+$.cookie('user_id')),'_self')",2000);
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>认证支付</title>
+    <!--公共样式和js文件-->
+    <script src="../../style/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <script src="../../style/expand/jquery.validate.js"></script>
+    <script src="../../style/expand/jquery.validate.message_cn.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <!--独立的-->
+    <link rel="stylesheet" href="../../style/css/payVip.css" type="text/css">
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<style>
+    body .demo-class2{
+        background: none!important;
+    }
+    body .demo-class2 .layui-layer-content{
+        background: rgba(0,0,0,.8);
+        color:#fff;
+        font-family: '黑体';
+        font-size: 3rem;
+        text-align: center;
+        padding:3rem;
+        padding-left:8rem;
+        border-radius: 20px;
+    }
+    body .demo-class2 i{
+        left:25%!important;
+        margin-top:1.5rem;
+    }
+    .demo-class1,.demo-class2{
+        border:none!important;
+    }
+</style>
+<body  style="background:#fff;">
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+    <h1>认证支付</h1>
+</header>
+<style>
+    .vipTabs{
+        border-bottom:1px solid #ddd;
+    }
+    .vipTabs .selected{
+        border-bottom:2px solid #ffaf32;
+    }
+</style>
+<!--content-->
+<div class="vipStatus">您当前服务状态 : <span class="orange">还未开通VIP服务</span></div>
+<ul class="vipTabs">
+    <li class="selected">按年付费</li>
+</ul>
+<form>
+    <div class="howMuch">付费金额 : <span class="orange">2800元/年</span></div>
+    <div class="payType">选择支付方式</div>
+    <ul class="payList">
+        <li class="on zhifubao" onclick="getHtml(this)">
+            <a>
+                <div class="payIncon"><img src="../../style/img/vipZ.png"></div>
+                <div class="payText">支付宝</div>
+            </a>
+        </li>
+        <li onclick="getHtml(this)">
+            <a>
+                <div class="payIncon"><img src="../../style/img/vipK.png"></div>
+                <div class="payText">中国银联</div>
+            </a>
+        </li>
+        <li class="yufuka">
+            <a href="javascript:void(0);" onClick="showCard();">
+                <div class="payIncon"><img src="../../style/img/vipY.png"></div>
+                <div class="payText">预付卡支付</div>
+            </a>
+        </li>
+    </ul>
+    <div class="cardShow">
+        <ul>
+            <li>
+                <input id="card_name" class="input2" value="" name="cardSn" type="text" placeholder="请输入预付卡卡号" />
+                <span id="card_name_msg"></span>
+            </li>
+            <li class="noBorder">
+                <input class="input2" value="" name="cardPass" type="password" id="card_pass" placeholder="请输入预付卡密码" />
+                <span id="card_pass_msg"></span>
+            </li>
+        </ul>
+        <div class="sureBtn">
+            <input type="button" value="确认支付" id="paySure">
+        </div>
+    </div>
+</form>
+<!--vip小贴士-->
+<div class="tieshi"><img src="../../style/img/authTip.png"></div>
+<script>
+    $(document).ready(function(){
+        function is_weixin(){
+            var ua = navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if(is_weixin()){
+            $('.zhifubao').hide();
+        }else{
+            $('.zhifubao').show();
+        }
+        $('#paySure').click(function(){
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data:{
+                    module:'auth',
+                    do:'pay_post',
+                    good_id:1,
+                    num:1,
+                    pay_type:101,
+                    code:'card',
+                    user_id: $.cookie('uid'),
+                    card:$('#card_name').val(),
+                    password:$('#card_pass').val()
+                },
+                success:function(data){
+                    $('#card_pass').val('');
+                    $('#card_name').val('');
+                    console.log(data)
+                    if(data.code==1){
+                        layer.msg('支付成功！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-class2',shadeClose:true,scrollbar: false});
+                        setTimeout("window.location.href='index.html'",2000)
+                    }else{
+                        layer.msg(data.errormsg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-class2',shadeClose:true,scrollbar: false});
+                    }
+                }
+            })
+        })
+    })
+    function getHtml(li){
+        var  userid= $.cookie('uid');
+        console.log(userid)
+        if($(li).children('a').children('div:nth-child(2)').html()=='支付宝'){
+            var paytype=1;
+            var code='alipay';
+        }else{
+            var paytype=2;
+            var code='unionpay';
+        }
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'auth',
+                do:'pay_post',
+                good_id:1,
+                num:1,
+                pay_type:paytype,
+                code:code,
+                user_id: $.cookie('uid')
+            },
+            success:function(data){
+                if(data.code==1){
+                    window.location.href='http://user.gushen178.com/payment?login_user_id='+userid+'&payType='+paytype+'&pay_time=2&app=2&pay_for=2';
+                }else{
+                    layer.msg(data.errormsg);
+                }
+            }
+        })
+    }
+    function showCard(){
+        if( $(".cardShow").css('display')=='none'){
+            if($(".payText").hasClass('on')){
+
+            }else{
+                $(".payText").addClass('on')
+            }
+            $(".cardShow").show();
+        }else{
+            if(!$(".payText").hasClass('on')){
+
+            }else{
+                $(".payText").removeClass('on')
+            }
+            $(".cardShow").hide();
+        }
+    }
+</script>
+</body>
+</html>

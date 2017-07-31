@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>选择排行</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+    <div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>选择排行</h1>
+    </header>
+    </div>
+    <ul class="joinType">
+        <li>
+          <a href="" id="weekPm">周业绩排行</a><img src="../../style/img/right.png">
+        </li>
+        <li>
+          <a href="" id="monthPm">月业绩排行</a><img src="../../style/img/right.png">
+        </li>
+        <li>
+          <a href="" id="jiPm">季业绩排行</a><img src="../../style/img/right.png">
+        </li>
+        <li>
+          <a href="" id="yearPm">年业绩排行</a><img src="../../style/img/right.png">
+        </li>
+    </ul>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+   var broker_id=GetQueryString("broker_id");
+   if(broker_id==' '||broker_id==null||broker_id==undefined){
+	   var weekPm="rankType.html?type="+7;
+	   $("#weekPm").attr("href",weekPm);
+	   var monthPm="rankType.html?type="+30;
+	   $("#monthPm").attr("href",monthPm);
+	   var jiPm="rankType.html?type="+91;
+	   $("#jiPm").attr("href",jiPm);
+	   var yearPm="rankType.html?type="+365;
+	   $("#yearPm").attr("href",yearPm);
+   }else{
+	   var weekPm="rankType.html?type="+7+"&broker_id="+broker_id;
+	   $("#weekPm").attr("href",weekPm);
+	   var monthPm="rankType.html?type="+30+"&broker_id="+broker_id;
+	   $("#monthPm").attr("href",monthPm);
+	   var jiPm="rankType.html?type="+91+"&broker_id="+broker_id;
+	   $("#jiPm").attr("href",jiPm);
+	   var yearPm="rankType.html?type="+365+"&broker_id="+broker_id;
+	   $("#yearPm").attr("href",yearPm);
+   }
+   
+});
+</script>
+</body>
+</html>

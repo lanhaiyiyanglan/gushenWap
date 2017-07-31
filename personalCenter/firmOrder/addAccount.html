@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>添加账户</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div id="wrapper1">
+    <div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>添加账户</h1>
+    </header>
+    </div>
+    <ul class="addAccount">
+        <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>开户券商</span>
+              <div class="infoInput">
+                 <div class="eidtorWhere"><input  value="" type="text" readonly id="broker_name"><input type="hidden" id="broker_id" value=""></div><span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+              <span>账户名称</span>
+              <div class="infoInput">
+                 <div class="eidtorWhere"><input  value="" type="text" placeholder="请输入账号名称" id="account_code"></div>
+              </div>
+          </div>
+        </li>
+    </ul>
+    <div class="tijiaoshenghe" onClick="addItem();">
+       <div><a href="javascript:void(0);">提交审核</a></div>
+    </div>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+        <h1>选择账号</h1>
+    </header>
+    <ul class="joinInfoList" id="joinAccountItem">
+    </ul>
+</div>
+<script>
+/*显示隐藏*/
+function showHide(page1,page2){
+	$("#"+page1).toggle();	
+    $("#"+page2).toggle();	
+}
+$(function(){
+   $.ajax({
+				  url:'http://user.shipan.zhengjuan.com/account',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==1){
+						  var html='';
+						  for(var i=0;i<data.data.length;i++){
+							 html+='<li onClick="hiddenSet(this);"><span class="broker_name">'+data.data[i].name+'</span><input type="hidden" value='+data.data[i].broker_id+' class="bid"></li>';  
+						  }
+						  $("#joinAccountItem").append(html);
+						  $(".joinInfoList li").click(function(){
+							  $(this).addClass("on").siblings().removeClass("on");  
+						  });
+						}
+				  }
+	 })	
+});
+function hiddenSet(obj){
+  var that=$(obj);
+  var broker_name=that.find(".broker_name").text();
+  $("#broker_name").val(broker_name);
+  var broker_id=that.find(".bid").val();
+  $("#broker_id").val(broker_id);
+  showHide('wrapper2','wrapper1');
+}
+function addItem(){
+	if($("#broker_name").val()==''){
+		layer.msg("请选择开户券商", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+		return false;
+	}else if($("#account_code").val()==''){
+		layer.msg("请输入账号名称", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+		return false;
+	}else if(!(/^[0-9]*[1-9][0-9]*$/.test($("#account_code").val()))){
+		layer.msg("账号必须是数字", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+	}else if($("#account_code").val().length<8||$("#account_code").val().length>16){
+		layer.msg("请输入8-16位帐号名称", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+	}else{
+		$.ajax({
+					  url:'http://user.shipan.zhengjuan.com/account/create',
+					  data:{
+						  app:1,
+						  login_user_id:$.cookie('uid'),
+						  broker_id:$("#broker_id").val(),
+						  account_code:$("#account_code").val()
+					  },
+					  type:'POST',
+					  dataType:'jsonp',
+					  success:function(data){
+						if(data.code==1){
+							layer.msg(data.data, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+						}else{
+						   layer.msg(data.errormsg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+						}
+					  }
+		 })		
+	}
+}
+</script>
+</body>
+</html>

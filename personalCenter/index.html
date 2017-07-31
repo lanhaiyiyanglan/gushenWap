@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>个人中心</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/personal.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- 强制使用移动端版本的kit -->
+    <script src="https://g.alicdn.com/aliww/h5.imsdk/2.1.0/scripts/yw/wsdk.js" charset="utf-8"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="../index.html" class="back"><img src="../style/img/back.png" alt=""></a>
+   <h1>个人中心</h1>
+   <a href="settings/index.html" class="seIncon"><img src="../style/img/setting.png"></a>
+</header>
+<!--perLog-->
+<div class="perLog">
+    <div class="perImg"><a href=""><img src="../image/pp.png"></a><i class="vipIncon"></i></div>
+    <div class="nameRoler"><span class="username"></span><span class="roler">高手</span></div>
+</div>
+<!--usercenterbox-->
+<ul class="personalList">
+  <li>
+    <a href="../personalCenter/editProfile/mainInformation.html">
+    <div class="perIncon"><img src="../style/img/edit.png"></div>
+        <div class="personalText">编辑资料<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="logManagement/logList.html">
+    <div class="perIncon"><img src="../style/img/journal.png"></div>
+        <div class="personalText">日志管理<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li class="noline">
+    <a href="myAlbum/albumManage.html">
+    <div class="perIncon"><img src="../style/img/photo.png"></div>
+        <div class="personalText">相册管理<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="orderManagement/orderManage.html">
+    <div class="perIncon"><img src="../style/img/order.png"></div>
+        <div class="personalText">晒单管理<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <!--高手-->
+  <li class="imgWord" class="noline">
+    <a>
+    <div class="perIncon"><img src="../style/img/direct.png"></div>
+        <div class="personalText">图文直播<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+    <li>
+        <a href="releaseCooperation/cooperList.html">
+            <div class="perIncon"><img src="../style/img/contract.png"></div>
+            <div class="personalText">发布合作<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+        </a>
+    </li>
+    <li>
+        <a href="simulationGame/index.html">
+            <div class="perIncon"><img src="../style/img/game.png"></div>
+            <div class="personalText">模拟比赛<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+        </a>
+    </li>
+    <li >
+        <a href="firmOrder/index.html">
+            <div class="perIncon"><img src="../style/img/shipan.png"></div>
+            <div class="personalText">实盘大赛<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+        </a>
+    </li>
+  <!--富豪-->
+  <!-- <li>
+    <a href="#">
+    <div class="perIncon"><img src="../style/img/contract.png"></div>
+        <div class="personalText">发布合作<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+ <li class="noline">
+    <a href="#">
+    <div class="perIncon"><img src="../style/img/game.png"></div>
+        <div class="personalText">模拟比赛<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>-->
+  <li class="myVip">
+    <a>
+    <div class="perIncon"><img src="../style/img/myvip.png"></div>
+        <div class="personalText">我的VIP<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="authentication/index.html">
+    <div class="perIncon"><img src="../style/img/authentication.png"></div>
+        <div class="personalText">我的认证<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="../moneyCenter/index.html">
+    <div class="perIncon"><img src="../style/img/money.png"></div>
+        <div class="personalText">财富中心<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li  class="noline">
+    <a href="safe/index.html">
+    <div class="perIncon"><img src="../style/img/save.png"></div>
+        <div class="personalText">安全中心<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+</ul>
+ <!--footer-->
+  <div class="footer">
+  <ul>
+    <li><a href="../index.html"><div class="nav"><div class="ispr firstPage"></div><p>首页</p></div></a></li>
+    <li><a><div class="nav"><div class="ispr myFriend"></div><p>我的好友</p></div></a></li>
+    <li><a><div class="nav"><div class="ispr myMsg"></div><span class="noReadMsg">0</span><p>我的消息</p></div></a></li>
+    <li><a class=" on"><div class="nav "><div class="ispr myPage"></div><p>个人中心</p></div></a></li>
+   </ul>
+  </div>
+</body>
+<script src="../style/js/personalCenter.js"></script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>绑定邮箱</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/expand/jquery.validate.js"></script>
+<script src="../../style/expand/jquery.validate.message_cn.js"></script>
+	<script src="../../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/safe.css" type="text/css">
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>绑定邮箱</h1>
+</header>
+<form id="bindEmailForm">
+  <ul class="bindEmail">
+      <li>
+        <input type="text" name="myEmail" id="myEmail" placeholder="请输入Email">
+      </li>
+      <div class="tips"></div>
+      <li>
+        <input type="text" placeholder="请输入验证码" maxlength="16" name="yzm2" id="yzm2">
+        <input type="button" name="aq2" class="aq_bt" value="获取验证码">
+      </li>
+      <div class="tips"></div>
+    </ul>
+  <div class="sureBtn">
+     <input type="button" value="绑定邮箱" id="EmailSure">
+    </div>
+</form>
+<script src="../../style/js/bindEmail.js"></script>
+</body>
+</html>

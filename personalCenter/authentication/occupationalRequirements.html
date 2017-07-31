@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>教育/培训/从业资格</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/authentication.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <script src="../../style/js/upfile.js"></script>
+    <script src="../../style/js/jquery-1.7.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+    <script src="../../style/js/layer.js"></script>
+</head>
+<style>
+    .article_btn{
+        margin-bottom:10rem;
+        font-size: 4rem;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+        <h1>教育/培训/从业资格</h1>
+    </header>
+</div>
+<div class="orcer_img dottedBorder">
+    <p class="orcer_p">上传教育证书：</p>
+    <ul id="orcer_img">
+        <li id="file_btn" class="file_btn">
+            <img src="../../style/img/btn_bt.png" alt="">
+            <input onchange="upload(event)" id="upfile" type="file">
+        </li>
+    </ul>
+    <span class="shenhe" style="display:none;"><img src="../../style/img/pass1.png" alt=""></span>
+</div>
+<div class="otherBackground">
+    <img src="../../style/img/shili1.png" alt="">
+</div>
+<div>
+    <div class="orcer_img1 dottedBorder">
+        <p class="orcer_p1">上传培训/从业资格证书：</p>
+        <ul id="orcer_img1">
+            <li id="file_btn1" class="file_btn1">
+                <img src="../../style/img/btn_bt.png" alt="">
+                <input onchange="upload1(event)" id="upfile1" type="file">
+            </li>
+        </ul>
+        <span class="shenhe1" style="display:none;"><img src="../../style/img/pass1.png" alt=""></span>
+    </div>
+    <div class="otherBackground">
+        <img src="../../style/img/shili1.png" alt="">
+    </div>
+</div>
+<button class="article_btn">保存</button>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                do:'edu',
+                module:'auth',
+                user_id: $.cookie('user_id')
+            },
+            success:function(data){
+                console.log(data)
+                var edu_img=data.data.edu.edu_img.split(';');
+                var train_img=data.data.train.train_img.split(';');
+                console.log(train_img)
+                console.log(edu_img);
+                if(edu_img.length!==0){
+                    var html='';
+                    for(var i=0;i<edu_img.length;i++){
+                        html+='<li><img src="'+edu_img[i]+'"><i onclick="del(this);"></i></li>';
+                    }
+                    $('#file_btn').before(html);
+                    if($('#orcer_img').children('li').length>=6){
+                        $('#file_btn').hide();
+                    }else{
+                        $('#file_btn').show();
+                    }
+                }else{}
+                if(train_img.length!==0){
+                    var html='';
+                    for(var i=0;i<train_img.length;i++){
+                        html+='<li><img src="'+train_img[i]+'"><i onclick="del(this);"></i></li>';
+                    }
+                    $('#file_btn1').before(html);
+                    if($('#orcer_img1').children('li').length>=6){
+                        $('#file_btn1').hide();
+                    }else{
+                        $('#file_btn1').show();
+                    }
+                }else{}
+                if(data.data.edu.status==1){
+                    $('#orcer_img').children('#file_btn').hide();
+                    $('#orcer_img').children('li').children('i').hide();
+                    $('.shenhe').children('img').attr('src','../../style/img/shenhe.png');
+                    $('.shenhe').css('display','block');
+                }else if(data.data.edu.status==2){
+                    $('#orcer_img').children('#file_btn').hide();
+                    $('#orcer_img').children('li').children('i').hide();
+                    $('.shenhe').children('img').attr('src','../../style/img/green1.png');
+                    $('.shenhe').css('display','block');
+                }else if(data.data.edu.status==3){
+                    $('.shenhe').children('img').attr('src','../../style/img/pass1.png');
+                    $('.shenhe').show();
+                    $('.shenhe').css('display','block');
+                }
+                if(data.data.train.status==1){
+                    $('#file_btn1').hide();
+                    $('#orcer_img1').children('li').children('i').hide();
+                    $('.shenhe1').children('img').attr('src','../../style/img/shenhe.png');
+                    $('.shenhe1').css('display','block');
+                }else if(data.data.train.status==2){
+                    $('#orcer_img1').children('#file_btn1').hide();
+                    $('.article_btn').hide()
+                    $('#orcer_img1').children('li').children('i').hide();
+                    $('.shenhe1').children('img').attr('src','../../style/img/green1.png');
+                    $('.shenhe1').css('display','block');
+                }else if(data.data.train.status==3){
+                    $('.shenhe1').children('img').attr('src','../../style/img/pass1.png');
+                    $('.shenhe1').show();
+                    $('.shenhe1').css('display','block');
+                }
+                if(data.data.train.status==1&&data.data.edu.status==1||data.data.train.status==2&&data.data.edu.status==2){
+                    $('.article_btn').hide();
+                }
+            }
+        })
+        $('.article_btn').click(function(){
+            var edu_img=$('#orcer_img').children('li').not('#file_btn').children('img');
+            var train_img=$('#orcer_img1').children('li').not('#file_btn1').children('img');
+            if(edu_img.length!==0){
+                var eduarr=[];
+                for(var i=0;i<edu_img.length;i++){
+                    eduarr.push($(edu_img[i]).attr('src'));
+                }
+            }else{
+                layer.msg('请上传教育证书！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            }
+            if(train_img.length!==0){
+                var trainarr=[];
+                for(var i=0;i<train_img.length;i++){
+                    trainarr.push($(train_img[i]).attr('src'));
+                }
+                console.log(trainarr);
+            }else{
+                layer.msg('请上传培训/从业资格证书！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+            }
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data:{
+                    do:'edu_edit',
+                    module:'auth',
+                    edu_img:eduarr.join(';'),
+                    train_img:trainarr.join(';'),
+                    user_id: $.cookie('user_id')
+                },
+                success:function(data){
+                    layer.msg('保存成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    setTimeout('window.location.href="index.html"',1000)
+                }
+            })
+        })
+    })
+    var uploader = uploadJSSDK;
+    function upload(e) {
+        var files = e.target.files;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '2048000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn");
+                    } else {
+                        layer.msg('图片大小不能超过2M！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    }
+                    if ($("#orcer_img li").length <= 5) {//限制图片张数
+                        $("#file_btn").show();
+                    } else {
+                        $("#file_btn").hide();
+                    }
+                }
+            });
+        }
+    }
+    function del(obj) {
+        if ($("#orcer_img li").length<=6) {//限制图片张数
+            $("#file_btn").show();
+        } else {
+            $("#file_btn").hide();
+        }
+        $(obj).parent().remove();
+    }
+    function upload1(e) {
+        var files = e.target.files;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '20480000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del1(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn1");
+                    } else {
+                        layer.msg('图片大小不能超过2M！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                    }
+                    if ($("#orcer_img1 li").length <= 5) {//限制图片张数
+                        $("#file_btn1").show();
+                    } else {
+                        $("#file_btn1").hide();
+                    }
+                }
+            });
+        }
+    }
+    function del1(obj) {
+        if ($("#orcer_img1 li").length<=6) {//限制图片张数
+            $("#file_btn1").show();
+        } else {
+            $("#file_btn1").hide();
+        }
+        $(obj).parent().remove();
+    }
+</script>
+</body>
+</html>

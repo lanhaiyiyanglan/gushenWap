@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>我创建的比赛</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>我创建的比赛</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li><a href="index.html">我参与的比赛</a></li>
+      <li class="on"><a href="javascript:void(0);">我创建的比赛</a></li>
+    </ul>
+    <ul id="createList">
+    </ul>
+    <div class="sureBtn">
+       <a href="../../game/applyFor.html">创建比赛</a>
+    </div>
+</div>
+<script>
+$(function(){
+	console.log($.cookie('user_id'));
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'my_game',
+                  uid: $.cookie('uid'),
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					 html+='<li><a href="../../game/gameDetail.html?game_id='+data.data[i].game_id+'">';
+					   html+='<div class="createLeft">';
+						html+='<img src="'+data.data[i].game_thumb+'">';
+					   html+='</div>';
+					   html+='<div class="createRight">';
+						  html+='<div class="createName">'+data.data[i].game_title+'</div>';
+						  html+='<p>主办方：<span>'+data.data[i].game_sponsor+'</span></p>';
+						  html+='<p>报名人数：<span>'+data.data[i].count+'</span>人</p>';
+						  html+='<p>报名时间：<span>'+x(data.data[i].apply_begin_time * 1000)+'</span> -<span>'+x(data.data[i].apply_end_time * 1000)+'</span></p>';
+				          html+='<p>比赛时间：<span>'+x(data.data[i].play_begin_time * 1000)+'</span> -<span>'+x(data.data[i].play_end_time * 1000)+'</span></p>';
+					   html+='</div>';
+					html+='</a></li>';
+                  }
+                 $("#createList").append(html);	 
+              }
+          })
+});
+function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (date.getMonth() < 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+</script>
+</body>
+</html>

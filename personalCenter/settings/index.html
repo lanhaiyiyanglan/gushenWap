@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>设置</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/settings.css" type="text/css">
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>设置</h1>
+</header>
+<ul class="baseList">
+  <li><a href="help.html"><div>帮助<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+</ul>
+<div class="sureBtn">
+ <input type="button" value="注销登录" id="layOut">
+</div>
+</div>
+<!--wrapper2-->
+<script>
+	var url=window.location.href;
+	var userid=url.split('?')[1].split('&')[0].split('=')[1];
+	var app=url.split('?')[1].split('&')[1].split('=')[1];
+	if(url.indexOf('app')){
+		$('.top').hide();
+		$('.top').next().css('margin-top','0')
+	}else{
+		$('.top').show();
+	}
+</script>
+<!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- WSDK-->
+<script src="https://g.alicdn.com/aliww/h5.imsdk/2.1.1/scripts/yw/wsdk.js" charset="utf-8"></script>
+<script>
+	var sdk = new WSDK();
+  $(function() {
+	  //注销登录
+	  $("#layOut").click(function () {
+		  layer.confirm("确定要注销登录吗？", {
+			  btn: ['取消', '确定'],
+			  shade: [0.3, '#000'],
+			  title: false,
+			  area: ['50rem', '25rem'],
+			  closeBtn: 0,
+			  skin: 'demo-class',
+			  scrollbar: false
+		  }, function () {
+			  layer.closeAll();
+		  }, function () {
+			  $.cookie('username', null, {path: '/'});
+			  $.cookie('password', null, {path: '/'});
+			  $.cookie('user_id', null, {path: '/'});
+			  $.cookie('role', null, {path: '/'});
+			  $.cookie('udid', null);
+			  $.cookie('usericon', null, {path: '/'});
+			  sdk.Base.login({
+				  uid: 'gs'+ $.cookie('user_id'),
+				  appkey: '23316858',
+				  credential: '111111',
+				  timeout: 5000,
+				  success: function(data){
+					  // {code: 1000, resultText: 'SUCCESS'}
+					  console.log('login success', data);
+
+					  setTimeout(function(){
+						  sdk.Base.logout();
+					  }, 2000);
+				  },
+				  error: function(error){
+					  // {code: 1002, resultText: 'TIMEOUT'}
+					  console.log('login fail', error);
+				  }
+			  });
+			  if ($.cookie('username') == 'null' && $.cookie('password') == 'null' && $.cookie('user_id') == 'null' && $.cookie('role') == 'null' && $.cookie('udid') == 'null' && $.cookie('usericon') == 'null') {
+				  layer.msg('注销成功', {
+					  icon: 7,
+					  time: 2000,
+					  area: '80%',
+					  shade: [0.3, '#000'],
+					  skin: 'demo-success',
+					  shadeClose: true,
+					  scrollbar: false
+				  }, function () {
+					  window.location.reload();
+				  });
+				  setInterval('window.location.href="../../index.html"', 2000);
+			  }
+		  })
+	  });
+	  /*显示隐藏*/
+  })
+</script>
+</body>
+</html>

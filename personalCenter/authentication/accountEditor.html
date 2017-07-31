@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>投资业绩</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/authentication.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+</head>
+<style>
+    body .demo-class{
+        border-radius: 20px;
+        height: 25rem;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a class="back" href="InvestmentPerformance.html"><img src="../../style/img/back.png"></a>
+        <h1>账户一</h1>
+        <span class="submitAll">删除</span>
+    </header>
+</div>
+<div class="content">
+    <ul>
+        <li>
+            <div>交易品种</div>
+            <div>
+                <span>股票</span><img src="../../style/img/right.png" alt="">
+            </div>
+        </li>
+        <li>
+            <div>开户机构</div>
+            <div>
+                <input class="openAccount" type="text" placeholder="请输入您的开户机构">
+            </div>
+        </li>
+        <li>
+            <div>交易账户</div>
+            <div>
+                <input class="transaction" type="text" placeholder="请输入您的交易账户">
+            </div>
+        </li>
+        <li>
+            <div>账户密码</div>
+            <div>
+                <input class="password" type="password" placeholder="请输入您的账户密码">
+            </div>
+        </li>
+    </ul>
+    <button>保存</button>
+    <div class="contentSample Sample">
+        <h1>示例</h1>
+        <ul>
+            <li>交易品种：股票</li>
+            <li>开户机构：中信证券</li>
+            <li>交易账户：1420000263</li>
+            <li>交易密码：123456</li>
+            <li>注：最多可上传5个实盘账户</li>
+        </ul>
+    </div>
+    <div class="contentSample Sample1">
+        <h1>示例</h1>
+        <ul>
+            <li>模拟平台：炒股大赛网</li>
+            <li>交易账户：1420000263</li>
+            <li>交易密码：Hhn123456</li>
+            <li>注：最多可上传5个模拟账户</li>
+        </ul>
+    </div>
+</div>
+<div class="contentChoice">
+    <ul>
+        <li><span>股票</span><img src="../../style/img/gougou.png" alt=""></li>
+        <li><span>期货</span><img src="../../style/img/gougou.png" alt=""></li>
+    </ul>
+</div>
+<ul class="delete">
+    <li class="del">删除</li>
+    <li class="close">取消</li>
+</ul>
+<div class="ceng"></div>
+</body>
+<script src="../../style/js/jquery-1.7.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script>
+    $('.submitAll').click(function(){
+        $('.ceng').fadeIn(100);
+        $('.delete').slideToggle();
+    });
+
+    $('.del').click(function(){
+        $('.ceng').fadeOut();
+        $('.delete').slideToggle();
+        layer.confirm('确定要删除此账户吗？', {
+            btn: ['取消','确定'],
+            closeBtn:false,
+            title:0,
+            skin:'demo-class',
+            area:['60%']
+        }, function(){
+            layer.closeAll();
+        }, function(){
+            if(yejiid!=='') {
+                $.ajax({
+                    url: 'http://open.zhengjuan.com/api/app',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: {
+                        yeji_id: yejiid,
+                        do: 'results_del',
+                        user_id: $.cookie('user_id'),
+                        module: 'auth'
+                    },
+                    success: function (data) {
+                        layer.msg('删除成功', {
+                            icon: 7,
+                            time: 2000,
+                            area: '80%',
+                            shade: [0.3, '#000'],
+                            skin: 'demo-success',
+                            shadeClose: true,
+                            scrollbar: false
+                        });
+                        setTimeout(function(){window.location.href='InvestmentPerformance.html';},2000)
+
+                    }
+                })
+            }else{
+                layer.msg('您还未创建此账户！')
+            }
+        });
+    })
+    $('.close').click(function(){
+        $('.delete').slideToggle();
+        $('.ceng').fadeOut(100);
+    })
+    $('.content ul li:nth-child(1)').click(function(){
+        $('.content').hide();
+        $('.contentChoice').show();
+        $('.back').hide();
+        $('.submitAll').hide();
+        $('.top').children('h1').css('width','100%');
+    })
+    /****************选择开始******************/
+    $('.contentChoice li').on('click',function(){
+        $(this).children('span').css('color','#ffaf32');
+        $(this).siblings().children('span').css('color','#232323');
+        $(this).children('img').show();
+        $(this).siblings().children('img').hide();
+        $('.content li:nth-child(1) div span').html($(this).children('span').html());
+        $('.content').show();
+        $('.contentChoice').hide();
+        $('.back').show();
+        $('.submitAll').show();
+        $('.top').children('h1').css('width','50%');
+    });
+    /****************选择结束******************/
+    var url=window.location.href;
+    var accountName = url.split("?")[1].split("&")[0].split('=')[1];
+    var yejiid = url.split("?")[1].split("&")[1].split('=')[1];
+    $('.top h1').html(decodeURI(accountName));
+    var tempStr = $('.top').children('h1').html();
+    var bool = tempStr.indexOf('模拟');
+    console.log(bool)
+    var status=url.split("?")[1].split("&")[2].split('=')[1];
+    if(yejiid!==''){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                yeji_id:yejiid,
+                do:'results_info',
+                user_id: $.cookie('user_id'),
+                module:'auth'
+            },
+            success:function(data){
+                $('.openAccount').val(data.data.url);
+                $('.transaction').val(data.data.account);
+                $('.password').val(data.data.pwd);
+                console.log(data)
+                if(status==1){
+                    $('.submitAll').hide();
+                    $('button').hide();
+                    $('input[type=text]').attr('disabled','disabled');
+                    $('input[type=password]').attr('disabled','disabled');
+                    $('.content ul li:nth-child(1)').unbind('click');
+                }else if(status==4){
+                    $('button').html('补充数据');
+                    $('.content ul li:nth-child(1)').unbind('click');
+                    $('input[type=text]').attr('disabled','disabled');
+                }else if(status==2){
+                    $('input[type=text]').attr('disabled','disabled');
+                    $('.content ul li:nth-child(1)').unbind('click');
+                    $('button').html('补充数据');
+                }else if(status==3){}
+            }
+        })
+    }else{
+        $('.submitAll').hide()
+    }
+    if(bool>=0){
+        console.log(bool)
+        $('.content>ul>li:nth-child(1)').hide();
+        $('.content>ul>li:nth-child(2)').children('div:nth-child(1)').html('模拟平台');
+        $('.content>ul>li:nth-child(2)').children('div').children('input').attr('placeholder','请输入您的模拟平台');
+        $('.content>ul>li:nth-child(3)').children('div:nth-child(1)').html('模拟账户');
+        $('.content>ul>li:nth-child(3)').children('div').children('input').attr('placeholder','请输入您的模拟账户');
+        $('.Sample').hide();
+        $('.Sample1').show();
+        $('.content').children('button').click(function(){
+                var data={
+                    account_type:'moni',
+                    url:$('.openAccount').val(),
+                    account:$('.transaction').val(),
+                    pwd:$('.password').val(),
+                    module:'auth',
+                    do:'results_edit',
+                    user_id: $.cookie('user_id')
+                };
+                if(yejiid!==''){
+                    data.yeji_id=yejiid;
+                }else{
+                    delete data.yeji_id;
+                }
+                $.ajax({
+                    url:'http://open.zhengjuan.com/api/app',
+                    type:'POST',
+                    dataType:'jsonp',
+                    data:data,
+                    success:function(data){
+                        layer.msg(data.data.msg, {
+                            icon: 7,
+                            time: 2000,
+                            area: ['80%'],
+                            shade: [0.3, '#000'],
+                            skin: 'demo-success',
+                            shadeClose: true,
+                            scrollbar: false
+                        });
+                        setTimeout('window.location.href="InvestmentPerformance.html"',2000);
+                    }
+                })
+        })
+    }else{
+        $('.content').children('button').click(function(){
+                var data = {
+                    account_type: 'shipan',
+                    url: $('.openAccount').val(),
+                    account: $('.transaction').val(),
+                    pwd: $('.password').val(),
+                    module: 'auth',
+                    do: 'results_edit',
+                    user_id: $.cookie('user_id')
+                };
+                if (yejiid !== '') {
+                    data.yeji_id = yejiid;
+                } else {
+                    delete data.yeji_id;
+                }
+                if ($('.content').children('ul').children('li:nth-child(1)').children('div').children('span').html() == '股票') {
+                    data.type = 1;
+                } else if ($('.content').children('ul').children('li:nth-child(1)').children('div').children('span').html() == '期货') {
+                    data.type = 2;
+                } else {
+                    delete data.type;
+                }
+
+                $.ajax({
+                    url: 'http://open.zhengjuan.com/api/app',
+                    type: 'POST',
+                    dataType: 'jsonp',
+                    data: data,
+                    success: function (data) {
+                        layer.msg(data.data.msg, {
+                            icon: 7,
+                            time: 2000,
+                            area: '80%',
+                            shade: [0.3, '#000'],
+                            skin: 'demo-success',
+                            shadeClose: true,
+                            scrollbar: false
+                        });
+                        setTimeout('window.location.href="InvestmentPerformance.html"', 2000);
+                    }
+                })
+        })
+        $('.content>ul>li:nth-child(1)').show();
+        $('.Sample').show();
+        $('.Sample1').hide();
+    }
+</script>
+</html>

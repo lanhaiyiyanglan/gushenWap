@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>证券详情</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+    <div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>爱建证券</h1>
+    </header>
+    </div>
+    <div class="broker_show">
+      <div class="brokerLeft">
+        <img src="../../style/img/1.jpg">
+        <h2></h2>
+      </div>
+      <div class="brokerRight">
+         <p><span class="red"></span>分</p>
+         <div class="starbg">
+            <div class="starco star">
+                <div class="starcolor"></div>
+            </div>
+		 </div>
+         <div class="visited">访问人数：<span></span>人</div>
+      </div>
+    </div>
+    <ul class="brokerList">
+       
+    </ul>
+    <ul class="brokerOperation">
+        <li><a href="" id="yjRank">业绩排名</a><img src="../../style/img/right.png"></li>
+        <li><a href="" id="brokeScore">券商评分</a><img src="../../style/img/right.png"></li>
+    </ul>
+    <div class="broker_intro">
+       <h3>公司简介</h3>
+       <p></p>
+    </div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+   var broker_id=GetQueryString("broker_id");
+   var yjRank="allRank.html?broker_id="+GetQueryString("broker_id");
+   $("#yjRank").attr("href",yjRank);
+   var brokeScore="brokerScore.html?broker_id="+GetQueryString("broker_id");
+   $("#brokeScore").attr("href",brokeScore);
+   $.ajax({
+				  url:'http://broker.shipan.zhengjuan.com',
+				  data:{
+					  app:1,
+					  broker:broker_id
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					if(data.code==1){
+						$(".top h1").text(data.data.info.name);
+						$(".brokerLeft h2").text(data.data.info.full_name);
+						if(data.data.score!=''){
+							$(".brokerRight > p .red").text(data.data.score);
+						}else{
+							$(".brokerRight > p").html("<span>还没有评分<span>");
+						}
+						
+						var srcs="http://static.zhengjuan.com/broker/"+data.data.info.logo
+						$(".brokerLeft img").attr("src",srcs);
+						$(".broker_intro > p").text(data.data.info.intro);
+						$(".visited span").text(data.data.info.count_views);
+						var html='';
+						html+='<li>证监会评级：'+data.data.info.level+'</li>';
+						html+='<li>注册地：'+data.data.info.city+'</li>';
+						html+='<li>成立日期：'+data.data.info.date+'</li>';
+						html+='<li>注册资本：'+data.data.info.reg_capital+' 亿元</li>';
+						if(data.data.info.ipo==1){
+						 html+='<li>是否上市：是</li>';	
+						}else{
+						 html+='<li>是否上市：否</li>';	
+						}
+						$(".brokerList").append(html);
+						var num = $(".brokerRight > p span").text();
+						console.log(num);
+						if(num == '还没有评分'){
+							$(".starco .starcolor").css("width","0px");
+						}else{
+							var str = Number(num);
+							animate(str);
+						}
+						function animate(str) {
+							var time = 10, //设置时间
+								tempnum = 0,//临时分数
+								linelength = str / 5 * 172,
+								tempwidth = 0,//临时进度条
+								fn = setInterval(function() {
+									if (tempnum >= str) {
+										$(".brokerRight > p span").text(num);
+										clearInterval(fn);
+									} else {
+										$(".brokerRight > p span").text(str);
+										$(".starco .starcolor").css({width: linelength});
+									}
+								}, time);
+						}	
+						
+						
+					}
+				  }
+	 })
+});
+</script>
+</body>
+</html>

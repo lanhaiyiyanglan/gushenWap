@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>添加相片</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<script src="../../style/js/upfile.js"></script>
+<script src="../../style/js/addPic.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!---->
+<link rel="stylesheet" href="../../style/css/album.css" type="text/css">
+</head>
+<body>
+<header class="top">
+   <a class="back"><img src="../../style/img/back.png"></a>
+   <h1>添加相片</h1>
+</header>
+<form>
+    <div class="addText">
+        <textarea  name="picText" id="picText" placeholder="请填写相片描述..."  onKeyDown='remainSub2("picText",80)'></textarea>
+        <div class="albumValid"></div><!--验证-->
+    </div>
+    <div class="InputTips">相片描述不得超过80个字</div>
+    <!--图片上传-->
+ <div class="addBox">
+    <ul id="addImg">
+       <li id="addBtn">
+         <img src="../../style/img/addAlbum.png" id="imagesAdd">
+         <input id="file" type="file"  onChange="upload(event)">
+       </li>
+    </ul>
+</div>
+    <div class="sureBtn">
+           <input type="button" value="保存" id="addpicSure">
+    </div>
+</form>
+</body>
+</html>

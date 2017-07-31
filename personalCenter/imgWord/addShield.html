@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>添加</title>
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <link rel="stylesheet" href="../../style/css/imgword.css">
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<style>
+    #layui-layer1{
+        border-radius: 12px;
+        background: rgba(0,0,0,.3);
+        border:none;
+    }
+    .layui-layer-dialog .layui-layer-content{
+        line-height: 72px;
+        font-size: 3rem;
+        color:#fff;
+        text-align: center;
+    }
+</style>
+<body>
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+    <h1>屏蔽字段</h1>
+</header>
+<textarea name="shield" id="shieldContent" placeholder="一个；两个；三个；四个；五个；六个；七个；"></textarea>
+<p class="contentTip">词组之间请用';'分号隔开</p>
+<button class="subContent">添加并保存</button>
+</body>
+<script>
+    $(document).ready(function(){
+        $('.subContent').click(function(){
+            layer.msg('添加成功！',{
+                shade: [0.6, '#000'],
+                area:['70%','8rem']
+            })
+            alert('发起ajax请求！')
+        })
+    })
+</script>
+</html>

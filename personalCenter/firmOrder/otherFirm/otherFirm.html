@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>实盘大赛</title>
+<link rel="stylesheet" href="../../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../../style/css/game.css" type="text/css">
+<script src="../../../style/js/jquery.min.js"></script>
+<script src="../../../style/js/jquery.cookie.js"></script>
+<script src="../../../style/js/layer.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../../style/img/back.png"></a>
+   <h1>实盘大赛</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--perLog-->
+    <div class="perLog" style="margin-top:11.5rem;">
+    </div>
+    <ul id="gameList">
+
+    </ul>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(document).ready(function(){
+    var uid=GetQueryString("uid");
+    $.ajax({
+        url:'http://open.zhengjuan.com/api/app',
+        type:'POST',
+        dataType:'jsonp',
+        data:{
+            module:'user',
+            do:'getUserdetailinfo',
+			uid:uid,
+			login_user_id:$.cookie('uid'),
+        },
+        success:function(data){
+            var perInfo=''; 
+			//个人信息
+			for(var i=0;i<data.data.length;i++){
+			   	    perInfo+='<div class="perImg"><a href="../../../hisIndex_killer/index.html?user_id='+data.data[i].uid+'" ><img src="'+data.data[i].usericon+'"></a>';
+					if(new Date(data.data[i].end_time).getTime()>0){
+					   perInfo+='<i class="vipIncon"></i>';
+					}
+					perInfo+='</div>';	
+					perInfo+='<div class="nameRoler">'+data.data[i].username+'';
+					 if(data.data.role==1){
+						perInfo+='<span class="roler">高手</span></div>';
+					}else{
+						perInfo+='<span class="roler">金主</span></div>';
+					}
+					perInfo+='<a href="../yjRank.html" class="fans"><img src="../../../style/img/yj_rank.png"></a>';	
+					/*if(data.data.is_follow==1){
+						perInfo+='<a href="javascript:void(0);" class="dy2" onClick="relation(this)" title="del">已订阅</a>';	
+					}else{
+						perInfo+='<a href="javascript:void(0);" class="dy2" onClick="relation(this)" title="add">订阅</a>';	
+					}	*/
+					perInfo+='<a href="../../../hisIndex_killer/index.html?user_id='+data.data[i].uid+'" id="contactHim"><img src="../../../style/img/lxt.png"></a>';
+			}
+			$(".perLog").append(perInfo);
+        }
+    })
+          $.ajax({
+              url:'http://user.shipan.zhengjuan.com/game',
+              data:{
+				  app:1,
+				  login_user_id:uid
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                   var html='';
+                   for (var i=0;i<data.data.games.length;i++){
+					      html+='<li><a href="../rank.html?rank_id='+data.data.games[i].rank_id+'">';
+						  html+='<div class="gameLeft">';
+   					      if(parseInt(data.data.games[i].ratio)>=0){
+							 html+='<div class="sylRed">'+(data.data.games[i].ratio*100).toFixed(2)+'%</div>';
+						  }else{
+							 html+='<div class="sylGreen">'+(data.data.games[i].ratio*100).toFixed(2)+'%</div>'; 
+						  }
+						  html+='<div class="gameText">收益率</div>';
+						  if(data.data.games[i].rank==0){
+							html+='<div class="paiM">'+data.data.games[i].rank_site+'</div>';  
+						  }else{
+							html+='<div class="paiM">'+data.data.games[i].rank+'</div>';  
+						  }
+						  html+='<div class="gameText">排名</div>';
+						  html+='</div>';
+						  html+='<div class="gameRight">';
+						  html+='<div class="gameName">'+data.data.games[i].broker_name+'';
+						  if(data.data.games[i].type==7){
+							html+='-周赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else if(data.data.games[i].type==30){
+							html+='-月赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else if(data.data.games[i].type==91){
+							html+='-季赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }else{
+							html+='-年赛【'+timeChange(data.data.games[i].begin_date)+'至'+timeChange(data.data.games[i].end_date)+'】';
+						  }
+						  html+='</div>';
+						  html+='<p>参赛账号：<span>'+data.data.games[i].broker_name2+'</span></p>';
+						  html+='<p>参数人数：<span>'+data.data.games[i].count_player+'</span>人</p>';
+						  html+='<p>开始时间：<span>'+timeChange(data.data.games[i].begin_date)+'</span></p>';
+						  html+='<p>结束时间：<span>'+timeChange(data.data.games[i].end_date)+'</span></p>';
+						  html+='</div>';
+						  html+='</a></li>';
+                  }
+                 $("#gameList").append(html);	
+              }
+          })
+});
+function timeChange(time){
+  return time.replace(/(\d{4})(\d{2})/,'$1.$2.');	
+}
+//订阅/取消订阅
+/* function relation(obj){
+	var fid=GetQueryString("user_id");
+	console.log(fid);
+	var operate=$(obj).attr("title");
+	var that=$(obj);
+	$.ajax({
+              url:'http://rank.shipan.zhengjuan.com/api/follow',
+              data:{
+                  app:1,
+				  login_user_id:$.cookie('uid'),
+				  fid:fid,
+				  operate:operate
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(data.code==1){
+					  if(operate=="add"){
+						that.attr("title","del");
+					  }else{
+						that.attr("title","add");
+					  }
+					  if(that.text()=="订阅"){
+						 that.text("已订阅");
+					  }else{
+						that.text("订阅"); 
+					  }
+					  layer.msg(data.data, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.reload();});
+				  }else{
+					  layer.msg(data.errormsg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+				  }
+              }
+   }) 
+ }*/
+</script>
+</body>
+</html>

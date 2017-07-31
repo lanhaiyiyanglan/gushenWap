@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>业绩认证</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>业绩认证</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li><a href="index.html">比赛记录</a></li>
+      <li  class="on"><a href="javascript:void(0);">我的认证</a></li>
+    </ul>
+    <!--未认证-->
+    <div class="noApprove">您还没有认证的账户，快去进行业绩认证吧！</div>
+    <!--已经认证-->
+    <ul class="approveList">
+    </ul>
+    <div class="sureBtn">
+       <a href="javascript:void(0);">添加新账号</a>
+    </div>
+</div>
+<script>
+$(function(){
+   $.ajax({
+				  url:'http://user.shipan.zhengjuan.com/game',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==-1){
+							$(".noApprove").show();
+							$(".approveList").hide();
+						}else{
+							$(".noApprove").hide();
+							$(".approveList").show();
+							var html='';
+							for(var i=0;i<data.data.account.length;i++){
+								html+='<li>';
+								html+='<p>'+data.data.account[i].broker_name+'：账户 <span class="orange">'+data.data.account[i].account_code+'</span>';
+								if(data.data.account[i].status==0){
+									html+='  审核中...  暂无数据';
+									html+='</p>';
+								}else{
+									html+='  认证成功！';	
+									html+='</p>';	
+									html+='<p>实盘数据区间：'+timeChange(data.data.account[i].min_date)+'-'+timeChange(data.data.account[i].max_date)+'</p>';						
+								}
+								html+='</li>';
+							}
+							$(".approveList").append(html);
+						}	
+				  }
+	 })	
+	 $(".sureBtn > a").click(function(){
+		   $.ajax({
+				  url:'http://user.shipan.zhengjuan.com/account',
+				  data:{
+					  app:1,
+					  login_user_id:$.cookie('uid')
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+						if(data.code==1){
+							  window.location.href="addAccount.html";
+						}else{
+							 window.location.href="rzPay.html";
+						}
+				  }
+	     })	
+    });
+});
+function timeChange(time){
+  return time.replace(/(\d{4})(\d{2})/,'$1.$2.');	
+}
+</script>
+</body>
+</html>

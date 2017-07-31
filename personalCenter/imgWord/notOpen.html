@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>开通直播室</title>
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <link rel="stylesheet" href="../../style/css/imgword.css">
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+    <h1>开通直播室</h1>
+</header>
+<button class="openButton">开通直播室</button>
+<div class="imgWordTip">
+    <h1><span>图文直播</span>小贴士</h1>
+    <p>
+        股神理财交友网鼓励真实、诚信的交友态度，致力打造安全诚信的交友平台，进行认证可以大大显示您的交友诚意，彰显交友的严肃性！
+    </p>
+    <p>
+        股神理财交友网用户推荐基本原则认证优先！目前我们为高手提供实名认证、实盘认证及其他认证三项认证内容。
+    </p>
+    <p>
+        认证通过的好处：<br>
+        会得到站内首页推荐展示机会；<br>
+        个人帐号、个人主页将显示"已认证"图标；<br>
+        可展示更多的、经网站验证的资料；<br>
+        将有机会得到股神交友网的专题访谈；<br>
+        在站内检索或同城高手栏得到优先推荐寄回；<br>
+        专题访谈将给您带来更多的关注与合作机会
+    </p>
+    <p>
+        股神理财交友网将严格保护您的隐私，您的认识信息将以各种点亮的图标显示。
+    </p>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.openButton').click(function(){
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                type:'POST',
+                dataType:'jsonp',
+                data:{
+                    module:'user',
+                    do:'applyLive',
+                    user_id: $.cookie('user_id')
+                },
+                success:function(data){
+                    console.log(data)
+                    if(data.code==1){
+                        layer.msg('开通成功！')
+                        window.location.href='../index.html';
+                    }else{
+                        layer.msg(data.message);
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

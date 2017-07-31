@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+<title>联系我们</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/settings1.css" type="text/css">
+</head>
+
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>联系我们</h1>
+</header>
+<div class="aboutInfo">
+    <div class="aboutUs">
+       <span>公司信息：</span>
+       <p>公司名称  ：杭州融亿网络科技股份有限公司</p>
+       <p>联系电话  ：4006498851</p>
+       <p>联系邮箱  ：lianzheng@qq.com</p>
+       <p>公司地址  ：浙江省杭州市西湖区留和路135号UN公社3幢701</p>
+    </div>
+    <div class="aboutUs">
+       <span>客服中心（为用户在线解答疑难杂问）</span>
+       <p>联系人：韦女士</p>
+       <p>联系QQ：2850735684</p>
+       <p>联系电话：400-6498851</p>
+    </div>
+    <div class="aboutUs">
+       <span>商务合作：（受理互联网站内广告投放、频道合作、线上活动等市场合作）</span>
+       <p>联系人：欧阳先生</p>
+       <p>联系QQ：2850735683</p>
+       <p>联系电话：15107996938</p>
+    </div>
+    <div class="aboutUs">
+       <span>市场合作（受理线上，线下交友活动、渠道推广合作）</span>
+       <p>联系人：欧阳先生</p>
+       <p>联系QQ：2850735683</p>
+       <p>联系电话：18072710841</p>
+    </div>
+    <div class="aboutUs">
+       <span>市场公关部：</span>
+       <p>联系人：徐先生</p>
+       <p>联系QQ：2853772206</p>
+       <p>联系电话：15381013841</p>
+    </div>
+    <div class="aboutUs">
+       <span>人力招聘（招聘专业素养高精尖，踏实有梦想，热情有干劲的江湖有志之士）</span>
+       <p>联系人：阳女士</p>
+       <p>联系QQ：2853662676</p>
+       <p>联系电话：0571-85880429</p>
+    </div>
+    <div class="aboutUs">
+       <span>关注我们（获取及时信息）</span>
+       <p>微信公众号：股神汇</p>
+       <p>微博：股神交友官网</p>
+    </div>
+    <div class="aboutUs">
+       <span>意见反馈:</span>
+       <p>如果您对我们平台有什么意见或者有一些不满想跟我们吐槽欢迎你到客服意见反馈中心与我们联系。</p>
+    </div>
+</div>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

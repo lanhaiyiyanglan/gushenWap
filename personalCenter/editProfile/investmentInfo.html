@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>投资信息</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<script src="../../style/js/layer.js"></script>
+<!--独有-->
+<link rel="stylesheet" href="../../style/css/personal.css" type="text/css">
+
+<script src="../../style/js/personal.js"></script>
+</head>
+<style>
+    #investmentForm{
+        margin-top:10rem;
+    }
+</style>
+<body>
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>投资信息</h1>
+   <span class="operationBtn"><input type="button" value="完成" id="investmentBtn"></span>
+</header>
+<!--form-->
+<form id="investmentForm">
+    <ul class="xi_list">
+        <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>年化收益率</span>
+              <div class="infoInput">
+                  <div class="eidtorWhere"><input type="text"  id="annualText"  name="annualText" value=""></div>
+                  <span class="forEditor"><img src="../../style/img/right.png"></span></div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper3','wrapper1')">
+          <div class="infobox">
+              <span>实盘累计收益率</span>
+              <div class="infoInput">
+                 <div class="eidtorWhere"><input type="text"  id="actualText" name="actualText" value=""></div>
+                 <span class="forEditor"><img src="../../style/img/right.png"></span></div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper4','wrapper1')">
+          <div class="infobox">
+              <span>模拟盘累计收益率</span>
+              <div class="infoInput">
+                 <div class="eidtorWhere"><input type="text"  id="simulateText" name="simulateText" value=""></div>
+                 <span class="forEditor"><img src="../../style/img/right.png"></span></div>
+          </div>
+        </li>
+        <li>
+           <div class="likeWhat">需求合作资金</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="moneyDemand" type="radio" id="radio_b11" class="radio_1" value="100万以下"><label for="radio_b11"></label><i>100万以下</i></li>
+                    <li><input name="moneyDemand" type="radio" id="radio_b22" class="radio_1" value="100-300万"><label for="radio_b22"></label><i>100-300万</i></li>
+                    <li><input name="moneyDemand" type="radio" id="radio_b33" class="radio_1" value="300-500万"><label for="radio_b33"></label><i>300-500万</i></li>
+                    <li><input name="moneyDemand" type="radio" id="radio_b44" class="radio_1" value="500-1000万"><label for="radio_b44"></label><i>500-1000万</i></li>
+                    <li><input name="moneyDemand" type="radio" id="radio_b55" class="radio_1" value="千万以上"><label for="radio_b55"></label><i>千万以上</i></li>
+                    <li><input name="moneyDemand" type="radio" id="radio_b66" class="radio_1" value="亿元以上"><label for="radio_b66"></label><i>亿元以上</i></li>
+                </ul>
+            </div>
+         </li>
+         <li>
+           <div class="likeWhat">操作风格</div>
+           <div class="whatList">
+                 <ul>
+                    <li><input name="operationStyle" type="checkbox" id="checkbox_a1" class="chk_1" value="超短"><label for="checkbox_a1"></label><i>超短</i></li>
+                    <li><input name="operationStyle" type="checkbox" id="checkbox_a2" class="chk_1" value="短线"><label for="checkbox_a2"></label><i>短线</i></li>
+                    <li><input name="operationStyle" type="checkbox" id="checkbox_a3" class="chk_1" value="长线"><label for="checkbox_a3"></label><i>长线</i></li>
+                    <li><input name="operationStyle" type="checkbox" id="checkbox_a4" class="chk_1" value="中线波段"><label for="checkbox_a4"></label><i>中线波段</i></li>
+                    <li><input name="operationStyle" type="checkbox" id="checkbox_a5" class="chk_1" value="中长结合"><label for="checkbox_a5"></label><i>中长结合</i></li>
+                 </ul>
+            </div>
+         </li>
+         <li>
+           <div class="likeWhat">合作模式</div>
+           <div class="whatList">
+                  <ul>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b1" class="chk_1" value="专户理财"><label for="checkbox_b1"></label><i>专户理财</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b2" class="chk_1" value="远程喊单"><label for="checkbox_b2"></label><i>远程喊单</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b3" class="chk_1" value="现场喊单"><label for="checkbox_b3"></label><i>现场喊单</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b4" class="chk_1" value="资管产品"><label for="checkbox_b4"></label><i>资管产品</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b5" class="chk_1" value="带盘指导"><label for="checkbox_b5"></label><i>带盘指导</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b6" class="chk_1" value="炒股培训"><label for="checkbox_b6"></label><i>炒股培训</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b7" class="chk_1" value="个人账户配资"><label for="checkbox_b7"></label><i>个人账户配资</i></li>
+                    <li><input name="cooperationModel" type="checkbox" id="checkbox_b8" class="chk_1" value="房产抵押融资"><label for="checkbox_b8"></label><i>房产抵押融资</i></li>
+                 </ul>
+            </div>
+         </li>
+         <li onClick="showHide('wrapper5','wrapper1')">
+          <div class="infobox">
+              <span>投资理念概述</span>
+              <div class="infoInput">
+                 <div class="eidtorWhere"><input type="text" id="ideaText" name="ideaText"  value=""></div>
+                 <span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper6','wrapper1')">
+          <div class="infobox">
+              <span>投资策略简述</span>
+              <div class="infoInput">
+                  <div class="eidtorWhere"><input type="text" id="strategyText" name="strategyText" value=""></div>
+                  <span class="forEditor"><img src="../../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+     </ul>
+</form>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+    <header class="top">
+       <a  href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../../style/img/back.png"></a>
+       <h1>年化收益率</h1>
+       <span class="operationBtn"><input type="button" value="完成" onClick="resetVal('wrapper2','wrapper1');"></span>
+    </header>
+    <ul class="annualList">
+      <li class="on"><input type="radio" class="radio_1" name="annualProfit" id="radio_a1" value="50%以下"  checked="true"><label for="radio_a1">50%以下</label></li>
+      <li><input type="radio" class="radio_1" name="annualProfit" id="radio_a2" value="50%-100%"><label for="radio_a2">50%-100%</label></li>
+      <li><input type="radio" class="radio_1" name="annualProfit" id="radio_a3" value="150%-200%"><label for="radio_a3">150%-200%</label></li>
+      <li><input type="radio" class="radio_1" name="annualProfit" id="radio_a4" value="200%以上"><label for="radio_a4">200%以上</label></li>
+    </ul>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>实盘累计收益率</h1>
+</header>
+<div class="editorText">
+  <input class="profit"   type="number" id="actualTextarea"  placeholder="输入实盘累计收益率(%)">
+</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure('wrapper3','wrapper1','actualTextarea','actualText')">
+</div>
+</div>
+<!--wrapper4-->
+<div id="wrapper4" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper4','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>模拟盘累计收益率</h1>
+</header>
+<div class="editorText">
+  <input type="number"   class="profit"   id="simulateTextarea"  placeholder="模拟盘累计收益率(%)">
+</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure('wrapper4','wrapper1','simulateTextarea','simulateText')">
+</div>
+</div>
+<!--wrapper5-->
+<div id="wrapper5" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper5','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>投资理念概述</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="ideaTextarea" placeholder="请输入投资理念概述..." onKeyUp='feedIn("ideaTextarea","ideaTips",1000)' onKeyDown='remainSub("ideaTextarea","ideaTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="ideaTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper5','wrapper1','ideaTextarea','ideaText')">
+</div>
+</div>
+<!--wrapper6-->
+<div id="wrapper6" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper6','wrapper1')"><img src="../../style/img/back.png"></a>
+    <h1>投资策略概述</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="strategyTextarea" placeholder="请输入投资策略概述..." onKeyUp='feedIn("strategyTextarea","strategyTips",1000)' onKeyDown='remainSub("strategyTextarea","strategyTips",1000)'></textarea>
+</div>
+<div class="InputTips" id="strategyTips"><font>0</font>/1000</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure1('wrapper6','wrapper1','strategyTextarea','strategyText')">
+</div>
+</div>
+</body>
+</html>

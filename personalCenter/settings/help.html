@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>帮助</title>
+<script src="../../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/settings.css" type="text/css">
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>帮助</h1>
+</header>
+<!--usercenterbox-->
+<ul class="baseList">
+  <li><a href="userManual.html"><div>使用手册<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="aboutUs.html"><div>关于我们<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="contactUs.html"><div>联系我们<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="useTerms.html"><div>使用条款<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="addUs.html"><div>加入我们<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="paterner.html"><div>合作伙伴<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+  <li><a href="mediaReports.html"><div>媒体报道<span class="baseDetail"><img src="../../style/img/right.png"></span></div></a></li>
+</ul>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

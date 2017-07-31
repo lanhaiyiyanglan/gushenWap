@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>相册详情</title>
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!---->
+<link rel="stylesheet" href="../../style/css/album.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/swiper.min.css" type="text/css">
+<script src="../../style/expand/swiper.min.js"></script>
+</head>
+<!--<style>
+	body{
+		background: #000;
+	}
+	.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+		font-size: 5rem;
+		color: #fff;
+		bottom:85%;
+	}
+</style>-->
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"><span>相册</span></a>
+   <h1>钢铁侠</h1>
+   <a href="javascript:void(0);" class="linkOperate"><img src="../../style/img/more.png"></a>
+</header>
+<div class="myIndex"><span>1</span>/<b></b></div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+    </div>
+</div>
+<!--<div class="swiper-pagination swiper-pagination-fraction">
+</div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+    </div>
+</div>-->
+<div class="Mhui"></div>
+<div class="bottomSlide">
+   <a class="deleteList" href="javascript:void(0);" onClick="deleteList(this)">删除相片</a>
+   <a class="setCover" href="javascript:void(0);" onClick="setCover(this)">设为封面</a>
+   <div class="cancleDel" onClick="cancleDel()">取消</div>
+</div>
+<input type="hidden" value="" id="ClickedPid"><!--存储我点进来的这张图片的index-->
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+var picid=(GetQueryString("picid"));
+var albumid=(GetQueryString("albumid"));
+var index=(GetQueryString("index"));
+var userid=(GetQueryString("userid"));
+var almbuname=(GetQueryString("almbuname"));
+console.log("picid="+picid+"&"+"albumid="+albumid);
+$(function(){//遍历出这个相册
+	$.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:{
+			  module:'user',
+			  do:'getPicListByAlbumId',
+			  albumid:albumid
+		  },
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  console.log(data)
+			  var html='';
+			  $('.myIndex b').html(data.data.length);
+			  for (var i=0;i<data.data.length;i++){
+				  html+='<div class="swiper-slide" id="'+data.data[i].picid+'">';
+				  html+='<img src="'+data.data[i].filepath+'">';
+				  html+='<div class="myInfo">';
+				  html+='<span>'+data.data[i].title+'</span>';
+				  html+='</div>';
+				  html+='</div>';
+				  if(data.data[i].picid==GetQueryString("picid")){
+					  $("#ClickedPid").val(i);
+				  }
+			  }
+			 $('.swiper-wrapper').append(html);
+			 $('.swiper-slide').height(document.documentElement.clientHeight-$(".top").height());
+			 $('.swiper-slide').css({background:"#000",opacity:"0.8"});
+			 $(".swiper-slide img").css({height:700,display:"block"});
+			 var tt=(document.documentElement.clientHeight-$(".swiper-slide img").height())/2;
+			 $(".swiper-slide img").css("margin-top",tt);
+			 var swiper = new Swiper('.swiper-container', {
+					initialSlide :$("#ClickedPid").val(),
+					onTransitionEnd: function(swiper){
+						$('.myIndex span').html(swiper.activeIndex+1);
+					}
+			});	
+			  /*var swiper = new Swiper('.swiper-container', {
+				  preloadImages:true,
+				  initialSlide:index,
+				  pagination : '.swiper-pagination',
+				  paginationType : 'fraction'
+			  });*/
+		  }
+	  })
+});
+function deleteList(obj){
+     var picid=$(".swiper-slide-active").attr("id");
+	 console.log(picid);
+	 layer.confirm("确定要删除相片吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+		}, function(){
+			layer.closeAll();
+		}, function(){
+			   $.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					data:{
+						  module:'user',
+						  do:'delPic',
+						  picid:picid
+					 },
+					dataType:'jsonp',
+                    jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+                    jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                    type:'POST',
+					success:function(data){
+						if(data.code ==1){
+							layer.msg('删除成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.reload();});	 
+						}else{
+							layer.msg("删除失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+						}
+					}
+				});
+	});
+}
+function setCover(obj){
+     var picid=$(".swiper-slide-active").attr("id");
+	 console.log(picid);
+	 layer.confirm("确定设为封面照片吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+		}, function(){
+			layer.closeAll();
+		}, function(){
+			   $.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					data:{
+						  module:'user',
+						  do:'saveCover',
+						  albumid:albumid,
+						  picid:picid
+					 },
+					dataType:'jsonp',
+                    jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+                    jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                    type:'POST',
+					success:function(data){
+						if(data.code ==1){
+							layer.msg('设置成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.reload();});	 
+						}else{
+							layer.msg("设置失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+						}
+					}
+				});
+	});
+}
+$(function(){
+	$('.top h1').html(decodeURI(almbuname))
+	if(userid== $.cookie('user_id')){
+		$(".linkOperate").click(function(){//相册点击的时候显示删除和取消
+			$(".Mhui").fadeIn();
+			$(".bottomSlide").slideToggle();
+		});
+	}else{
+		$.ajax({
+			url:'http://open.zhengjuan.com/api/app',
+			type:'POST',
+			dataType:'jsonp',
+			data:{
+				user_id:userid,
+				module:'user',
+				do:'getMemberBasicDetail'
+			},
+			success:function(data){
+				console.log(data)
+				$('.linkOperate').hide();
+			}
+		})
+	}
+});
+function cancleDel(){//点击取消的时候隐藏删除和取消选项
+	$(".Mhui").fadeOut();
+	$(".bottomSlide").slideToggle();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>头像管理</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="../../style/js/upfile.js"></script>
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <script src="../../style/js/jquery-1.7.min.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/avatar.css">
+</head>
+<body>
+        <header class="bar bar-nav top" >
+            <a href="javascript:window.history.go(-1);"><img src="../../style/img/back.png" alt=""></a>
+            <h1 class="title pull-center">头像管理</h1>
+            <div class="more pull-right" id="more" >
+                <img src="../../style/img/more_img.png" alt="">
+            </div>
+        </header>
+            <div class="head">
+                <img src="../../style/img/1.jpg" alt="">
+            </div>
+            <div class="btn"></div>
+            <div class="ul">
+                <ul>
+                    <li class="btn_photo">
+                            <input class="btn_file1" id="photo" type="button" value="拍照上传" >
+                    </li>
+                    <li>
+                        <div class="btn_file">
+                            <span>上传头像</span><input  onchange="upload(event)" id="file_head" type="file" style="opacity: 0;">
+                        </div>
+                    </li>
+                    <li>取消</li>
+                </ul>
+            </div>
+            <div class="load_img"><img src="../../style/img/loading.gif" alt=""><span>请稍等，正在上传中...</span></div>
+            <script>
+                $(document).ready(function(){
+                    $.ajax({
+                        url:'http://open.zhengjuan.com/api/app',
+                        type:'POST',
+                        dataType:'jsonp',
+                        data:{
+                            username: $.cookie('username'),
+                            password: $.cookie('password'),
+                            udid: $.cookie('udid'),
+                            module:'user',
+                            do:'login'
+                        },
+                        success:function(data){
+                            $('.head').children('img').attr('src',data.data.usericon);
+                        }
+                    })
+                })
+                var uploader = uploadJSSDK;
+                function upload(e) {
+                    var files = e.target.files;
+                    //上传
+                    $('.load_img').show();
+                    $('.ul ul').slideToggle();
+                    $('.btn').slideToggle();
+                    for (var i = 0; i < files.length; i++) {
+                        uploader({
+                            file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                            token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                            name: new Date().getTime(),
+                            dir: '/pic',  //目录，选填，默认根目录''
+                            retries: '0',  //重试次数，选填，默认0不重试
+                            maxSize: '20480000',  //上传大小限制，选填，默认0没有限制
+                            callback: function (percent, result) {
+                                //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                                //result(服务端返回的responseText，json格式)
+                                console.log(percent)
+                                console.log(result)
+                                if (result.code == 'OK') {
+                                    $('.load_img').hide();
+                                    $.ajax({
+                                        url:'http://open.zhengjuan.com/api/app',
+                                        type:'POST',
+                                        dataType:'jsonp',
+                                        data:{
+                                            module:'user',
+                                            do:'uploadUsericon',
+                                            user_id: $.cookie('user_id'),
+                                            avatar_url:result.url
+                                        },
+                                        success:function(data){
+                                            $('.head').children('img').attr('src',result.url);
+                                        }
+                                    })
+                                    //
+                                } else {
+                                    $('.load_img').hide();
+                                    layer.msg('图片大小不能超过2M！', {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});
+                                }
+                            }
+                        });
+                    }
+                }
+                $('.more').click(function(){
+                    $('.btn').slideToggle();
+                    $('.ul ul').slideToggle(500);
+                })
+                $('ul li:last-child').click(function(){
+                    $('.ul ul').slideToggle(500);
+                    $('.btn').slideToggle();
+                })
+            </script>
+
+
+
+
+
+</body>
+</html>

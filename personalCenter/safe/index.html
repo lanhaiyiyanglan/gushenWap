@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>安全中心</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/safe.css" type="text/css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png" alt=""></a>
+   <h1>安全中心</h1>
+</header>
+<div class="safeScore">
+   <div class="scoreContent">
+       <img src="../../style/img/safe.png">
+       <div class="score">安全评分:<span class="scoreRed">50分</span></div>
+   </div>
+   <div class="scoreText">通过以下设置可提高安全评分分数</div>
+</div>
+<ul class="safeList">
+  <li>
+    <a href="updatePassword.html">
+    <div class="safeIncon"><img src="../../style/img/password.png"></div>
+        <div class="safeText">修改密码<span class="rightDetail"><img src="../../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="bindPhone.html">
+    <div class="safeIncon"><img src="../../style/img/bindPhone.png"></div>
+        <div class="safeText">绑定手机<span class="rightDetail"><img src="../../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="bindEmail.html">
+    <div class="safeIncon"><img src="../../style/img/email.png"></div>
+        <div class="safeText">绑定邮箱<span class="rightDetail"><img src="../../style/img/right.png"></span></div>
+    </a>
+  </li>
+</ul>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getSafeScoreNum',
+                user_id: $.cookie('user_id')
+            },
+            success:function(data){
+                $('.scoreRed').html(data.data.score_num+'分');
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>我的VIP</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/payVip.css" type="text/css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>我的VIP</h1>
+</header>
+<!--content-->
+<div class="vipStatus">您当前服务状态 : <span class="orange"></span></div>
+<div class="perLog">
+    <div class="perImg"><img src="../../image/pp.png"><i class="vipIncon"></i></div>
+    <div class="nameRoler"><a></a><span class="roler"></span></div>
+</div>
+<div class="overdueTime">VIP截止日期 ：<span class="orange">2016-02-20</span></div>
+<div class="sureOperate">
+      <a href="index.html">续费会员</a>
+</div>
+<!--vip小贴士-->
+<div class="tieshi"><img src="../../style/img/tieshi.png"></div>
+<script>
+    function x(tm) {
+        tm = parseInt(tm);
+        var date = new Date(tm); //转换成时间对象，这就简单了
+        var year = date.getFullYear();  //获取年
+        var mouth = date.getMonth() + 1 ;
+        var data = date.getDate();
+        if (mouth < 10) {
+            mouth = '0' + (date.getMonth()+1);
+        } else {
+            data = date.getDate();
+        }
+
+        if(date.getDate()<10) {
+            data = '0' + date.getDate();
+        }else{
+            data = date.getDate();
+        }
+        return year+'-'+mouth+'-'+data;
+    }
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getMyVipInfo',
+                user_id: $.cookie('user_id')
+            },
+            success:function(data){
+                console.log(data)
+            }
+        })
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getUserdetailinfo',
+                user_id: $.cookie('user_id'),
+                login_user_id:''
+            },
+            success:function(data){
+                $('.perImg').children('img').attr('src',data.data[0].usericon);
+                $('.nameRoler').children('a').html(data.data[0].username);
+                if(data.data[0].role==1){
+                    $('.nameRoler').children('.roler').html('高手');
+                }else{
+                    $('.nameRoler').children('.roler').html('金主');
+                }
+                if(data.data[0].end_time==''||data.data[0].end_time*1000<new Date().getTime()){
+                    $('.vipIncon').hide();
+                }else{
+                    $('.vipIncon').show();
+                }
+                if(data.data[0].end_time==''){
+                    $('.overdueTime').html('您还未开通VIP！')
+                    $('.sureOperate').children('a').html('开通会员')
+                }else if(data.data[0].end_time*1000<new Date().getTime()){
+                    $('.overdueTime').html('您的VIP已到期！')
+                    $('.orange').html(x(data.data[0].end_time*1000));
+                }else{
+                    $('.orange').html(x(data.data[0].end_time*1000));
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>晒单管理</title>
+<link rel="stylesheet" href="../../style/js/skin/layer.css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/layer.js"></script>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!---->
+<link rel="stylesheet" href="../../style/css/orders.css" type="text/css">
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+   <a href="../index.html" class="back"><img src="../../style/img/back.png"></a>
+   <h1>晒单管理</h1>
+   <a href="addOrder.html" class="linkOperate"><span>我要晒单</span></a>
+</header>
+<ul class="shareList">
+
+</ul>
+<div class="loading">
+   <img src="../../style/img/loading.gif" alt="">
+   <span style="font-size: 1.5rem;">正在加载中...</span>
+</div>
+<script>
+
+   if (typeof($.cookie('password')) == 'undefined') {
+      window.location.href = '../../logRegPassword/index.html'
+   } else {
+   }
+</script>
+<script src="../../style/js/orderManage.js"></script>
+</body>
+</html>

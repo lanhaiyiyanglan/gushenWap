@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>加入我们</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/settings.css" type="text/css">
+</head>
+
+<body style="background:#fff;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>加入我们</h1>
+</header>
+<div class="aboutInfo">
+    <div class="aboutUs">
+        <span>随着我公司规模扩大，业务增长，诚邀专业素养高精尖，踏实有梦想，热情有干劲的江湖有志之士，汇聚此地，彼此成就，共创辉煌！
+如果您是这样的人，如果您愿意应征，我们将为您提供良好的薪资待遇、完善的福利保险、专业的培训机会及</span>
+        <span>融亿科技，广阔天地，大有作为！</span>
+    </div>
+    <div class="aboutUs">
+        <span>PHP开发工程师：</span>
+        <p>人数：5人</p>
+        <p>地点：杭州</p>
+    </div>
+    <div class="aboutUs">
+        <span>职位描述：</span>
+        <p>1、负责相关网站系统的技术开发和维护工作；</p>
+        <p>2、网站应用和功能模块的设计与程序开发、单元测试、维护文档的编定</p>
+    </div>
+    <div class="aboutUs">
+        <span>任职要求：</span>
+        <p>1、两年以上的LINUX + PHP + MYSQL开发经验；</p>
+        <p>2、精通HTML，CSS等页面知识，熟练应用JS，Ajax等Web相关技术；</p>
+        <p>3、对Mysql有深入的认识，熟练掌握关系数据库理论；</p>
+        <p>4、熟悉Linux操作系统和Shell；</p>
+        <p>5、具备强烈的责任心、良好的团队精神，较强的自学能力；</p> 
+        <p>6、有独立工作能力，工作踏实认真，以及较强的团队协作精神；</p>
+        <p>7、有解决问题、钻研技术的兴趣和能力，善于沟通和表达；</p>
+        <p>8、有良好的编码习惯和撰写文档习惯，有大型网站开发经验者优先；</p>
+    </div>
+    <div class="aboutUs">
+        <span>应聘人员简历投放至电子邮箱：lianzheng@qq.com</span>
+        <span>联系人：阳女士</span>
+        <span>联系电话：0571-85880429</span>
+        <span>邮政编码：310023</span>
+        <span>公司地址：浙江省杭州市西湖区留和路135号UN公社3幢701室</span>
+    </div>
+</div>
+<script src="../../style/js/jquery.min.js"></script>
+<script>
+    var url=window.location.href;
+    var userid=url.split('?')[1].split('&')[0].split('=')[1];
+    var app=url.split('?')[1].split('&')[1].split('=')[1];
+    if(url.indexOf('app')){
+        $('.top').hide();
+        $('.top').next().css('margin-top','0')
+    }else{
+        $('.top').show();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>券商评分</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+    <div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>券商评分</h1>
+    </header>
+    </div>
+    <ul class="scoreType">
+      
+    </ul>
+    <ul class="scoreList">
+     
+    </ul>
+    <div class="loading">
+      <img src="../../style/img/loading.gif" alt="">
+      <span>正在加载中...</span>
+    </div>
+<div class="sureBtn1">
+  <a href="" id="addComment">写评论</a>
+</div>
+<input type="hidden" value="0" id="typeNum">
+<script>
+ function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+	  var addComment="comment.html?broker_id="+GetQueryString("broker_id");
+	  $("#addComment").attr("href",addComment);
+	  var page=1;
+      $.ajax({
+				  url:'http://broker.shipan.zhengjuan.com/api/reviews',
+				  data:{
+					  app:1,
+					  broker:GetQueryString("broker_id"),
+					  type:0,
+					  page:1,
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					if(data.code==1){
+						var scoreType=''
+						scoreType+='<li class="on">全部('+data.count+')<input type="hidden" value="0"></li>';
+						scoreType+='<li>好评('+data.good_count+')<input type="hidden" value="3"></li>';
+						scoreType+='<li>中评('+data.medium_count+')<input type="hidden" value="6"></li>';
+						scoreType+='<li>差评('+data.bad_count+')<input type="hidden" value="9"></li>';
+					}
+					$(".scoreType").append(scoreType);
+					$(".scoreType li:first-child").addClass("on");
+					var scoreList='';
+					for(var i=0;i<data.data.length;i++){
+						scoreList+='<li>';
+						scoreList+='<div class="pingText">'+data.data[i].content+'';
+						scoreList+='</div>';
+						scoreList+='<input type="hidden" value="'+(data.data[i].type)+'" class="hiddenScore">';
+						scoreList+='<div class="starbg startBroker">';
+						scoreList+='<div class="starco star">';
+						scoreList+='<div class="starcolor"></div>';
+					    scoreList+='</div>';
+						scoreList+='</div>';
+						scoreList+='<div class="scorePer">';
+						scoreList+=''+data.data[i].username+'<span>'+data.data[i].create_time+'</span>';
+						scoreList+='</div>';
+						scoreList+='</li>';
+					}
+                    $(".scoreList").append(scoreList);
+					$(".scoreList li").each(function(index, element) {
+                        var num=$(this).find(".hiddenScore").val();
+						if(num ==0||num==''){
+							$(".starco .starcolor").css("width","0px");
+						}else{
+							var str = Number(num);
+							animate(str);
+						}
+                    });
+					$(".scoreType li").click(function(){
+					  $(this).addClass("on").siblings().removeClass("on");
+					  var type=$(this).find("input").val();//获取当前评价的类型
+					  $("#typeNum").val(type);//如果切换评价类型则将当前类型存入隐藏域便于滚动翻页
+					  $.ajax({
+								  url:'http://broker.shipan.zhengjuan.com/api/reviews',
+								  data:{
+									  app:1,
+									  broker:GetQueryString("broker_id"),
+									  type:type,
+									  page:1,
+								  },
+								  type:'POST',
+								  dataType:'jsonp',
+								  success:function(data){
+									if(data.code==1){
+										var scoreList='';
+										for(var i=0;i<data.data.length;i++){
+											scoreList+='<li>';
+											scoreList+='<div class="pingText">'+data.data[i].content+'';
+											scoreList+='</div>';
+											scoreList+='<input type="hidden" value="'+(data.data[i].type)+'" class="hiddenScore">';
+											scoreList+='<div class="starbg startBroker">';
+											scoreList+='<div class="starco star">';
+											scoreList+='<div class="starcolor"></div>';
+											scoreList+='</div>';
+											scoreList+='</div>';
+											scoreList+='<div class="scorePer">';
+											scoreList+=''+data.data[i].username+'<span>'+data.data[i].create_time+'</span>';
+											scoreList+='</div>';
+											scoreList+='</li>';
+										}
+										$(".scoreList").html(scoreList);
+									}
+								  }
+					 })
+					});
+				  }
+	 })	
+	  $(window).scroll(function(){
+          var height1=$(document).height();
+          var height2=$(window).height();
+          if($(window).scrollTop()+1==(height1-height2)){
+			  console.log('123')
+              $('.loading').show();
+			  $('.loading').css('margin-bottom','13rem')
+			  setTimeout(function(){$.ajax({
+				  url:'http://broker.shipan.zhengjuan.com/api/reviews',
+				  data:{
+					  app:1,
+					  broker:GetQueryString("broker_id"),
+					  type:$("#typeNum").val(),
+					  page:page++,
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					  if(data.data.length>0){
+						  var scoreList='';
+						  for(var i=0;i<data.data.length;i++){
+							  scoreList+='<li>';
+							  scoreList+='<div class="pingText">'+data.data[i].content+'';
+							  scoreList+='</div>';
+							  scoreList+='<input type="hidden" value="'+data.data[i].type+'" class="hiddenScore">';
+							  scoreList+='<div class="starbg startBroker">';
+							  scoreList+='<div class="starco star">';
+							  scoreList+='<div class="starcolor"></div>';
+							  scoreList+='</div>';
+							  scoreList+='</div>';
+							  scoreList+='<div class="scorePer">';
+							  scoreList+=''+data.data[i].username+'<span>'+data.data[i].create_time+'</span>';
+							  scoreList+='</div>';
+							  scoreList+='</li>';
+						  }
+						  $(".scoreList").append(scoreList);
+					  }else{
+						  $('.loading').children('img').remove();
+						  $('.loading').children('span').html('没有更多了哦！')
+					  }
+				  }
+			  })},2000)
+          }else{
+              $('.loading').hide();
+          }
+      });
+});
+function animate(str) {
+	linelength = str / 5 * 172;
+	$(".starco .starcolor").css({width: linelength*5});
+	/*var time = 100, //设置时间
+		tempnum = 0,//临时分数
+		linelength = str / 5 * 172,
+		tempwidth = 0,//临时进度条
+		fn = setInterval(function() {
+			if (tempnum >= str) {
+				clearInterval(fn);
+			} else {
+				$(".starco .starcolor").css({width: linelength*5});
+			}
+		}, time);*/
+}	
+</script>
+</body>
+</html>

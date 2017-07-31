@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>合作详情</title>
+<!--公共样式和js文件-->
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<!--独立的-->
+<link rel="stylesheet" href="../../style/css/fbCooperation.css" type="text/css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<style>
+    .shareOpen{
+        width:96%;
+        padding:2%;
+        position: fixed;
+        bottom:0;
+        display: none;
+    }
+    .shareOpen li{
+        width:25%;
+        text-align: center;
+        float:left;
+        padding-bottom:2rem;
+    }
+    .shareOpen li>div>span{
+        font-size: 3rem;
+    }
+    .shareOpen li>div:nth-child(1){
+        width:100px;
+        margin:0 auto;
+    }
+</style>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>合作详情</h1>
+   <a class="linkOperate"><span>修改</span></a>
+</header>
+<!--日志详情-->
+<div class="ctTit">资管产品</div>
+<div class="cooperDetail">
+    <div class="cooperTitle"></div>
+    <div class="cooperTime"></div>
+    <div class="cooperContent"></div>
+</div>
+<script>
+    function x(tm) {
+        tm = parseInt(tm);
+        var date = new Date(tm); //转换成时间对象，这就简单了
+        var year = date.getFullYear();  //获取年
+        var mouth = date.getMonth() + 1 ;
+        var data = date.getDate();
+        if (date.getMonth() < 10) {
+            mouth = '0' + (date.getMonth()+1);
+        } else {
+            data = date.getDate();
+        }
+
+        if(date.getDate()<10) {
+            data = '0' + date.getDate();
+        }else{
+            data = date.getDate();
+        }
+        return year+'-'+mouth+'-'+data;
+    }
+    var urlinfo = window.location.href;                                                                //获取url
+    var cooper_id = urlinfo.split("?")[1].split("=")[1];
+    console.log(cooper_id)
+    $(document).ready(function(){
+        $('.open').click(function(){
+            $('.shareOpen').slideToggle(500);
+        })
+        $('body').click(function(){
+            $('.shareOpen').slideToggle(500);
+        })
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getCoopDetail',
+                coop_id:cooper_id
+            },
+            success:function(data){
+                $('.ctTit').html(data.data[0].type);
+                $('.cooperTitle').html(data.data[0].subject);
+                $('.cooperTime').html(x(data.data[0].create_time*1000));
+                $('.cooperContent').html(data.data[0].content);
+                if(data.data[0].creator_id!== $.cookie('user_id')){
+                    $('.linkOperate').hide()
+                }
+                console.log(data)
+            }
+        })
+        $(document).on('click','.linkOperate',function(){
+            var url = "modifyCooper.html";
+            window.open(encodeURI(url + "?cooper_id=" + cooper_id),'_self');
+            console.log(cooper_id)
+            //encodeURI编码
+        });
+    })
+</script>
+</body>
+</html>
