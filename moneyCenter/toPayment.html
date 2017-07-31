@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>充值</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/moneyCenter.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/moneyCenter.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="#" class="back"><img src="../style/img/back.png"></a>
+   <h1>充值</h1>
+</header>
+<form  id="payCoin" method="post" action="http://user.gushen178.com/payment">
+<div class="moneyUp">
+    <div class="payTit">请选择支付方式：</div>
+    <ul class="payWay">
+        <li class="selected"><a href="javascript:void(0);" title="支付宝支付" data="1">支付宝</a></li>
+        <li><a href="javascript:void(0);" title="网银支付" data="2">银联支付</a></li>
+    </ul>
+    <div class="payTit">请选择充值数量：</div>
+    <div class="selectCoin">
+        <ul>
+            <li class="on"><span>100金币</span></li>
+            <li><span>500金币</span></li>
+            <li><span>1000金币</span></li>
+            <li><span>3000金币</span></li>
+            <li><span>5000金币</span></li>
+            <li><span>10000金币</span></li>
+        </ul>
+        <div class="otherCoin">其他：<input type="text" id="otherPrice">金币</div>
+    </div>
+    <div id="toCharge"><input type="button" value="充值"  onclick="recgargeNow()"></div>
+</div>
+    <input type="hidden" name="pay_time" value="4">
+	<input type="hidden" name="app" value="2">
+	<input type="hidden" name="login_user_id" value="" id="uid">
+    <input type="hidden" name="payType" value="" id="payType">
+    <input type="hidden" name="fee" value="" id="fee">
+</form>
+</body>
+</html>

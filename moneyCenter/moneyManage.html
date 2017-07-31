@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>财富中心</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/moneyCenter.css" type="text/css"><br>
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/moneyCenter.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>财富管理</h1>
+       <a href="toPayment.html" class="linkOperate"><span>充值</span></a>
+    </header>
+    <!--moneyCount-->
+    <div class="moneyCount">
+       <span>金币总数</span>
+       <div id="countNumber"></div>
+    </div>
+    <!--giftList-->
+    <div class="giftListTit">我的礼物列表</div>
+    <ul class="giftList">
+    
+    </ul>
+    <div class="exchargeAll"><a href="javascript:void(0);">全部兑换</a></div>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1',this)"><img src="../style/img/back.png"></a>
+    <h1>兑换</h1>
+</header>
+<div class="exgiftInfo">
+ <img src=""><span class="exremaindNum"></span>
+ <div class="exgiftName"></div>
+ <div class="exgiftPrice"></div>
+ <input type="hidden" value="" id="per_id">
+</div>
+<div class="exchargeNumber"><span>请输入兑换数量</span><input type="text" value="" id="inputexchargeNumber"></div>
+<div class="exchargetotals">共计:<span>0</span>金币</div>
+<div class="exchargeBtn"><a href="javascript:void(0);">立即兑换</a></div>
+<div class="exchargeTips">温馨提示 : 礼物兑换成金币为<span>9</span>折</div>
+</div>
+<script>
+$(function(){
+	console.log($.cookie('user_id'));
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'wealthcenter',
+                  do:'my_gift',
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+				  $("#countNumber").text(data.data.gold);
+				  var html='';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[0])!="undefined"){
+						  html+='<img src="../style/img/gift1.png"><span class="remaindNum">'+data.data.present[0].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift1.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">鲜花</div>';
+					   html+='<div class="giftPrice">1金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[1])!="undefined"){
+						  html+='<img src="../style/img/gift2.png"><span class="remaindNum">'+data.data.present[1].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift2.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">苹果</div>';
+					   html+='<div class="giftPrice">18金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[2])!="undefined"){
+						   html+='<img src="../style/img/gift3.png"><span class="remaindNum">'+data.data.present[2].present_num+'</span>'; 
+					   }else{
+						    html+='<img src="../style/img/gift3.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">蛋糕</div>';
+					   html+='<div class="giftPrice">58金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[3])!="undefined"){
+						   html+='<img src="../style/img/gift4.png"><span class="remaindNum">'+data.data.present[3].present_num+'</span>';
+					   }else{
+						   html+='<img src="../style/img/gift4.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">大福袋</div>';
+					   html+='<div class="giftPrice">88金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[4])!="undefined"){
+						  html+='<img src="../style/img/gift5.png"><span class="remaindNum">'+data.data.present[4].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift5.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">大吉大利</div>';
+					   html+='<div class="giftPrice">188金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[5])!="undefined"){
+						  html+='<img src="../style/img/gift6.png"><span class="remaindNum">'+data.data.present[5].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift6.png"><span class="remaindNum">0</span>';
+					   }
+					  
+					   html+='<div class="giftName">金元宝</div>';
+					   html+='<div class="giftPrice">388金币</div>';
+					   html+='</div>';
+					   html+='<a href="javascript:void(0);" class="excharge" onClick="excharge(this);">兑换</a>';
+					   html+='</li>';
+                 $(".giftList").append(html);
+              }
+          })
+})		
+function excharge(obj){
+ showHide('wrapper2','wrapper1',obj);
+}
+</script>
+</body>
+</html>

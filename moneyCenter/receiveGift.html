@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>收到礼物</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/moneyCenter.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>收到礼物</h1>
+</header>
+<!--receiveGiftList-->
+<ul class="receiveGiftList">
+ <!-- <li>
+    <div class="receivePer"><img src="../image/roler1.png"></div>
+    <div class="receiveInfo">
+      <div class="receiveMans"><span class="who">我是谁</span>送给我<img src="../style/img/gift3.png"><span class="howMany">10</span>个</div>
+      <div class="receiveTime">2015-11-19</div>
+      <div class="receiveSaying">我是赠言我是赠言我是赠言我是赠言我是赠言我是赠言</div>
+    </div>
+  </li>-->
+</ul>
+<div class="loading">
+      <img src="../style/img/loading.gif" alt="">
+      <span>正在加载中...</span>
+</div>
+<script>
+$(function(){
+	var page=0;
+	var user_id=$.cookie('user_id');
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'wealthcenter',
+				  do:'received_gift',
+				  page:++page,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					  html+='<li>';
+					  html+='<div class="receivePer"><a href="../hisIndex_killer/index.html?user_id='+data.data[i].from_user_id+'"><img src="../image/roler1.png"></a></div>';
+					  html+='<div class="receiveInfo">';
+					  html+='<div class="receiveMans"><span class="who">'+data.data[i].username+'</span>送给我';
+					  if(data.data[i].present_name=="鲜花"){
+						 html+='<img src="../style/img/gift1.png">'; 
+					  }else if(data.data[i].present_name=="鲜花"){
+						 html+='<img src="../style/img/gift3.png">'; 
+					  }
+					  else if(data.data[i].present_name=="苹果"){
+						 html+='<img src="../style/img/gift2.png">'; 
+					  }
+					  else if(data.data[i].present_name=="蛋糕"){
+						 html+='<img src="../style/img/gift3.png">'; 
+					  }
+					  else if(data.data[i].present_name=="大福袋"){
+						 html+='<img src="../style/img/gift4.png">'; 
+					  }
+					  else if(data.data[i].present_name=="大吉大利"){
+						 html+='<img src="../style/img/gift5.png">'; 
+					  }else{
+						 html+='<img src="../style/img/gift6.png">';  
+					  }
+					  html+='<span class="howMany">'+data.data[i].present_num+'</span>个</div>';
+					  html+='<div class="sendTime">'+x(data.data[i].create_time * 1000)+'</div>';
+					  html+='<div class="receiveSaying">'+data.data[i].mesg+'</div>';
+					  html+='</div>';
+					  html+='</li>';
+                  }
+                 $(".receiveGiftList").append(html);	
+              }
+          })
+      $(window).scroll(function(){
+          var height1=$(document).height();
+          var height2=$(window).height();
+          if($(window).scrollTop()+1==(height1-height2)){
+              $('.loading').show();
+              $.ajax({
+                  url:'http://open.zhengjuan.com/api/app',
+                  data:{
+                      module:'wealthcenter',
+					  do:'received_gift',
+					  page:++page,
+					  uid: $.cookie('uid')
+                  },
+                  dataType:'jsonp',
+                  jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+                  jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                  type:'POST',
+                  success:function(data){
+					  if(data.data.length>0){
+						  var html='';
+						  for (var i=0;i<data.data.length;i++){
+                          html+='<li>';
+						  html+='<div class="receivePer"><a href="../hisIndex_killer/index.html?user_id='+data.data[i].from_user_id+'"><img src="../image/roler1.png"></a></div>';
+						  html+='<div class="receiveInfo">';
+						  html+='<div class="receiveMans"><span class="who">'+data.data[i].username+'</span>送给我';
+						  if(data.data[i].present_name=="鲜花"){
+							 html+='<img src="../style/img/gift1.png">'; 
+						  }else if(data.data[i].present_name=="鲜花"){
+							 html+='<img src="../style/img/gift3.png">'; 
+						  }
+						  else if(data.data[i].present_name=="苹果"){
+							 html+='<img src="../style/img/gift2.png">'; 
+						  }
+						  else if(data.data[i].present_name=="蛋糕"){
+							 html+='<img src="../style/img/gift3.png">'; 
+						  }
+						  else if(data.data[i].present_name=="大福袋"){
+							 html+='<img src="../style/img/gift4.png">'; 
+						  }
+						  else if(data.data[i].present_name=="大吉大利"){
+							 html+='<img src="../style/img/gift5.png">'; 
+						  }else{
+							 html+='<img src="../style/img/gift6.png">';  
+						  }
+						  html+='<span class="howMany">'+data.data[i].present_num+'</span>个</div>';
+						 html+='<div class="sendTime">'+x(data.data[i].create_time * 1000)+'</div>';
+						  html+='<div class="receiveSaying">'+data.data[i].mesg+'</div>';
+						  html+='</div>';
+						  html+='</li>';
+                      }
+                       $(".receiveGiftList").append(html);
+					  }else{
+                          $('.loading span').html('没有更多了...')
+                          $('.loading img').remove();
+                      }
+                  }
+              });
+          }else{
+              $('.loading').hide();
+          }
+      });
+});
+function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (date.getMonth() < 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+</script>
+</body>
+</html>

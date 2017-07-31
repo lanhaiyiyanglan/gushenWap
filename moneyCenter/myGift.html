@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>财富中心</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/moneyCenter.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/moneyCenter.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>我的礼物包裹</h1>
+    </header>
+    <ul class="giftList">
+    </ul>
+    <ul class="xi_list">
+        <li id="selectFre">
+          <div class="infobox">
+              <span>选择赠送好友</span>
+              <div onclick="showHide('wrapper2','wrapper1');" class="infoInput">
+                <div  class="eidtorWhere"><input type="text" name="sendFriend" id="sendFriend" value=""><input type="hidden" id="sendFriendId"></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+         <li>
+          <div class="infobox">
+              <span>赠言</span>
+              <div onclick="showHide('wrapper3','wrapper1');" class="infoInput">
+                <div  class="eidtorWhere"><input type="text" name="sendSayingText" id="sendSayingText" value=""></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+   </ul>
+   <div class="sendToBtn">
+     <input type="text" id="sendNumber" value="0">
+     <input type="button" value="赠送" id="sendBtn">
+   </div>
+   <input type="hidden" value="" id="remaindCoins">
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+   <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../style/img/back.png"></a>
+       <h1>我的好友</h1>
+       <span class="operationBtn"><input type="button" value="确定" id="selectFriendBtn"></span>
+   </header>
+   <!--freindList-->
+    <div id="letter" ></div>
+    <div  class="friendList sort_box" id="friendList">
+    </div>
+    <div class="initials">
+        <ul>
+        </ul>
+    </div>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+<header class="top">
+    <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../style/img/back.png"></a>
+    <h1>赠言</h1>
+</header>
+<div class="editorText">
+<textarea class="textarea" id="sendSayingTextarea" placeholder="输入不超过200字..." onKeyUp='feedIn("sendSayingTextarea","sendSayingTips",200)' onKeyDown='remainSub("sendSayingTextarea","sendSayingTips",200)'></textarea>
+</div>
+<div class="InputTips" id="sendSayingTips"><font>0</font>/200</div>
+<div class="sureBtn">
+   <input type="button" value="确认保存" onClick="sure('wrapper3','wrapper1','sendSayingTextarea','sendSayingText')">
+</div>
+</div>
+<script src="../style/js/jquery.charfirst.pinyin.js"></script>
+<script src="../style/js/loadFre.js"></script>
+<script>
+//加载礼物包裹列表
+$(function(){
+	console.log($.cookie('user_id'));
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'wealthcenter',
+                  do:'my_gift',
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+				  $("#remaindCoins").val(data.data.gold);
+				  var html='';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[0])!="undefined"){
+						  html+='<img src="../style/img/gift1.png"><span class="remaindNum">'+data.data.present[0].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift1.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">鲜花</div>';
+					   html+='<div class="giftPrice">1金币</div>';
+					   html+='</div>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[1])!="undefined"){
+						  html+='<img src="../style/img/gift2.png"><span class="remaindNum">'+data.data.present[1].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift2.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">苹果</div>';
+					   html+='<div class="giftPrice">18金币</div>';
+					   html+='</div>'; 
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[2])!="undefined"){
+						   html+='<img src="../style/img/gift3.png"><span class="remaindNum">'+data.data.present[2].present_num+'</span>'; 
+					   }else{
+						    html+='<img src="../style/img/gift3.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">蛋糕</div>';
+					   html+='<div class="giftPrice">58金币</div>';
+					   html+='</div>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[3])!="undefined"){
+						   html+='<img src="../style/img/gift4.png"><span class="remaindNum">'+data.data.present[3].present_num+'</span>';
+					   }else{
+						   html+='<img src="../style/img/gift4.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">大福袋</div>';
+					   html+='<div class="giftPrice">88金币</div>';
+					   html+='</div>';
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[4])!="undefined"){
+						  html+='<img src="../style/img/gift5.png"><span class="remaindNum">'+data.data.present[4].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift5.png"><span class="remaindNum">0</span>';
+					   }
+					   html+='<div class="giftName">大吉大利</div>';
+					   html+='<div class="giftPrice">188金币</div>';
+					   html+='</div>';  
+					   html+='</li>';
+					   html+='<li>';
+					   html+='<div class="giftInfo">';
+					   if(typeof(data.data.present[5])!="undefined"){
+						  html+='<img src="../style/img/gift6.png"><span class="remaindNum">'+data.data.present[5].present_num+'</span>';
+					   }else{
+						  html+='<img src="../style/img/gift6.png"><span class="remaindNum">0</span>';
+					   }
+					  
+					   html+='<div class="giftName">金元宝</div>';
+					   html+='<div class="giftPrice">388金币</div>';
+					   html+='</div>';
+					   html+='</li>';
+                 $(".giftList").append(html);
+				 $(".giftList li").click(function(){
+				   $(this).addClass("on").siblings().removeClass("on");	 
+				});
+              }
+          })
+});
+$(function(){
+  $("#selectFriendBtn").click(function(){//选中的好友填充
+	  var sendFriendName=$("#friendList li.selectOn").find(".num_name").text();
+	  var sendFriendId=$("#friendList li.selectOn").find("input[type='hidden']").val();
+	  showHide("wrapper1","wrapper2");
+	  $("#sendFriend").val(sendFriendName);
+	  $("#sendFriendId").val(sendFriendId);
+  });
+  //提交
+  $("#sendBtn").click(function(){
+	  if($(".giftList li.on").length==0){
+		  layer.msg("请点击礼物选择要赠送的礼物", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});}
+	  else if($("#sendNumber").val()==0){
+		 layer.msg("请输入要赠送的礼物数量", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});}
+	 else if($("#sendFriend").val()==''){
+	    layer.msg("请输入赠送的好友", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+	}else{
+	   var sendNumber=parseInt($("#sendNumber").val());//赠送数量
+	   var giftPrice=parseInt($(".giftList li.on").find(".giftPrice").text());//当前礼物价格
+	   var remaindNum=parseInt($(".giftList li.on").find(".remaindNum").text());//现有数量
+	   var giftName=$(".giftList li.on").find(".giftName").text();//当前送的礼物名字
+	   var remaindCoins=$("#remaindCoins").val();//现可用金币
+	   if(sendNumber<=remaindNum){//赠送数量少于当前数量
+		     var html=''
+		       html+='<p style="line-height:50px;">您当前拥有<span class="red">'+remaindNum+'</span>'+giftName+'和<span class="red">'+remaindCoins+'</span>金币</p>';
+			   html+='<p style="line-height:50px;">您需要消耗<span id="presentNum" class="red">'+sendNumber+'</span>'+giftName+'和<span id="needCoins" class="red">0</span>金币</p>';
+			 layer.confirm(html, {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false}, function(){layer.closeAll();}, function(){getInfo(); });
+	   }else{
+		   if((sendNumber-remaindNum)*giftPrice<=remaindCoins){//赠送数量大于当前数量，但所需金币数小于现有金币数
+			   var html=''
+		       html+='<p style="line-height:50px;">您当前拥有<span class="red">'+remaindNum+'</span>'+giftName+'和<span class="red">'+remaindCoins+'</span>金币</p>';
+			   html+='<p style="line-height:50px;">您需要消耗<span id="presentNum" class="red">'+remaindNum+'</span>'+giftName+'和<span id="needCoins" class="red">'+(sendNumber-remaindNum)*giftPrice+'</span>金币</p>';
+			   layer.confirm(html, {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false}, function(){layer.closeAll();}, function(){getInfo(); });
+		   }else{
+			  layer.confirm("您的账户余额不足，请充值后再赠送", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false}, function(){layer.closeAll();},
+			   function(){
+				  window.location.href="moneyManage.html";
+			  });
+		   }
+	   }
+	}
+  });
+
+});
+function getInfo(){
+	console.log($(".giftList li.on").index()+1);
+	var present_id=$(".giftList li.on").index()+1;
+	 $.ajax({
+		url:'http://open.zhengjuan.com/api/app',
+		data:{
+			  module:'wealthcenter',
+			  do:'send_gift_to',
+			  uid: $.cookie('uid'),
+			  sendto_uid:$("#sendFriendId").val(),
+			  present_id:present_id,
+			  present_num:parseInt($("#presentNum").text()),
+			  select_num:parseInt($("#sendNumber").val()),
+			  present_gold:parseInt($("#needCoin").text()),
+			  mesg:$("#sendSayingText").val()
+		 },
+		dataType:'jsonp',
+		jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+		jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+		type:'POST',
+		success:function(data){
+			if(data.code ==1){
+				layer.msg('送出成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});	
+			}else{
+				layer.msg("送出失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+			}
+		}
+	});	
+}
+</script>
+</body>
+</html>
