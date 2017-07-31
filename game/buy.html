@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>买入</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/buy.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div id="wrapper1">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>买入</h1>
+    </header>
+    <ul class="buyMain">
+      <li>
+        <div class="buyLeft">
+          <!--可用资金-->
+            <input type="text" id="p01_form_symbol"  placeholder="请输入股票名称/代码/拼音" autocomplete="off">
+        </div>
+        <div class="buyRight"><span id="gpName">股票名称</span></div>
+      </li>
+      <li>
+        <div class="buyLeft">
+          <div class="tit">价格（元）：</div>
+          <input type="text"  id="p01_form_buyprice" onKeyUp="changeShu()">
+        </div>
+        <div class="buyRight">
+          <div class="zengjian">
+            <a href="javascript:void(0);"  class="zeng" onclick="add();">+</a>
+            <a href="javascript:void(0);"  class="jian" onClick="Minus();">-</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="buyLeft">
+          <div class="tit">数量（股）：</div>
+          <input type="text" id="p01_form_ordeNum">
+        </div>
+        <div class="buyRight">
+           <div class="gNum" onClick="showHide('wrapper2','wrapper1')"><input type="text" value="全部" id="buySelect" readonly><span>></span></div>
+        </div>
+      </li>
+    </ul>
+    <div class="nowStatus">可用资金<span class="red" id="user_money">0</span>最大可买<span class="red" id="maxbuyNum">0</span>股</div>
+    <div class="sureBtn">
+           <a href="javascript:void(0);">买入下单</a>
+    </div>
+    <div class="gpInfo">
+       <div class="gpLeft">
+          <!--<p>asdf</p>
+          <span>dsff</span><span>afasdf</span>
+          <ul>
+             <li>
+               <span>今开 ：</span>
+               <div></div>
+             </li>
+             <li>
+               <span>昨收 ：</span>
+               <div>adfasd</div>
+             </li>
+             <li>
+               <span>最高 ：</span>
+               <div></div>
+             </li>
+             <li>
+               <span>最低 ：</span>
+               <div></div>
+             </li>
+             <li>
+               <span>总量 ：</span>
+               <div></div>
+             </li>
+             <li>
+               <span>总额 ：</span>
+               <div></div>
+             </li>
+          </ul>-->
+       </div>
+       <ul class="gpRight">
+          <!--<li>
+            <div class="mmText">卖5<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">卖4<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">卖3<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">卖2<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li class="borders">
+            <div class="mmText">卖1<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">买5<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">买4<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">买3<span></span></div>
+            <div class="mmNum"></div>
+          </li>
+          <li>
+            <div class="mmText">买2<span>asdfasd</span></div>
+            <div class="mmNum">asdfads</div>
+          </li>
+          <li>
+            <div class="mmText">买1<span></span></div>
+            <div class="mmNum"></div>
+          </li>-->
+       </ul>
+    </div>
+    <div class="notTime">
+    </div>
+</div>
+<div id="wrapper2" style="display:none;">
+    <header class="top">
+       <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../style/img/back.png"></a>
+       <h1>买入</h1>
+    </header>
+    <ul class="reportCause">
+      <li class="on"><input type="radio" class="radio_1" name="case" id="radio_a1" value="全部" checked="true"><label for="radio_a1">全部</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a2" value="1/2"><label for="radio_a2">1/2</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a3" value="1/3"><label for="radio_a3">1/3</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a4" value="1/4"><label for="radio_a4">1/4</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a5" value="1/5"><label for="radio_a5">1/5</label></li>
+    </ul>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+   var game_id=GetQueryString("game_id");//比赛id
+   var stock_name=decodeURI(GetQueryString("stock_name"));//股票名称
+   console.log(stock_name);
+   var stock_code=GetQueryString("stock_code");//股票代码
+   var id=GetQueryString("id");//股票id
+   $("#p01_form_symbol").val(stock_code);//填充股票代码
+   $("#gpName").text(stock_name);//填充股票名称
+   //当前可用资金
+    $.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:{
+			  module:'moni',
+			  do:'user_money',
+			  game_id:game_id,
+			  id:id,
+			  uid: $.cookie('uid')
+		  },
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  console.log(data);
+			  //当前可用资金
+			  $("#user_money").text(data.data.money);
+		  }
+   })
+   //买入
+   $(".sureBtn a").click(function(){
+	   var data={};
+	   if(game_id==' '||game_id==null){
+				data={
+				  module:'moni',
+				  do:'buy',
+				  type:'buy',
+				  stock_name:stock_name,
+				  stock_code:stock_code,
+				  buy_count:$("#p01_form_ordeNum").val(),
+				  entrust_money:$("#p01_form_buyprice").val(),
+				  uid: $.cookie('uid')
+			  }
+			}else{
+				data={
+				  module:'moni',
+				  do:'buy',
+				  type:'buy',
+				  stock_name:stock_name,
+				  stock_code:stock_code,
+				  buy_count:$("#p01_form_ordeNum").val(),
+				  entrust_money:$("#p01_form_buyprice").val(),
+				  game_id:game_id,
+				  uid: $.cookie('uid')
+			  }
+	   }
+	  $.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:data,
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  if(data.code==1){
+				layer.msg(data.msg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});	
+			  }else{
+				 layer.msg(data.errormsg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+			  }
+		  }
+	  })
+   });
+   //该股票行情
+   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'query',
+                  do:'get',
+				  project:'moni',
+				  model:'stock_info',
+				  where:encodeURIComponent("stock_code=")+stock_code
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+				  var leftInfo='';var rightInfo='';
+				  leftInfo+='';
+				  $("#p01_form_buyprice").val(data.data.currentPrice);//当前价格
+				  var user_money=$("#user_money").text();
+                  var price=$("#p01_form_buyprice").val();
+			      //最初的最大手数
+			      $("#maxbuyNum").text(Math.floor(user_money/(price*100))*100);
+				  if(data.data.currentPrice>data.data.closingPrice){
+					  leftInfo+='<p class="red">'+data.data.currentPrice+'</p>';
+				  }else if(data.data.currentPrice==data.data.closingPrice){
+					  leftInfo+='<p class="black">'+data.data.currentPrice+'</p>';
+				  }else{
+					  leftInfo+='<p class="green">'+data.data.currentPrice+'</p>';
+				  }
+				  if(data.data.profit_money>=0){
+					  leftInfo+='<span class="red">'+data.data.profit_money+'</span>'; 
+				  }else{
+					  leftInfo+='<span class="green">'+data.data.profit_money+'</span>'; 
+				  }
+				  if(data.data.profit>=0){
+					  leftInfo+='<span class="red">'+(data.data.profit*100).toFixed(2)+'%</span>';
+				  }else{
+					  leftInfo+='<span class="green">'+(data.data.profit*100).toFixed(2)+'%</span>';
+				  }
+				  leftInfo+='<ul>';
+					 leftInfo+='<li>';
+					   leftInfo+='<span>今开 ：</span>';
+					   if(data.data.OpenningPrice>data.data.closingPrice){
+						    leftInfo+='<div class="red">'+data.data.OpenningPrice+'</div>'; 
+					   }else if(data.data.OpenningPrice==data.data.closingPrice){
+						    leftInfo+='<div class="black">'+data.data.OpenningPrice+'</div>'; 
+					   }else{
+						   leftInfo+='<div class="green">'+data.data.OpenningPrice+'</div>';  
+					   }
+					 leftInfo+='</li>';
+					 leftInfo+='<li>';
+					 leftInfo+='<span>昨收 ：</span>';
+					 leftInfo+='<div class="black">'+data.data.closingPrice+'</div>';  
+					 leftInfo+='</li>';
+					 leftInfo+='<li>';
+					   leftInfo+='<span>最高 ：</span>';
+					   if(data.data.hPrice>data.data.closingPrice){
+						   leftInfo+='<div class="red">'+data.data.hPrice+'</div>';
+					   }else if(data.data.hPrice==data.data.closingPrice){
+						   leftInfo+='<div class="black">'+data.data.hPrice+'</div>';
+					   }else{
+						  leftInfo+='<div class="green">'+data.data.hPrice+'</div>'; 
+					   }
+					 leftInfo+='</li>';
+					 leftInfo+='<li>';
+					   leftInfo+='<span>最低 ：</span>';
+					   if(data.data.lPrice>data.data.closingPrice){
+						 leftInfo+='<div class="red">'+data.data.lPrice+'</div>'; 
+					   }else if(data.data.lPrice==data.data.closingPrice){
+						 leftInfo+='<div class="black">'+data.data.lPrice+'</div>';  
+					   }else{
+						leftInfo+='<div class="green">'+data.data.lPrice+'</div>';   
+					   }
+					 leftInfo+='</li>';
+					 leftInfo+='<li>';
+					   leftInfo+='<span>总量 ：</span>';
+					   leftInfo+='<div>'+parseInt(data.data.totalNumber*0.0001)+'万</div>';
+					 leftInfo+='</li>';
+					 leftInfo+='<li>';
+					   leftInfo+='<span>总额 ：</span>';
+					   leftInfo+='<div>'+parseInt(data.data.turnover*0.0001)+'万</div>';
+					 leftInfo+='</li>';
+			      leftInfo+='</ul>';
+				  $(".gpLeft").append(leftInfo);
+				  //右边
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">卖5';
+					if(data.data.sellFivePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.sellFivePrice+'</span>';
+					}else if(data.data.sellFivePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.sellFivePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.sellFivePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.sellFive+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">卖4';
+					if(data.data.sellFourPrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.sellFourPrice+'</span>';
+					}else if(data.data.sellFourPrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.sellFourPrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.sellFourPrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.sellFour+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">卖3';
+					if(data.data.sellThreePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.sellThreePrice+'</span>';
+					}else if(data.data.sellThreePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.sellThreePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.sellThreePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.sellThree+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">卖2';
+					if(data.data.sellTwoPrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.sellTwoPrice+'</span>';
+					}else if(data.data.sellTwoPrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.sellTwoPrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.sellTwoPrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.sellTwo+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li class="borders">';
+					rightInfo+='<div class="mmText">卖1';
+					if(data.data.sellOnePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.sellOnePrice+'</span>';
+					}else if(data.data.sellOnePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.sellOnePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.sellOnePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.sellOne+'</div>';
+				  rightInfo+='</li>';
+				   rightInfo+='<li>';
+					rightInfo+='<div class="mmText">买1';
+					if(data.data.buyOnePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.buyOnePrice+'</span>';
+					}else if(data.data.buyOnePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.buyOnePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.buyOnePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.buyOne+'</div>';
+				  rightInfo+='</li>';
+				   rightInfo+='<li>';
+					rightInfo+='<div class="mmText">买2';
+					if(data.data.buyTwoPrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.buyTwoPrice+'</span>';
+					}else if(data.data.buyTwoPrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.buyTwoPrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.buyTwoPrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.buyTwo+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">买3';
+					if(data.data.buyThreePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.buyThreePrice+'</span>';
+					}else if(data.data.buyThreePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.buyThreePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.buyThreePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.buyThree+'</div>';
+				  rightInfo+='</li>';
+		           rightInfo+='<li>';
+					rightInfo+='<div class="mmText">买4';
+					if(data.data.buyFourPrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.buyFourPrice+'</span>';
+					}else if(data.data.buyFourPrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.buyFourPrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.buyFourPrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.buyFour+'</div>';
+				  rightInfo+='</li>';
+				  rightInfo+='<li>';
+					rightInfo+='<div class="mmText">买5';
+					if(data.data.buyFivePrice>data.data.closingPrice){
+						rightInfo+='<span class="red">'+data.data.buyFivePrice+'</span>';
+					}else if(data.data.buyFivePrice==data.data.closingPrice){
+						rightInfo+='<span class="black">'+data.data.buyFivePrice+'</span>';
+					}else{
+						rightInfo+='<span class="green">'+data.data.buyFivePrice+'</span>';
+					}
+					rightInfo+='</div>';
+					rightInfo+='<div class="mmNum">'+data.data.buyFive+'</div>';
+				  rightInfo+='</li>';
+				  $(".gpRight").append(rightInfo);
+              }
+          }) 
+		   //当前是否是交易时间
+		   $.ajax({
+				  url:'http://open.zhengjuan.com/api/app',
+				  data:{
+					  module:'moni',
+					  do:'market',
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					   if(data.data.today==0){
+						 layer.msg("今天不开市哟！", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+						 $(".notTime").show();
+						 $(".notTime").append("<p>今天不开市</p><p>非交易时间买卖股票无法成交</p>");
+					  }else if(data.data.today==1&&data.data.time==0){
+						 $(".notTime").show();
+						 $(".notTime").append("<p>非交易时间买卖股票无法成交</p>");
+						layer.msg("现在不是交易时间", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+					  } 
+				  }
+		   })
+});
+ //价格变化最大手数和数量（股）变化
+function changeShu(){
+	var price=$("#p01_form_buyprice").val();
+	$("#maxbuyNum").text(Math.floor($("#user_money").text()/(price*100))*100);
+	var numType='';//手数的几分之几
+    if($("#buySelect").val()=="全部"){
+	   numType=1;
+   }else if($("#buySelect").val()=="1/2"){
+	   numType=0.5;
+   }
+   else if($("#buySelect").val()=="1/3"){
+	   numType=0.33;
+   }
+   else if($("#buySelect").val()=="1/4"){
+	   numType=0.25;
+   }else{
+	  numType=0.2; 
+   }
+   var maxNum=parseInt($("#maxbuyNum").text());//最大手数
+   $("#p01_form_ordeNum").val(Math.floor(maxNum/100*numType)*100);
+}
+function add(){//委托价格增加
+    var price=$("#p01_form_buyprice").val();
+	price=parseFloat(price)+parseFloat(0.01);
+	$("#p01_form_buyprice").val(price.toFixed(2));
+	changeShu();
+}
+function Minus(){//委托价格减少
+    var price=$("#p01_form_buyprice").val();
+	price=parseFloat(price)-parseFloat(0.01);
+	$("#p01_form_buyprice").val(price.toFixed(2));
+	changeShu();
+}
+</script>
+</body>
+</html>

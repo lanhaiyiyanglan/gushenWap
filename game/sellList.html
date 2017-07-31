@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>卖出列表</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>卖出列表</h1>
+</header>
+<ul class="titList">
+  <li>
+    <p>股票名称</p>
+    <p>股票代码</p>
+  </li>
+  <li>
+    <p>成本价(元)</p>
+    <p>盈亏率(%)</p>
+  </li>
+  <li>
+    <p>可卖股数(股)</p>
+    <p>盈亏额(元)</p>
+  </li>
+  <li>
+     <div>卖出</div>
+  </li>
+</ul>
+<div class="kongcang"><img src="../style/img/null.png"></div>
+<ul class="operationList">
+ <!-- <li>
+     <ul>
+      <li>
+        <p>西部建设</p>
+        <p>002302</p>
+      </li>
+      <li>
+        <p>13.59</p>
+        <p>600</p>
+      </li>
+      <li>
+        <p>2016-03-03</p>
+        <p>16:01:25</p>
+      </li>
+      <li>
+        <a href="javascript:void(0);" class="sellOperation">卖出下单</a>
+      </li>
+     </ul>
+  </li>-->
+</ul>
+<div class="notTime">
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+	var game_id=GetQueryString("game_id");
+	 //当前是否是交易时间
+	   $.ajax({
+			  url:'http://open.zhengjuan.com/api/app',
+			  data:{
+				  module:'moni',
+				  do:'market',
+			  },
+			  type:'POST',
+			  dataType:'jsonp',
+			  success:function(data){
+				   if(data.data.today==0){
+					 layer.msg("今天不开市哟！", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+					 $(".notTime").show();
+					 $(".notTime").append("<p>今天不开市</p><p>非交易时间买卖股票无法成交</p>");
+				  }else if(data.data.today==1&&data.data.time==0){
+					 $(".notTime").show();
+					 $(".notTime").append("<p>非交易时间买卖股票无法成交</p>");
+					layer.msg("现在不是交易时间", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+				  } 
+			  }
+	   })
+	    var data={};
+		if(game_id==' '||game_id==null){//game_id=null时是
+			 data={
+				module:'moni',
+				do:'sell_list',
+				uid: $.cookie('uid')
+			};
+		}else{
+		   data={
+				module:'moni',
+				do:'sell_list',
+				game_id:GetQueryString("game_id"),
+				uid: $.cookie('uid')
+			};
+		}
+	 $.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:data,
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  var html='';
+			  if(data.data.length<=0){
+				 $(".kongcang").show();
+				 $(".operationList").hide();
+			  }else{
+					 for (var i=0;i<data.data.length;i++){
+					 html+='<li id='+data.data[i].id+'>';
+						 html+='<ul>';
+						  html+='<li>';
+							html+='<p>'+data.data[i].stock_name+'</p>';
+							html+='<p>'+data.data[i].stock_code+'</p>';
+						  html+='</li>';
+						  html+='<li>';
+							html+='<p>'+data.data[i].position_cost+'</p>';
+							if(data.data[i].profit>0){
+								html+='<p class="red">'+data.data[i].profit+'%</p>';
+							}else if(data.data[i].profit==0){
+								html+='<p class="black">'+data.data[i].profit+'%</p>';
+							}else{
+								html+='<p class="green">'+data.data[i].profit+'%</p>';
+							}
+						  html+='</li>';
+						  html+='<li>';
+							html+='<p>'+data.data[i].available_positions+'</p>';
+							if(data.data[i].profit_money>0){
+								html+='<p class="red">'+data.data[i].profit_money+'</p>';
+							}else if(data.data[i].profit_money==0){
+								html+='<p class="black">'+data.data[i].profit_money+'</p>';
+							}else{
+								html+='<p class="green">'+data.data[i].profit_money+'</p>';
+							}
+						  html+='</li>';
+						  html+='<li>';
+						    if(game_id==' '||game_id==null){
+							  html+='<a href="sell.html?stock_name='+encodeURI(encodeURI(data.data[i].stock_name))+'&stock_code='+data.data[i].stock_code+'&id='+data.data[i].id+'" class="sellOperation">卖出下单</a>';	
+							}else{
+							  html+='<a href="sell.html?game_id='+game_id+'&stock_name='+encodeURI(encodeURI(data.data[i].stock_name))+'&stock_code='+data.data[i].stock_code+'&id='+data.data[i].id+'" class="sellOperation">卖出下单</a>';
+							}
+						  html+='</li>';
+						 html+='</ul>';
+					html+='</li>';
+				  }
+				  $(".operationList").append(html);
+			  }
+		  }
+	  })
+ }); 
+</script>
+</body>
+</html>

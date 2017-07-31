@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>交易明细</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>交易明细</h1>
+    </header>
+</div>
+<ul class="tradeList">
+</ul>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+ $(function(){
+	 var game_id=GetQueryString("game_id");
+	 var uid=$.cookie('uid');
+	 var stock_code=GetQueryString("stock_code");
+	 var data={}; 
+	 if(game_id!=' '){
+		 data={
+			  module:'query',
+              do:'get',
+			  project:'moni',
+			  model:'stock',
+			  where:"stock_type="+1+"&uid="+uid+"&stock_code="+stock_code+"&game_id="+game_id
+	    };  
+	 }else{
+		data={
+			  module:'query',
+              do:'get',
+			  project:'moni',
+			  model:'stock',
+			  where:"stock_type="+1+"&uid="+uid+"&stock_code="+stock_code
+	    };   
+	 }	
+	 $.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:data,
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  console.log(data);
+			  var html='';
+			  for (var i=0;i<data.data.length;i++){
+				  html+='<li>';
+				   html+='<div class="tradeStatus">';
+				   if(data.data[i].type==1){
+					   html+='<span class="buyStatus">买</span>';
+				   }else{
+					   html+='<span class="sellStatus">卖</span>';
+				   }
+				   html+='</div>';
+				   html+='<div class="tradeInfo">';
+				   html+='<div class="tradeNames">'+data.data[i].stock_name+'('+data.data[i].stock_code+')</div>';
+					   html+='<ul>';
+						 html+='<li>成交价格 ：'+data.data[i].buy_stock_money+'</li>';
+						 html+='<li>成交数量 ：<span class="red">'+data.data[i].buy_count+'</span></li>';
+						 html+='<li>成交金额 ：：<span class="red">'+data.data[i].buy_count_money+'</span></li>';
+						 html+='<li>成交时间 ：'+x(data.data[i].created_at* 1000)+'</li>';
+					   html+='</ul>';
+				   html+='</div>';
+				 html+='</li>';
+			  }
+			  $(".tradeList").append(html);
+		  }
+	  })
+ }); 
+ function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (date.getMonth() < 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+</script>
+</body>
+</html>

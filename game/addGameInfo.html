@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>基本资料</title>
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.form.js"></script>
+<script src="../style/js/game.js"></script>
+<script src="../style/js/layer.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/upfile.js"></script>
+<script src="../style/js/award.js"></script>
+<link rel="stylesheet" href="../style/css/sm.css">
+<link rel="stylesheet" href="../style/css/sm-extend.css">
+</head>
+<body style="background:#eeeeee;">
+<div id="wrapper1">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>比赛基本信息</h1>
+   <span class="operationBtn"><input type="button" value="下一步"  id="gameBasic"></span>
+</header>
+<!--form-->
+<form id="gameForm">
+   <ul class="xi_list">
+        <li onClick="showHide('wrapper2','wrapper1')">
+          <div class="infobox">
+              <span>主办方名称</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="game_sponsor"  value="" type="text"  id='game_sponsor'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+         <li onClick="showHide('wrapper3','wrapper1')">
+          <div class="infobox">
+              <span>联系人</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="contact_name"  value="" type="text"  id='contact_name'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+         <li onClick="showHide('wrapper4','wrapper1')">
+          <div class="infobox">
+              <span>联系电话</span>
+              <div class="infoInput">
+                <div  class="eidtorWhere"><input name="contact_mobile"  value="" type="text"  id='contact_mobile'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper5','wrapper1')">
+          <div class="infobox">
+              <span>邮箱</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="contact_email" value="" type="text"  id="contact_email"></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper6','wrapper1')">
+          <div class="infobox">
+              <span>比赛名称</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="game_title"  value="" type="text"  id='game_title'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('wrapper7','wrapper1')">
+          <div class="infobox">
+              <span>比赛介绍</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="game_intro"  value="" type="text"  id='game_intro'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li id="uploaAward"><input type="hidden" value="7" id="clickTimes">
+          <div class="infobox">
+              <span>添加奖品</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="addAward"  readonly="readonly" value="" type="text"  id='addAward'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+    </ul>
+	<ul  class="xi_list addItems">
+	   <input type="hidden" value="" id="delIndex">
+	</ul>
+</form>
+</div>
+<!--wrapper2-->
+<div id="wrapper2" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>主办方名称</h1>
+    </header>
+    <div class="editorText">
+    <input placeholder="输入主办方名称" id="sponsor" onKeyDown='remainSub2("sponsor",15)'>
+    </div>
+    <div class="InputTips">名称不得超过15个字</div>
+    <div class="sureBtn">
+       <input type="button" value="保存" onClick="sure('wrapper2','wrapper1','sponsor','game_sponsor','game_sponsor_hidden')">
+    </div>
+</div>
+<!--wrapper3-->
+<div id="wrapper3" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper3','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>联系人</h1>
+    </header>
+    <div class="editorText">
+     <input placeholder="输入联系人" id="contact" onKeyDown='remainSub2("contact",10)'>
+    </div>
+    <div class="InputTips">联系人不得超过10个字</div>
+    <div class="sureBtn">
+       <input type="button" value="保存" onClick="sure('wrapper3','wrapper1','contact','contact_name','contact_name_hidden')">
+    </div>
+</div>
+<!--wrapper4-->
+<div id="wrapper4" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper4','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>联系电话</h1>
+    </header>
+    <div class="editorText">
+     <input placeholder="输入联系电话" id="mobile">
+    </div>
+    <div class="sureBtn">
+       <input type="button" value="保存">
+    </div>
+</div>
+<!--wrapper5-->
+<div id="wrapper5" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper5','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>电子邮箱</h1>
+    </header>
+    <div class="editorText">
+     <input placeholder="输入电子邮箱" id="email">
+    </div>
+    <div class="sureBtn">
+       <input type="button" value="保存">
+    </div>
+</div>
+<!--wrapper6-->
+<div id="wrapper6" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper6','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>比赛名称</h1>
+    </header>
+    <div class="editorText">
+     <input placeholder="输入比赛名称" id="title" onKeyDown='remainSub2("title",20)'>
+    </div>
+    <div class="InputTips">比赛名称不得超过20个字</div>
+    <div class="sureBtn">
+       <input type="button" value="保存" onClick="sure('wrapper6','wrapper1','title','game_title','game_title_hidden')">
+    </div>
+</div>
+<!--wrapper7-->
+<div id="wrapper7" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper7','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>比赛介绍</h1>
+    </header>
+    <div class="editorText">
+    <textarea class="textarea" id="intro" placeholder="输入不超过500字..." onKeyUp='feedIn("intro","gameNameTips",500)' onKeyDown='remainSub("intro","gameNameTips",500)'></textarea>
+    </div>
+    <div class="InputTips" id="gameNameTips"><font>0</font>/500</div>
+    <div class="sureBtn">
+       <input type="button" value="保存" onClick="sure('wrapper7','wrapper1','intro','game_intro','game_intro_hidden')">
+    </div>
+</div>
+<!--wrapper8-->
+<div class="upWrappers">
+<div id="wrapper8" style="display:none;">
+   <div id="giftAdd8" class="tmd">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('wrapper8','wrapper1')"><img src="../style/img/back.png"></a>
+        <h1>比赛名称</h1>
+	    <span class="operationBtn delAward" onClick="delAward(this);"><input type="button" value="删除"></span>
+    </header>
+    <div class="editorText">
+     <input placeholder="奖项名称.." class="title">
+    </div>
+    <div class="InputTips">如总收益第一名</div>
+    <div class="editorText" onClick="showHide('awardTypes8','giftAdd8')">
+     <input placeholder="奖项类型" readonly class="type" title=""><img src="../style/img/right.png" id="awardTypeImg">
+    </div>
+    <div class="editorText">
+     <input placeholder="名次..." class="rank">
+    </div>
+    <div class="InputTips">如为前十名请填写：1-10，单个名次直接填写对应的数字，如为无任何名次的填写0</div>
+    <div class="editorText">
+     <input placeholder="奖品名称..." class="prize">
+    </div>
+    <div class="InputTips">如苹果手机IPHONE4一部</div>
+    <div class="addBox">
+            <ul id="addImg">
+               <li id="addBtn">
+                 <img src="../style/img/addAlbum.png" id="imagesAdd">
+                 <input id="file" type="file"  onChange="upload(event,this)">
+               </li>
+            </ul>
+    </div>
+    <div class="sureBtn">
+           <input type="button" value="确认保存" onClick="addAwardInfo(this);">
+    </div>
+   </div>
+   <!--awardTypes-->
+    <div id="awardTypes8" style="display:none;">
+        <header class="top">
+            <a href="javascript:void(0);" onClick="showHide('awardTypes8','giftAdd8')" class="back"><img src="../style/img/back.png"></a>
+            <h1>奖项类型</h1>
+        </header>
+        <ul class="joinInfoList">
+           <li onClick="setAward(this);">总榜奖</li>
+           <li onClick="setAward(this);">周榜奖</li>
+           <li onClick="setAward(this);">月榜奖</li>
+        </ul>
+    </div>
+</div>
+</div>
+<!--------------------------------------------------------第二步---------------------------------------------------------------------------->
+<div id="step2" style="display:none;">
+    <header class="top">
+       <a href="javascript:void(0);" class="back" onClick="showHide('step2','wrapper1')"><img src="../style/img/back.png"></a>
+       <h1>比赛规则设置</h1>
+       <span class="operationBtn"><input type="button" value="下一步"  id="gameRuler"></span>
+    </header>
+    <ul class="xi_list">
+        <li onClick="showHide('step21','step2')">
+          <div class="infobox">
+              <span>比赛LOGO</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="game_thumb"  value="" type="text"  id='game_thumb'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('step22','step2')">
+          <div class="infobox">
+              <span>比赛横向大图</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input name="game_img"  value="" type="text"  id='game_img'></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('step23','step2')">
+          <div class="infobox">
+              <span>比赛赛程设置</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input value="" type="text"><input type="hidden" id="ab"><input type="hidden" id="ae"><input type="hidden" id="pb"><input type="hidden" id="pe"></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+        <li onClick="showHide('step24','step2')">
+          <div class="infobox">
+              <span>起始资金设置</span>
+              <div class="infoInput">
+                 <div  class="eidtorWhere"><input  value="" type="text" ><input type="hidden" id="gm"><input type="hidden" id="gc"><input type="hidden" id="ge"><input type="hidden" id="gt"></div><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+        </li>
+    </ul>
+</div>
+<div id="step21" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('step21','step2')"><img src="../style/img/back.png"></a>
+        <h1>比赛LOGO</h1>
+    </header>
+    <div class="addBox addBox2">
+            <ul id="addImg">
+               <li id="addBtn">
+                 <img src="../style/img/addAlbum.png" id="imagesAdd">
+                 <input id="file" type="file"  onChange="upload(event,this)">
+               </li>
+            </ul>
+    </div>
+    <p class="picText">只能上传一张</p>
+    <div class="sureBtn">
+           <input type="button" value="保存" onClick="upgameImg(this,'game_thumb','game_thumb_hidden','gameLogo')">
+    </div>
+</div> 
+<div id="step22" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('step22','step2')"><img src="../style/img/back.png"></a>
+        <h1>比赛横向大图</h1>
+    </header>
+    <div class="addBox addBox2">
+            <ul id="addImg">
+               <li id="addBtn">
+                 <img src="../style/img/addAlbum.png" id="imagesAdd">
+                 <input id="file" type="file"  onChange="upload(event,this)">
+               </li>
+            </ul>
+    </div>
+    <p class="picText">只能上传一张</p>
+    <div class="sureBtn">
+           <input type="button" value="保存" onClick="upgameImg(this,'game_img','game_img_hidden','gameBigImg')">
+    </div>
+</div> 
+<div id="step23" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('step23','step2')"><img src="../style/img/back.png"></a>
+        <h1>比赛赛程设置</h1>
+    </header>
+    <ul class="xi_list">
+         <li>
+          <div class="infobox">
+              <span>报名时间</span>
+              <div class="infoInput edu_time">
+                <input type="text" name="apply_begin_time" class="gametimes" id="apply_begin_time" readonly placeholder=" 报名开始时间" value="" onchange="setInfo(this,'apply_begin_time_hidden','apply_begin_time_span')">至
+                <input type="text" name="apply_end_time" class="gametimes" id="apply_end_time" readonly placeholder="报名结束时间" value="" onchange="setInfo(this,'apply_end_time_hidden','apply_end_time_span')">
+              </div>
+          </div>
+         </li>
+         <li>
+          <div class="infobox">
+              <span>比赛时间</span>
+              <div class="infoInput edu_time">
+                <input type="text" name="play_begin_time" class="gametimes" id="play_begin_time" readonly placeholder="比赛开始时间" value="" onchange="setInfo(this,'play_begin_time_hidden','play_begin_time_span')">至
+                <input type="text" name="play_end_time" class="gametimes" id="play_end_time" readonly placeholder="比赛结束时间" value="" onchange="setInfo(this,'play_end_time_hidden','play_end_time_span')">
+              </div>
+          </div>
+         </li>
+    </ul>
+    <div class="sureBtn">
+           <input type="button" value="保存" id="timeSave">
+    </div>
+</div> 
+<div id="step24" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onClick="showHide('step24','step2')"><img src="../style/img/back.png"></a>
+        <h1>比赛赛程设置</h1>
+    </header>
+    <ul class="xi_list">
+         <li onclick="showHide('step24','step241')">
+          <div class="infobox">
+              <span>起始资金</span>
+              <div class="infoInput">
+                <div class="eidtorWhere"><input type="text" id="game_money" name="game_money" value=""></div>
+                <div class="forEditor"><img src="../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+		 <li onclick="showHide('step24','step242')">
+          <div class="infobox">
+              <span>比赛模式</span>
+              <div class="infoInput">
+                <div class="eidtorWhere"><input type="text" id="game_creator" name="game_creator" value=""></div>
+                <div class="forEditor"><img src="../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+		 <li onclick="showHide('step24','step243')">
+          <div class="infobox">
+              <span>比赛内容</span>
+              <div class="infoInput">
+                <div class="eidtorWhere"><input type="text" id="game_event" name="game_event" value="" ></div>
+                <div class="forEditor"><img src="../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+         <li onclick="showHide('step24','step244')">
+           <div class="infobox">
+              <span>比赛类型</span>
+              <div class="infoInput">
+                <div class="eidtorWhere"><input type="text" id="game_type" name="game_type" value=""></div>
+                <div class="forEditor"><img src="../style/img/right.png"></div>
+              </div>
+          </div>
+         </li>
+    </ul>
+    <div class="sureBtn">
+           <input type="button" value="保存" id="gameRoad">
+    </div>
+</div> 
+<div id="step241" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onclick="showHide('step24','step241')"><img src="../style/img/back.png"></a>
+        <h1>起始资金</h1>
+    </header>
+    <ul class="stepList" id="stepList1">
+      <li class="on">10万</li>
+      <li>100万</li>
+    </ul>
+</div> 
+<div id="step242" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onclick="showHide('step24','step242')"><img src="../style/img/back.png"></a>
+        <h1>比赛模式</h1>
+    </header>
+    <ul class="stepList" id="stepList2">
+      <li>有奖大赛<input type="hidden" value="77"></li>
+	  <li>高校大赛<input type="hidden" value="8"></li>
+	  <li>券商大赛<input type="hidden" value="9"></li>
+	  <li>团队大赛<input type="hidden" value="11"></li>
+	  <li>其他大赛<input type="hidden" value="353"></li>
+	  <li>特殊大赛<input type="hidden" value="99"></li>
+    </ul>
+</div> 
+<div id="step243" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onclick="showHide('step24','step243')"><img src="../style/img/back.png"></a>
+        <h1>比赛内容</h1>
+    </header>
+    <ul class="stepList" id="stepList3">
+      <li>股票<input type="hidden" value="9865"></li>
+	  <li>基金<input type="hidden" value="34233"></li>
+	  <li>股指期货<input type="hidden" value="13424"></li>
+	  <li>商品期货<input type="hidden" value="93413"></li>
+    </ul>
+</div> 
+<div id="step244" style="display:none;">
+    <header class="top">
+        <a href="javascript:void(0);" class="back" onclick="showHide('step24','step244')"><img src="../style/img/back.png"></a>
+        <h1>比赛类型</h1>
+    </header>
+    <ul class="stepList" id="stepList4">
+      <li>公开赛<input type="hidden" value="901"></li>
+	  <li>邀请赛<input type="hidden" value="293"></li>
+    </ul>
+</div>   
+<!--------------------------------------------------------第三步---------------------------------------------------------------------------->
+<div id="step3" style="display:none;">
+  <form id="createrSureForm" method="post" action="http://open.zhengjuan.com/api/app">
+    <input type="hidden" name="module" value="moni">
+	<input type="hidden" name="do" value="create_game">
+	<input type="hidden" name="uid" value="" id="uid">
+	<header class="top">
+	   <a href="javascript:void(0);" onClick="showHide('step2','step3')" class="back"><img src="../style/img/back.png"></a>
+	   <h1>申请信息确认</h1>
+	   <span class="operationBtn"><input type="button" value="提交" class="tijiaoSure"></span>
+	</header>
+    <div class="sureTit">比赛基本信息</div>
+	<ul class="sureList">
+	   <li><span>主办方名称 ：</span><div><input type="text"  id="game_sponsor_hidden" name="game_sponsor" readonly></div></li>
+	   <li><span>联系人 ：</span><div><input type="text"  id="contact_name_hidden" name="contact_name" readonly></div></li>
+	   <li><span>联系电话 ：</span><div><input type="text" id="contact_mobile_hidden" name="contact_mobile" readonly></div></li>
+	   <li><span>电子邮箱 ：</span><div><input type="text" id="contact_email_hidden" name="contact_email" readonly></div></li>
+	   <li><span>比赛名称 ：</span><div><input type="text" id="game_title_hidden" name="game_title" readonly></div></li>
+	   <li><span>比赛介绍 ：</span><div><input type="text" id="game_intro_hidden" name="game_intro" readonly></div></li>
+	</ul>
+	<div class="sureText">比赛奖项设置</div>
+	<div class="tableContainer">
+		<table class="sureTable">
+		   <tr>
+			 <th>奖项名称</th>
+			 <th>奖项类型</th>
+			 <th>比赛名次</th>
+			 <th>奖品名称</th>
+		   </tr>
+		</table>
+		<table class="sureTable sureTable2">
+		</table>
+	</div>
+	<div class="sureTit">比赛规则设置</div>
+	<div class="gameLogShow">比赛LOGO：<img src="" class="gameLogo"><input type="hidden" id="game_thumb_hidden" name="game_thumb"></div>
+	<div class="sureText">比赛横向大图</div>
+    <div class="bigImg"><img src="" class="gameBigImg" ><input type="hidden" id="game_img_hidden" name="game_img"></div>
+	<div class="sureText">比赛赛程设置：</div>
+	<ul class="gameSet">
+	  <li>报名时间 ：<span class="apply_begin_time_span"></span><input type="hidden" id="apply_begin_time_hidden" name="apply_begin_time">至<span class="apply_end_time_span"></span><input type="hidden" id="apply_end_time_hidden" name="apply_end_time"></li>
+	  <li>比赛时间 ：<span class="play_begin_time_span"></span><input type="hidden" id="play_begin_time_hidden" name="play_begin_time">至<span class="play_end_time_span"></span><input type="hidden" id="play_end_time_hidden" name="play_end_time"></li>
+	  <li>起始资金 ：<input type="text" id="game_money_hidden" name="game_money" readonly></li>
+	  <li>比赛模式 ：<span class="game_creator_span"></span><input type="hidden" id="game_creator_hidden" name="game_creator"></li>
+	  <li>比赛内容 ：<span class="game_event_span"></span><input type="hidden" id="game_event_hidden" name="game_event"></li>
+	  <li>比赛类型 ：<span class="game_type_span"></span><input type="hidden" id="game_type_hidden" name="game_type"></li>
+	  <li>报名费用设置 ：免费</li>
+	</ul>
+	<div class="sureBtn">
+       <a href="javascript:void(0);" class="tijiaoSure">提交</a>
+    </div>
+ </form>
+</div>
+<script type='text/javascript'  src="../style/expand/zepto.js" charset='utf-8'></script>
+<script type='text/javascript' src="../style/expand/sm.js" charset='utf-8'></script>
+<script type='text/javascript'  src="../style/expand/sm-extend.js" charset='utf-8'></script>
+<script type="text/javascript">
+Zepto(function($){
+ $("#apply_begin_time").calendar({onChange: function(p, v, d) {console.log(p, v, d);}});
+ $("#apply_end_time").calendar({onChange: function(p, v, d) {console.log(p, v, d);}});
+ $("#play_begin_time").calendar({onChange: function(p, v, d) {console.log(p, v, d);}});
+ $("#play_end_time").calendar({onChange: function(p, v, d) {console.log(p, v, d);}});
+});
+</script>
+</body>
+</html>

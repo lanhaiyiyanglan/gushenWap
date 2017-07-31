@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>定制模拟赛</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<link rel="stylesheet" href="../style/css/mmenu.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/expand/mmenu.js"></script>
+<script src="../style/js/game.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#menu")
+                    .mmenu({
+                        navbar: {title: '搜索比赛'},
+                        navbars: [{content: ["prev", "title"]}],
+                        extensions 	: [ "theme-white", "border-full", "effect-listitems-slide" ],
+                        offCanvas: {position: "right"}
+                    }).on( 'click','a[href^="#/"]',function() {return false;}
+            );
+        });
+</script>
+</head>
+
+<body>
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>模拟比赛</h1>
+   <a href="#menu" class="seIncon"><img src="../style/img/shaixuan.png"></a>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li><a href="cgGame.html">常规模拟赛</a></li>
+      <li class="on"><a href="javascript:void(0);">定制模拟赛</a></li>
+    </ul>
+    <ul id="createList">
+    </ul>
+    <div class="sureBtn">
+       <a href="applyFor.html">创建比赛</a>
+    </div>
+</div>
+<!--右侧导航-->
+<form>
+    <nav id="menu">
+        <ul>
+             <li>
+                <span><cite>比赛模式</cite><input type="text"  readonly class="gameModel" title="" value="不限"  /></span>
+                <ul class="gameModel_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>比赛状态</cite><input type="text"  readonly class="gameStatus" title="" value="不限"  /></span>
+                <ul class="gameStatus_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>比赛内容</cite><input type="text"  readonly class="gameContent" title="" value="不限"  /></span>
+                <ul class="gameContent_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>比赛性质</cite><input type="text"  readonly class="gameNature" title="" value="不限"  /></span>
+                <ul class="gameNature_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                </ul>
+            </li>
+            <div class="findBtn">
+               <input type="button" class="findSure" value="确定" /> 
+               <input type="reset" class="findReset" value="取消" /> 
+            </div>
+        </ul>
+    </nav>
+</form>
+<script>
+$(function(){
+	 if (typeof($.cookie('password')) == 'undefined') {
+            window.location.href = '../../logRegPassword/index.html'
+     }
+	console.log($.cookie('user_id'));
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'game_lists',
+				  status:1,
+                  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					   html+='<li><a href="gameDetail.html?game_id='+data.data[i].game_id+'">';
+					   html+='<div class="createLeft">';
+					   html+='<img src="../image/cr1.png"><span>报名中</span>';
+					   html+='</div>';
+					   html+='<div class="createRight">';
+					   html+='<div class="createName">'+data.data[i].game_title+'</div>';
+					   html+='<p>主办方：<span>'+data.data[i].game_sponsor+'</span></p>';
+					   html+='<p>报名人数：<span>'+data.data[i].count+'</span>人</p>';
+					   html+='<p>报名时间：<span>'+x(data.data[i].apply_begin_time * 1000)+'</span> -<span>'+x(data.data[i].apply_end_time * 1000)+'</span></p>';
+				       html+='<p>比赛时间：<span>'+x(data.data[i].play_begin_time * 1000)+'</span> -<span>'+x(data.data[i].play_end_time * 1000)+'</span></p>';
+					   html+='</div>';
+					   if(data.data[i].isapply==1){
+					    html+='<div class="join"></div>';   
+					   }
+					   html+='</a></li>';	
+                  }
+                 $("#createList").append(html);	 
+              }
+          })
+		   //填充筛选条件
+		  $.ajax({
+			url:'http://open.zhengjuan.com/api/app',
+			type:'POST',
+			dataType:'jsonp',
+			data:{
+				module:'moni',
+				do:'get_select',
+				select_type:'game'
+			},
+			success:function(data){
+				var game_creator='';var game_progress='';var game_event='';var game_type='';
+				for(var i=0;i<data.data.game_creator.length;i++){
+				  game_creator+='<li><a href="#mm-1"  title="'+data.data.game_creator[i].code+'">'+data.data.game_creator[i].name+'</a></li>';	
+				}
+				$(".gameModel_item").append(game_creator);
+				for(var i=0;i<data.data.game_progress.length;i++){
+				  game_progress+='<li><a href="#mm-1"  title="'+data.data.game_progress[i].code+'">'+data.data.game_progress[i].name+'</a></li>';	
+				}
+				$(".gameStatus_item").append(game_progress);
+				for(var i=0;i<data.data.game_event.length;i++){
+				  game_event+='<li><a href="#mm-1"  title="'+data.data.game_event[i].code+'">'+data.data.game_event[i].name+'</a></li>';	
+				}
+				$(".gameContent_item").append(game_event);
+				for(var i=0;i<data.data.game_type.length;i++){
+				  game_type+='<li><a href="#mm-1"  title="'+data.data.game_type[i].code+'">'+data.data.game_type[i].name+'</a></li>';	
+				}
+				$(".gameNature_item").append(game_type);
+				/*alreadOn*/
+				$(".gameModel_item li a").click(function(){
+					$(this).addClass("alread_on").parent().siblings().children().removeClass("alread_on");
+					$(".gameModel").val($(this).html());
+					$(".gameModel").attr("title",$(this).attr("title"));
+				});	
+				$(".gameStatus_item li a").click(function(){
+					$(this).addClass("alread_on").parent().siblings().children().removeClass("alread_on");
+					$(".gameStatus").val($(this).html());
+					$(".gameStatus").attr("title",$(this).attr("title"));
+				});	
+				$(".gameContent_item li a").click(function(){
+					$(this).addClass("alread_on").parent().siblings().children().removeClass("alread_on");
+					$(".gameContent").val($(this).html());
+					$(".gameContent").attr("title",$(this).attr("title"));
+				});	
+				$(".gameNature_item li a").click(function(){
+					$(this).addClass("alread_on").parent().siblings().children().removeClass("alread_on");
+					$(".gameNature").val($(this).html());
+					$(".gameNature").attr("title",$(this).attr("title"));
+				});	
+			}
+		})
+		  //筛选
+		  $('.findSure').click(function(){
+			var data={
+				   module:'moni',
+                   do:'game_lists',
+				   status:1
+			};
+			if($('.gameModel').val()!=='不限'){
+				var game_creator=$('.gameModel').attr("title");
+				data.game_creator=game_creator;
+			}
+			if($('.gameStatus').val()!=='不限'){
+			    var game_progress=$('.gameStatus').attr("title");
+				data.game_progress=game_progress;
+			}
+			if($('.gameContent').val()!=='不限'){
+				var game_event=$('.gameContent').attr("title");
+				data.game_event=game_event;
+			}
+			if($('.gameNature').val()!=='不限'){
+				var game_type=$('.gameNature').attr("title");
+				data.game_type=game_type;
+			}
+		    $.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					type:'POST',
+					dataType:'jsonp',
+					data:data,
+					success:function(data){
+						var html='';
+						for(var i=0;i<data.data.length;i++){
+							   html+='<li><a href="gameDetail.html?game_id='+data.data[i].game_id+'">';
+							   html+='<div class="createLeft">';
+							   html+='<img src="../image/cr1.png"><span>报名中</span>';
+							   html+='</div>';
+							   html+='<div class="createRight">';
+							   html+='<div class="createName">'+data.data[i].game_title+'</div>';
+							   html+='<p>主办方：<span>'+data.data[i].game_sponsor+'</span></p>';
+							   html+='<p>报名人数：<span>'+data.data[i].count+'</span>人</p>';
+							   html+='<p>报名时间：<span>'+x(data.data[i].apply_begin_time * 1000)+'</span> -<span>'+x(data.data[i].apply_end_time * 1000)+'</span></p>';
+							   html+='<p>比赛时间：<span>'+x(data.data[i].play_begin_time * 1000)+'</span> -<span>'+x(data.data[i].play_end_time * 1000)+'</span></p>';
+							   html+='</div>';
+							   if(data.data[i].isapply==1){
+								html+='<div class="join"></div>';   
+							   }
+							   html+='</a></li>';	
+						}
+						  $("#createList").html(html);
+                         $(".mm-slideout").trigger("mousedown");
+					}
+				})
+	   })
+});
+ function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (mouth< 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+$(function(){
+   $(".findReset").click(function(){
+    $(".mm-slideout").trigger("mousedown");
+  });	
+});
+</script>
+</body>
+</html>

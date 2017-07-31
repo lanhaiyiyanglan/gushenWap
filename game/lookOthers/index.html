@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>定制模拟赛</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/game.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+<script src="../../style/js/layer.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+       <h1>模拟比赛</h1>
+    </header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li class="on"><a href="javascript:void(0)" id="otherCg">他的常规赛</a></li>
+      <li><a href="" id="otherDz">他的定制赛</a></li>
+    </ul>
+    <!--perLog-->
+    <div class="perLog">
+
+    </div>
+    <div class="dzInfo">
+      <ul class="profitList">
+
+      </ul>
+    </div>
+    <!--tables-->
+    <ul class="dzTabel">
+        <li>市值</li>
+        <li>盈亏</li>
+        <li>持仓/可用</li>
+        <li>成本/现价</li>
+    </ul>
+    <ul class="dzData">
+    </ul>
+    <!--空仓中-->
+    <div class="kongcang"><img src="../../style/img/null.png"></div>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+ $(function(){
+   var game_id=" ";
+   var otherDz="otherDz.html?other_id="+GetQueryString("other_id");	
+   $("#otherDz").attr("href",otherDz);
+   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'my_conventional_info',
+				  stock_type:0,
+				  status:1,
+				  user_id:GetQueryString("other_id"),
+				  my_uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				    console.log(data);
+                    var perInfo=''; var html='';var stocks=''; 
+					//个人信息
+					perInfo+='<div class="perImg"><a href="../../hisIndex_killer/index.html?user_id='+data.data.user_info.uid+'"><img src="'+data.data.user_info.avatar+'"></a>';
+					if(new Date(data.data.user_info.vip_finish_time).getTime()>0){
+					   perInfo+='<i class="vipIncon"></i>';
+					}
+					perInfo+='</div>';	
+					perInfo+='<div class="nameRoler">'+data.data.user_info.username+'';
+					 if(data.data.user_info.role==1){
+						perInfo+='<span class="roler">高手</span></div>';
+					}else{
+						perInfo+='<span class="roler">金主</span></div>';
+					}
+    				/*if(data.data.relation==1){
+						perInfo+='<a href="javascript:void(0);" class="ydy_status" onClick="relation(this)" title="cancel">已订阅</a>';	
+					}else{
+						perInfo+='<a href="javascript:void(0);" class="dy_status" onClick="relation(this)" title="add">订阅</a>';	
+					}*/
+					perInfo+='<a href="../../hisIndex_killer/index.html?user_id='+data.data.user_info.uid+'" id="contactHim"><img src="../../style/img/lxt.png"></a>';
+					$(".perLog").append(perInfo);
+					//收益信息
+					  if(data.data.game_bilv>=0){
+						 html+='<li>总收益 ：<span class="red">'+data.data.game_bilv+'%</span></li>';	
+					  }else{
+						 html+='<li>总收益 ：<span class="green">'+data.data.game_bilv+'%</span></li>';	
+					  }
+					  html+='<li>总资产 ：<span class="red">'+data.data.total_money+'</span></li>';	
+					  html+='<li>总市值 ：<span class="red">'+data.data.total_stock+'</span></li>';	
+					  html+='<li>可用资金 ：<span class="red">'+data.data.money+'</span></li>';	
+					  if(data.data.make>=0){
+						 html+='<li>当日盈亏 ：<span class="red">'+data.data.make+'</span></li>';	
+					  }else{
+						 html+='<li>当日盈亏 ：<span class="green">'+data.data.make+'</span></li>';	;	
+					  }
+					  if(data.data.profit>=0){
+						 html+='<li>当日收益 ：<span class="red">'+data.data.profit+'%</span></li>';	
+					  }else{
+						 html+='<li>当日收益 ：<span class="green">'+data.data.profit+'%</span></li>';	
+					  }
+					  $(".profitList").append(html);
+					  //股票信息
+					 if(data.data.stocks.length<=0){
+						 $(".kongcang").show();
+						 $(".dzData").hide(); 
+					 }else{
+								for (var i=0;i<data.data.stocks.length;i++){	
+								  stocks+='<li>';
+									stocks+='<ul>';
+									  if(data.data.stocks[i].profit>=0){
+										stocks+='<li>'+data.data.stocks[i].stock_name+'</li>';
+										stocks+='<li class="red">'+data.data.stocks[i].profit_money+'</li>';  
+										stocks+='<li class="red">'+data.data.stocks[i].current_position+'</li>';
+									    stocks+='<li class="red">'+data.data.stocks[i].position_cost+'</li>';
+									    stocks+='<li class="red">'+data.data.stocks[i].total_money+'</li>';
+										stocks+='<li class="red">'+data.data.stocks[i].profit+'%</li>'; 
+									    stocks+='<li class="red">'+data.data.stocks[i].available_positions+'</li>';
+									    stocks+='<li class="red">'+data.data.stocks[i].price+'</li>'; 
+									  }else{
+										stocks+='<li>'+data.data.stocks[i].stock_name+'</li>';
+										stocks+='<li class="green">'+data.data.stocks[i].profit_money+'</li>';  
+										stocks+='<li class="green">'+data.data.stocks[i].current_position+'</li>';
+									    stocks+='<li class="green">'+data.data.stocks[i].position_cost+'</li>';
+									    stocks+='<li class="green">'+data.data.stocks[i].total_money+'</li>';
+										stocks+='<li class="green">'+data.data.stocks[i].profit+'%</li>';  
+										stocks+='<li class="green">'+data.data.stocks[i].available_positions+'</li>';
+									    stocks+='<li class="green">'+data.data.stocks[i].price+'</li>';
+									  }
+									 
+									stocks+='</ul>';
+								 stocks+='</li>';
+							  }
+							$(".dzData").append(stocks);  
+					 }
+					  
+              }
+          }) 
+		  //当前是否是交易时间
+		   $.ajax({
+				  url:'http://open.zhengjuan.com/api/app',
+				  data:{
+					  module:'moni',
+					  do:'market',
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					  if(data.data.today==0){
+						 $(".notTime").show();
+					  }else if(data.data.today==1&&data.data.time==0){
+						$(".notTime").show();
+					  } 
+				  }
+		   })
+ });
+ /* function relation(obj){
+	var to_user_id=GetQueryString("other_id")
+	var type=$(obj).attr("title");
+	var that=$(obj);
+	$.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'relation',
+				  type:type,
+				  to_user_id:to_user_id,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(type=="add"){
+					that.attr("title","cancel");
+				  }else{
+					that.attr("title","add");
+				  }
+				  if(that.text()=="订阅"){
+					 that.text("已订阅");
+					 that.attr("class","ydy_status");
+				  }else{
+					that.text("订阅"); 
+					that.attr("class","dy_status"); 
+				  }
+				  layer.msg(data.msg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});	
+              }
+   }) 
+ }*/
+</script>
+</body>
+</html>

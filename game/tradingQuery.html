@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>模拟交易查询</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>模拟交易查询</h1>
+    </header>
+</div>
+<ul class="baseList">
+  <li class="mgTop"><a href="javascript:void(0);" id="dayTrade"><div>当日成交<span class="baseDetail"><img src="../style/img/right.png"></span></div></a></li>
+  <li><a href="javascript:void(0);" id="dayDelegate"><div>当日委托<span class="baseDetail"><img src="../style/img/right.png"></span></div></a></li>
+  <li class="mgTop"><a href="javascript:void(0);" id="historyTrade"><div>历史成交<span class="baseDetail"><img src="../style/img/right.png"></span></div></a></li>
+  <!--<li><a href="javascript:void(0);" id="historyDelegate"><div>历史委托<span class="baseDetail"><img src="../style/img/right.png"></span></div></a></li>-->
+</ul>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+var dayTrade="dayTrade.html?game_id="+GetQueryString("game_id");	
+$("#dayTrade").attr("href",dayTrade);
+var dayDelegate="dayDelegate.html?game_id="+GetQueryString("game_id");	
+$("#dayDelegate").attr("href",dayDelegate);
+var historyTrade="historyTrade.html?game_id="+GetQueryString("game_id");	
+$("#historyTrade").attr("href",historyTrade);
+var historyDelegate="historyDelegate.html?game_id="+GetQueryString("game_id");	
+$("#historyDelegate").attr("href",historyDelegate);
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>我参与的比赛</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>创建比赛</h1>
+</header>
+<div class="appleyTop">
+  <p>欢迎您进入炒股比赛平台模拟炒股比赛开放平台，我们诚意邀请您成为炒股比赛平台合作赛的合作伙伴!炒股比赛平台模拟炒股具有强大的团队比赛功能，因此我们愿意为有需求的团体、机构、大学金融学院、证券公司等单独开设模拟炒股大赛。
+主办方可自由选择比赛模板、比赛类型、初始资金等多种选项，并且还可通过后台邀请比赛用户、短信群发、下载比赛榜单、获奖用户管理等等。</p>
+  <p>如果您想申请模拟炒股比赛，请认真阅读以下条款：</p>
+</div>
+<div class="listInfo">
+  <div class="listTit">炒股比赛平台合作赛使用协议</div>
+  <p>第一条 ：合作模拟炒股平台旨在为广大用户提供模拟炒股服务，其服务是无偿的；炒股比赛平台仅提供技术和平台支持，炒股比赛平台不对合作伙伴的比赛进程负责；炒股比赛平台不保证比赛中涉及信息的准确性和完整性，比赛中涉及的信息内容不由炒股比赛平台实际控制，炒股比赛平台对其合法性概不负责，亦不承担任何法律责任，合作伙伴的比赛内容亦不代表炒股比赛平台之观点或意见；</p>
+  <p>第二条 ：合作伙伴的比赛信息版权由原作者和炒股比赛平台共同所有，比赛信息观点仅代表作者本人观点，</p>
+</div>
+<div class="readAgree">
+    <input class="chk_1" type="checkbox" name="agree" id="checkbox_a1"><label for="checkbox_a1"></label>
+    <span class="alreadRead">我已阅读并同意<a href="?go=applyDetails" target="_blank">报名细则</a></span>
+</div>
+<div class="sureBtn">
+  <input type="button" value="创建比赛" id="afNext">
+</div>
+<script>
+jQuery("#afNext").on("click", function() {
+    if ($('#checkbox_a1').is(":checked")) {
+        location.href='addGameInfo.html';
+    }else{
+		 layer.msg("请同意报名细则", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+		 return false;
+    }
+});
+</script>
+</body>
+</html>

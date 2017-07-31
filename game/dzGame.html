@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>定制模拟赛</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>模拟比赛</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li><a href="cgGame.html">常规模拟赛</a></li>
+      <li class="on"><a href="javascript:void(0);">定制模拟赛</a></li>
+    </ul>
+    <!--perLog-->
+    <div class="perLog">
+    </div>
+    <div class="dzInfo">
+      <h1></h1>
+      <ul class="profitList">
+      </ul>
+      <ul id="dzOperation">
+        <li><a href="javascript:void(0);" id="buyLink">买入</a></li>
+        <li><a href="javascript:void(0);" id="sellLink">卖出</a></li>
+        <li><a href="javascript:void(0);" id="cancellationLink">撤单</a></li>
+        <li><a href="javascript:void(0);" id="tradingQuery">查询</a></li>
+      </ul>
+    </div>
+    <!--tables-->
+    <ul class="dzTabel">
+        <li>市值</li>
+        <li>盈亏</li>
+        <li>持仓/可用</li>
+        <li>成本/现价</li>
+    </ul>
+    <ul class="dzData">
+    </ul>
+    <!--空仓中-->
+    <div class="kongcang"><img src="../style/img/null.png"></div>
+    <!--不在交易时间内-->
+    <div class="notTime">
+    </div>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+ $(function(){
+	var game_id=GetQueryString("game_id")
+   $(".dzData > li >ul").click(function(){
+	  $(this).next(".dataOperation").toggle(); 
+   }); 
+   var buyLink="buy1.html?game_id="+GetQueryString("game_id");	
+   $("#buyLink").attr("href",buyLink);
+   var sellLink="sellList.html?game_id="+GetQueryString("game_id");	
+   $("#sellLink").attr("href",sellLink);
+   var cancellationLink="cancellationList.html?game_id="+GetQueryString("game_id");	
+   $("#cancellationLink").attr("href",cancellationLink);
+   var tradingQueryLink="tradingQuery.html?game_id="+game_id;	
+   $("#tradingQuery").attr("href",tradingQueryLink);
+   var username= $.cookie('username');
+    var password= $.cookie('password');
+    var udid= $.cookie('udid');
+    $.ajax({
+        url:'http://open.zhengjuan.com/api/app',
+        type:'POST',
+        dataType:'jsonp',
+        data:{
+            username:username,
+            password:password,
+            udid:udid,
+            module:'user',
+            do:'login'
+        },
+        success:function(data){
+			var perInfo='';
+			//个人信息
+				perInfo+='<div class="perImg"><a href="../hisIndex_killer/index.html?user_id='+$.cookie('user_id')+'"><img src="'+data.data.usericon+'"></a>';
+				if(new Date(data.data.vip_finish_time).getTime()>0){
+				   perInfo+='<i class="vipIncon"></i>';
+				}
+				perInfo+='</div>';	
+				perInfo+='<div class="nameRoler">'+data.data.username+'';
+				 if(data.data.role==1){
+					perInfo+='<span class="roler">高手</span></div>';
+				}else{
+					perInfo+='<span class="roler">金主</span></div>';
+				}
+				var links="rank.html?game_id="+GetQueryString("game_id");	
+				perInfo+='<a href="'+links+'" class="zpm"><img src="../style/img/zpm.png"></a>';	
+				<!--perInfo+='<a href="#" class="fans"><img src="../style/img/fans.png"></a>';	-->
+				$(".perLog").append(perInfo);
+		}
+    })
+   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'my_go_info',
+				  game_id:GetQueryString("game_id"),
+				  get_price:1,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                var html='';var stocks='';
+				
+				//标题
+				$(".dzInfo h1").text(data.data.game_info.game_title);
+				  if(data.data.game_bilv>=0){
+					 html+='<li>总收益 ：<span class="red">'+data.data.game_bilv+'%</span></li>';	
+				  }else{
+					 html+='<li>总收益 ：<span class="green">'+data.data.game_bilv+'%</span></li>';	
+				  }
+				  html+='<li>总资产 ：<span class="red">'+data.data.total_money+'</span></li>';	
+				  html+='<li>总市值 ：<span class="red">'+data.data.total_stock+'</span></li>';	
+				  html+='<li>可用资金 ：<span class="red">'+data.data.money+'</span></li>';	
+				  if(data.data.make>=0){
+					 html+='<li>当日盈亏 ：<span class="red">'+data.data.make+'</span></li>';	
+				  }else{
+					 html+='<li>当日盈亏 ：<span class="green">'+data.data.make+'</span></li>';	;	
+				  }
+				  if(data.data.profit>=0){
+					 html+='<li>当日收益 ：<span class="red">'+data.data.profit+'%</span></li>';	
+				  }else{
+					 html+='<li>当日收益 ：<span class="green">'+data.data.profit+'%</span></li>';	
+				  }
+                  $(".profitList").append(html);
+				  //股票信息
+				  if(data.data.stocks.length<=0){
+						 $(".kongcang").show();
+						 $(".dzData").hide(); 
+				  }else{
+							  for (var i=0;i<data.data.stocks.length;i++){	
+							  stocks+='<li>';
+							  if(data.data.stocks[i].profit>=0){
+								  stocks+='<ul>';
+								  stocks+='<li>'+data.data.stocks[i].stock_name+'</li>';
+								  stocks+='<li class="red">'+data.data.stocks[i].profit_money+'</li>';  
+								  stocks+='<li class="red">'+data.data.stocks[i].current_position+'</li>';
+								  stocks+='<li class="red">'+data.data.stocks[i].position_cost+'</li>';
+								  stocks+='<li class="red">'+data.data.stocks[i].total_money+'</li>';
+								  stocks+='<li class="red">'+data.data.stocks[i].profit+'%</li>';  
+								  stocks+='<li class="red">'+data.data.stocks[i].available_positions+'</li>';
+								  stocks+='<li class="red">'+data.data.stocks[i].price+'</li>';
+								  stocks+='</ul>';
+							  }else{
+								  stocks+='<ul>';
+								  stocks+='<li>'+data.data.stocks[i].stock_name+'</li>';
+								  stocks+='<li class="green">'+data.data.stocks[i].profit_money+'</li>';  
+								  stocks+='<li class="green">'+data.data.stocks[i].current_position+'</li>';
+								  stocks+='<li class="green">'+data.data.stocks[i].position_cost+'</li>';
+								  stocks+='<li class="green">'+data.data.stocks[i].total_money+'</li>';
+								  stocks+='<li class="green">'+data.data.stocks[i].profit+'%</li>';  
+								  stocks+='<li class="green">'+data.data.stocks[i].available_positions+'</li>';
+								  stocks+='<li class="green">'+data.data.stocks[i].price+'</li>';
+								  stocks+='</ul>';
+							  }
+								stocks+='<div class="dataOperation">';
+								stocks+='<a href="buy.html?game_id='+game_id+'&stock_name='+encodeURI(encodeURI(data.data.stocks[i].stock_name))+'&stock_code='+data.data.stocks[i].stock_code+'&id='+data.data.stocks[i].id+'" class="mairu">买入</a>';
+								stocks+='<a href="sell.html?game_id='+game_id+'&stock_name='+encodeURI(encodeURI(data.data.stocks[i].stock_name))+'&stock_code='+data.data.stocks[i].stock_code+'&id='+data.data.stocks[i].id+'" class="maichu">卖出</a>';
+								stocks+='<a href="tradeDetail.html?game_id='+game_id+'&stock_name='+encodeURI(encodeURI(data.data.stocks[i].stock_name))+'&stock_code='+data.data.stocks[i].stock_code+'&id='+data.data.stocks[i].id+'" class="jiaoyiDetail">交易明细</a>';
+								stocks+='</div>';
+							 stocks+='</li>';
+						  }
+						$(".dzData").append(stocks);  
+						$(".dzData li").click(function(){
+							$(this).find(".dataOperation").toggle();
+						});
+				  }
+              }
+          }) 
+		  //当前是否是交易时间
+		   $.ajax({
+				  url:'http://open.zhengjuan.com/api/app',
+				  data:{
+					  module:'moni',
+					  do:'market',
+				  },
+				  type:'POST',
+				  dataType:'jsonp',
+				  success:function(data){
+					   if(data.data.today==0){
+						 $(".notTime").show();
+						 $(".notTime").append("<p>今天不开市</p><p>非交易时间买卖股票无法成交</p>");
+					  }else if(data.data.today==1&&data.data.time==0){
+						 $(".notTime").show();
+						 $(".notTime").append("<p>非交易时间买卖股票无法成交</p>");
+					  } 
+				  }
+		   })
+ });
+</script>
+</body>
+</html>

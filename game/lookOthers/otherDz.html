@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>定制模拟赛</title>
+<link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../../style/css/game.css" type="text/css">
+<script src="../../style/js/jquery.min.js"></script>
+<script src="../../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<div class="topWrapper">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+   <h1>模拟比赛</h1>
+</header>
+</div>
+<div class="gameMiddle">
+    <!--tabs-->
+    <ul class="gameTab gameTab2">
+      <li><a href="" id="otherCg">他的常规赛</a></li>
+      <li class="on"><a href="javascript:void(0);" id="otherDz">他的定制赛</a></li>
+    </ul>
+    <!--perLog-->
+    <div class="perLog">
+    </div>
+    <ul id="otherGameList">
+    </ul>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+ $(function(){
+   var otherCg="index.html?other_id="+GetQueryString("other_id");	
+   $("#otherCg").attr("href",otherCg);
+   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'my_conventional_info',
+				  stock_type:0,
+				  status:1,
+				  user_id:GetQueryString("other_id"),
+				  my_uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				    console.log(data);
+                    var perInfo=''; 
+					//个人信息
+					perInfo+='<div class="perImg"><a href="../../hisIndex_killer/index.html?user_id='+data.data.user_info.uid+'"><img src="'+data.data.user_info.avatar+'"></a>';
+					if(new Date(data.data.user_info.vip_finish_time).getTime()>0){
+					   perInfo+='<i class="vipIncon"></i>';
+					}
+					perInfo+='</div>';	
+					perInfo+='<div class="nameRoler">'+data.data.user_info.username+'';
+					 if(data.data.user_info.role==1){
+						perInfo+='<span class="roler">高手</span></div>';
+					}else{
+						perInfo+='<span class="roler">金主</span></div>';
+					}
+    				/*if(data.data.relation==1){
+						perInfo+='<a href="javascript:void(0);" class="ydy_status" onClick="relation(this)" title="cancel">已订阅</a>';	
+					}else{
+						perInfo+='<a href="javascript:void(0);" class="dy_status" onClick="relation(this)" title="add">订阅</a>';	
+					}*/
+					perInfo+='<a href="../../hisIndex_killer/index.html?user_id='+data.data.user_info.uid+'" id="contactHim"><img src="../../style/img/lxt.png"></a>';
+					$(".perLog").append(perInfo);
+              }
+   }) 
+   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+				  module:'moni',
+                  do:'my_go',
+				  status:1,
+				  user_id:GetQueryString("other_id")
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                 console.log(data);
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					      html+='<li><a href="../../game/dzGame.html?game_id='+data.data[i].game_id+'">';
+						  
+						  html+='<div class="otherContent"><div class="gameName">'+data.data[i].game_title+'</div><div class="gameLeft">';
+						  if(parseInt(data.data[i].game_bilv)>=0){
+							 html+='<div class="sylRed">'+data.data[i].game_bilv+'%</div>';
+						  }else{
+							 html+='<div class="sylGreen">'+data.data[i].game_bilv+'%</div>'; 
+						  }
+						  html+='<div class="gameText">收益率</div>';
+						  html+='<div class="paiM">'+data.data[i].rank+'</div>';
+						  html+='<div class="gameText">排名</div>';
+						  html+='</div>';
+						  html+='<div class="gameRight">';
+						  html+='<p>主办方：<span>'+data.data[i].game_sponsor+'</span></p>';
+						  html+='<p>投资品种：<span>'+data.data[i].game_event+'</span></p>';
+						  html+='<p>比赛范围：<span>'+data.data[i].game_creator+'</span></p>';
+						  html+='<p>比赛状态：<span class="sylRed">'+data.data[i].game_progress+'</span></p>';
+						  html+='<p>报名时间：<span>'+x(data.data[i].apply_begin_time * 1000)+'</span>至<span>'+x(data.data[i].apply_end_time * 1000)+'</span></p>';
+				          html+='<p>比赛时间：<span>'+x(data.data[i].play_begin_time * 1000)+'</span>至<span>'+x(data.data[i].play_end_time * 1000)+'</span></p>';
+						  html+='</div></div>';
+						  html+='</a></li>';	
+                  }
+                 $("#otherGameList").append(html);
+              }
+          }) 
+ });
+ function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (mouth< 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+//订阅取消订阅
+/*function relation(obj){
+	var to_user_id=GetQueryString("other_id")
+	var type=$(obj).attr("title");
+	var that=$(obj);
+	$.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'relation',
+				  type:type,
+				  to_user_id:to_user_id,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(type=="add"){
+					that.attr("title","cancel");
+				  }else{
+					that.attr("title","add");
+				  }
+				  if(that.text()=="订阅"){
+					 that.text("已订阅");
+					 that.attr("class","ydy_status");
+				  }else{
+					that.text("订阅"); 
+					that.attr("class","dy_status"); 
+				  }
+				  layer.msg(data.msg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});	
+              }
+   }) 
+ }*/
+</script>
+</body>
+</html>

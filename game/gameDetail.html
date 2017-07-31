@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>比赛详情</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1></h1>
+</header>
+<div class="gameThumb"><img src=""></div>
+<div class="sfJoin"></div>
+<div class="detailBasic">
+  <h3>基本信息</h3>
+</div>
+<div class="detailIntroduce">
+  <h3>比赛介绍</h3>
+  <dl>
+    <dt>注意事项 ：</dt>
+    <dd>1、每位参赛选手只能拥有一个大赛账号，且账号必须通过手机验证。选手需根据真实情况填写报名信息，手机号码将作为发奖唯一联系方式。大赛期间如发现作弊行为，相关账号将被取消比赛资格；</dd>
+    <dd>2、模拟炒股比赛将在模拟炒股比赛网PC端开展（主办方有权更改大赛平台），初始资产统一为10万元虚拟资金，根据账户期末资产，决定该次比赛获奖人员；
+3、总参赛人员须满200人（含）以上。</dd>
+  </dl>
+  <dl>
+    <dt>参赛条件：</dt>
+    <dd>全国大学在校学生（含研究生、博士生及成人教育、职业教育），实行邀请码制度；
+不符合条件者，不鼓励报名，不计比赛成绩；不颁奖。</dd>
+  </dl>
+</div>
+<div class="awardDetail">
+  <h3>奖项设置</h3>
+  <!--<dl>
+    <dt><img src="../image/game1.png"></dt>
+    <dd>
+     <p>一等奖（1名）</p>
+     <p>1、现金2000元</p>
+     <p>2、实盘操作资金10万元</p>
+     <p>3、股神网VIP卡（360元）</p>
+    </dd>
+  </dl>
+  <dl>
+    <dt><img src="../image/game2.png"></dt>
+    <dd>
+      <p>二等奖(1名）</p>
+      <p>1、现金1000元；</p>
+      <p>2、实盘操作资金2万元；</p>
+      <p>3、股神网VIP卡（360元）</p>
+    </dd>
+  </dl>
+  <dl>
+    <dt><img src="../image/game3.png"></dt>
+    <dd>
+     <p>三等奖(1名)</p>
+     <p>1、智能路由器一个(150元)；</p>
+     <p>2、股神网VIP卡（360元）</p>
+    </dd>
+  </dl>
+  <div class="awardDiv">注：1、“实盘操作资金”仅有资金使用权，期限3个月，允许本金最大回撤10%，选手收益与融亿股份7:3分成；</div>
+  <div class="awardDiv">2、奖励发放方式：现金及实物。</div>-->
+</div>
+<div class="rule-detail">
+    <h3>比赛规则</h3>
+    <p><em class="special-tt">① 交易品种：</em>交易品种限于深沪A股、创业板股票。上市首日的新股、权证、不设涨跌幅限制的股票(如增发等)禁止委托和交易</p>
+    <p><em class="special-tt">② 交易类型：</em>支持： 普通买卖交易、分红（派息、送股、转增股）；不支持：新股申购、增发申购、配股等；</p>
+    <p><em class="special-tt">③ 委托时间：</em>每个交易日里的交易时间可以委托，其余时间都不可以委托；</p>
+    <p><em class="special-tt">④ 交易时间：</em>虚拟盘交易时间与交易所规定的交易时间相同。</p>
+    <p><em class="special-tt">⑤ 成交规则：</em></p>
+    <p>成交价格：按照交易所公布的最新成交价撮合</p>
+    <p>买入时：如果最新成交价等于委托价，按照委托价成交，如果最新价小于委托价，按照最新价撮合成交；</p>
+    <p>卖出时：如果最新成交价等于委托价，按照委托价成交，如果最新价高于委托价，按照最新价撮合成交。</p>
+    <p>T+1规则：当天买入的股票不能当天卖出，要在下一个交易日才能卖出。</p>
+    <p class="orange">★成交规则友情提示★：本网站模拟炒股具备扫单功能，本网站建议您，打高价格委托买入或打低价格委托卖出，将非常有助于提高您的委托成交速度。</p>
+    <p><em class="special-tt">⑥ 交易费用：</em></p>                   
+    <table cellspacing="1" class="dpzs-table"> 
+        <tbody><tr>
+            <th>股票类型</th>
+            <th>印花税比例</th>
+            <th>佣金比例</th>
+            <th>过户费比例</th>
+        </tr>
+        <tr>
+            <td>上海A股</td>
+            <td>0.1%</td>
+            <td>0.2%</td>
+            <td>0.375‰</td>
+        </tr>
+        <tr>
+            <td>深圳A股</td>
+            <td>0.1%</td>
+            <td>0.2%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>创业板</td>
+            <td>0.1%</td>
+            <td>0.2%</td>
+            <td>0</td>
+        </tr>
+    </tbody></table>
+    <p class="orange">注意：</p>
+    <p class="orange">1、印花税=成交金额×印花税比例；卖出时才收取；</p>
+    <p class="orange">2、佣金=成交金额×佣金比例，起点为五元；买入卖出均收取；</p>
+</div>
+<div class="createRank">
+    <div class="top3">比赛排名Top3</div>
+    <ul id="rankList" class="rankThree">
+    </ul>
+</div>
+<div class="sureBtn">
+       <a href="" id="goOrTo"></a>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+	var Paiming=1;
+	var game_id=GetQueryString("game_id");
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'game_info',
+                  uid: $.cookie('uid'),
+				  game_id:game_id
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+				  $(".top h1").text(data.data.game_info.game_title);
+				  $(".gameThumb").find("img").attr("src",data.data.game_info.game_img);//比赛横向大图
+				  if(data.data.isapply==1){
+					  $(".sfJoin").text("已报名");
+					  $("#goOrTo").text("进入比赛");
+					  var links="dzGame.html?game_id="+game_id;
+					  $("#goOrTo").attr("href",links );
+				  }else{
+					 $(".sfJoin").html('<a href="javascript:void(0);" onClick="apply();">立即报名</a>');
+					 $("#goOrTo").html('<span onClick="apply();">立即报名</span>');
+				  }
+                  var html='';var gameIntro=''; var award='';
+					 html+='<dl>';
+						html+='<dt>';
+						  html+='<p>报名人数：'+data.data.count+'人</p>';
+						  html+='<p>报名费用：免费</p>';
+						  html+='<p>比赛模式：'+data.data.game_info.game_creator+'';
+						  html+='</p>';
+						  html+='<p>报名：'+x(data.data.game_info.apply_begin_time * 1000)+' - '+x(data.data.game_info.apply_end_time * 1000)+'</p>';
+						  html+='<p>比赛：'+x(data.data.game_info.play_begin_time * 1000)+' - '+x(data.data.game_info.play_end_time * 1000)+'</p>';
+						html+='</dt>';
+						html+='<dd>比赛内容：'+data.data.game_info.game_event+'';
+						html+='</dd>';
+						html+='<dd>比赛性质：'+data.data.game_info.game_type+'';
+						html+='</dd>';
+						html+='<dd>起始资金：'+data.data.game_info.game_money+'</dd>';
+				   html+='</dl>';
+				  gameIntro+=''+data.data.game_info.game_intro+'';
+				  $(".detailBasic").append(html);	
+				  $(".detailIntroduce").append(gameIntro);
+				  for (var i=0;i<data.data.prize.length;i++){	
+					 award+='<dl>';
+					 award+='<dt><img src="'+data.data.prize[i].qiniu_key+'"></dt>';
+					 award+='<dd>';
+					 if(data.data.prize[i].type==0){
+						 award+='<p>总榜单</p>';  
+					 }else if(data.data.prize[i].type==1){
+						 award+='<p>周榜单</p>';  
+					 }else{
+						  award+='<p>月榜单</p>';   
+					 }
+					 award+='<p>第'+data.data.prize[i].rank+'名</p>';
+					 award+='<p>'+data.data.prize[i].title+'</p>';
+					 award+='<p>'+data.data.prize[i].prize+'</p>';
+					 award+='</dd>';
+					 award+='</dl>';
+				  }
+				 $(award).insertAfter(".awardDetail h3");
+				 var ranks='';
+				 if(data.data.rank.length>0){
+					$(".createRank").show();  
+				  }else{
+					$(".createRank").hide();  
+				  }
+                  for (var i=0;i<data.data.rank.length;i++){
+					        Paiming=i+1;
+					        ranks+='<li id="'+data.data.rank[i].user_id+'">';
+						    ranks+='<div class="rankNum"><span>'+Paiming+'</span></div>';
+						    ranks+='<div class="rankInfo">';
+							ranks+='<div class="rankNames"><a class="otherName" href="../hisIndex_killer/index.html?user_id='+data.data.rank[i].uid+'">'+data.data.rank[i].nick_name+'</a><span class="roler">';
+							if(data.data.rank[i].role==1){
+							  ranks+='高手</span>';	
+							}else{
+							  ranks+='金主</span>';
+							}
+							/*if(data.data.rank[i].relation==1){
+								ranks+='<a href="javascript:void(0);" class="ydy" onclick="relation(this)" title="cancel">已订阅</a>';
+							}else{
+								ranks+='<a href="javascript:void(0);" class="dy" onclick="relation(this)" title="add">订阅</a>';
+							}*/
+							ranks+='</div><ul>';
+							if(parseInt(data.data.rank[i].game_bilv)>=0){
+							 ranks+='<li>总收益 ：<span class="red">'+data.data.rank[i].game_bilv+'%</span></li>';
+						    }else{
+							 ranks+='<li>总收益 ：<span class="green">'+data.data.rank[i].game_bilv+'%</span></li>';
+						    }
+							if(parseInt(data.data.rank[i].day_bilv)>=0){
+							 ranks+='<li>日收益率 ：<span class="red">'+data.data.rank[i].day_bilv+'%</span></li>';
+						    }else{
+							 ranks+='<li>日收益率 ：<span class="green">'+data.data.rank[i].day_bilv+'%</span></li>';
+						    }
+							if(parseInt(data.data.rank[i].week_bilv)>=0){
+							 ranks+='<li>周收益率 ：<span class="red">'+data.data.rank[i].week_bilv+'%</span></li>';
+						    }else{
+							 ranks+='<li>周收益率 ：<span class="green">'+data.data.rank[i].week_bilv+'%</span></li>';
+						    }
+						    ranks+='<li>持仓 ：'+data.data.rank[i].stock_name+'</li>';
+							ranks+='<li>A股资产 ：'+data.data.rank[i].total_money+'</li>';
+							ranks+='</ul>';
+						    ranks+='</div>';
+					        ranks+='</li>';
+                  }
+                 $("#rankList").append(ranks);	
+              }
+          })
+});
+function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (mouth < 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+//报名
+function apply(){
+	$.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'apply',
+				  game_id:GetQueryString("game_id"),
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+					  layer.msg(data.msg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){
+						  window.location.href="dzGame.html?game_id="+GetQueryString("game_id");
+					 });	 
+              }
+   }) 
+}
+//订阅/取消订阅
+/* function relation(obj){
+	var to_user_id=$(obj).parent().parent().parent().attr("id");
+	var type=$(obj).attr("title");
+	var that=$(obj);
+	$.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'relation',
+				  type:type,
+				  to_user_id:to_user_id,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  if(data.code==1){
+					  if(type=="add"){
+						that.attr("title","cancel");
+					  }else{
+						that.attr("title","add");
+					  }
+					  if(that.text()=="订阅"){
+						 that.text("已订阅");
+						 that.attr("class","ydy");
+					  }else{
+						that.text("订阅"); 
+						that.attr("class","dy"); 
+					  }
+					  layer.msg(data.data.msg, {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false});	 
+				  }else{
+					 layer.msg(data.errormsg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false}); 
+				  }
+              }
+   }) 
+ }
+*/
+</script>
+</body>
+</html>

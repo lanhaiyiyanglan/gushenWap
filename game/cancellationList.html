@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>撤单列表</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/game.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/layer.js"></script>
+</head>
+
+<body style="background:#eeeeee;">
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>撤单列表</h1>
+</header>
+<ul class="titList">
+  <li>
+    <p>股票名称</p>
+    <p>股票代码</p>
+  </li>
+  <li>
+    <p>价格</p>
+    <p>股数</p>
+  </li>
+  <li>
+    <p>日期</p>
+    <p>时间</p>
+  </li>
+  <li>
+     <div>撤单</div>
+  </li>
+</ul>
+<div class="kongcang"><img src="../style/img/null.png"></div>
+<ul class="operationList">
+ <!-- <li>
+     <ul>
+      <li>
+        <p>西部建设</p>
+        <p>002302</p>
+      </li>
+      <li>
+        <p>13.59</p>
+        <p>600</p>
+      </li>
+      <li>
+        <p>2016-03-03</p>
+        <p>16:01:25</p>
+      </li>
+      <li>
+        <a href="javascript:void(0);" class="cancelOperation">撤销卖单</a>
+      </li>
+     </ul>
+  </li>-->
+</ul>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+	//当前是否是交易时间
+	   $.ajax({
+			  url:'http://open.zhengjuan.com/api/app',
+			  data:{
+				  module:'moni',
+				  do:'market',
+			  },
+			  type:'POST',
+			  dataType:'jsonp',
+			  success:function(data){
+				  if(data.data.today==0){
+					 layer.msg("今天不开市哟！", {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+				  }else if(data.data.today==1&&data.data.time==0){
+					layer.msg("现在不是交易时间", {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.href="javascript:window.history.go(-1);"});
+				  } 
+			  }
+	   })
+	var game_id=GetQueryString("game_id");
+	var stock_type=1;
+	var status=0;
+	var uid=$.cookie('uid');
+	var data={};
+	if(typeof game_id == "number" ){
+		  data={
+			  module:'query',
+              do:'get',
+			  project:'moni',
+			  model:'stock',
+			  where:"stock_type="+stock_type+"&status="+status+"&game_id="+game_id+"&uid="+uid
+		  };
+	}else{
+		 data={
+			  module:'query',
+              do:'get',
+			  project:'moni',
+			  model:'stock',
+			  where:"stock_type="+stock_type+"&status="+status+"&uid="+uid
+		  }; 
+	}
+	 $.ajax({
+		  url:'http://open.zhengjuan.com/api/app',
+		  data:data,
+		  type:'POST',
+		  dataType:'jsonp',
+		  success:function(data){
+			  console.log(data);
+			  var html='';
+			  if(data.data.length<=0){
+				 $(".kongcang").show();
+				 $(".operationList").hide(); 
+			  }else{
+					 for (var i=0;i<data.data.length;i++){
+					 html+='<li id='+data.data[i].id+'>';
+						 html+='<ul>';
+						  html+='<li>';
+							html+='<p>'+data.data[i].stock_name+'</p>';
+							html+='<p>'+data.data[i].stock_code+'</p>';
+						  html+='</li>';
+						  html+='<li>';
+							html+='<p>'+data.data[i].buy_stock_money+'</p>';
+							html+='<p>'+data.data[i].buy_count+'</p>';
+						  html+='</li>';
+						  html+='<li>';
+							html+='<p>'+x(data.data[i].entrust_time * 1000)+'</p>';
+							html+='<p>'+getLocalTime(data.data[i].entrust_time* 1000)+'</p>';
+						  html+='</li>';
+						  html+='<li>';
+						  if(data.data[i].type==1){
+							 html+='<a href="javascript:void(0);" class="cancelOperation" onClick="cancelOperation(this);">撤销买单</a>'; 
+						  }else{
+							html+='<a href="javascript:void(0);" class="cancelOperation" onClick="cancelOperation(this);">撤销卖单</a>';  
+						  }
+						  html+='</li>';
+						 html+='</ul>';
+					html+='</li>';
+				  }
+				   $(".operationList").append(html);
+			  }
+		  }
+	  })
+ }); 
+ //撤单操作
+ function cancelOperation(obj){
+	var id=$(obj).parent().parent().parent().attr("id");//股票id
+	var game_id=GetQueryString("game_id");
+	if(game_id==' '){
+		data={
+                  module:'moni',
+                  do:'revoke',
+				  id:id,
+				  uid: $.cookie('uid')
+       };
+	}else{
+		data={
+                  module:'moni',
+                  do:'revoke',
+				  id:id,
+				  game_id:game_id,
+				  uid: $.cookie('uid')
+       };
+	}
+	$.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'moni',
+                  do:'revoke',
+				  id:id,
+				  game_id:game_id,
+				  uid: $.cookie('uid')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				 if(data.code==1){
+					layer.msg(data.data.msg,{icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){$(obj).parent().parent().parent().remove();});	
+				  }else{
+					 layer.msg(data.data.errormsg, {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+				  }
+              }
+   }) 
+ }
+ function x(tm) {
+	tm = parseInt(tm);
+	var date = new Date(tm); //转换成时间对象，这就简单了
+	var year = date.getFullYear();  //获取年
+	var mouth = date.getMonth() + 1 ;
+	var data = date.getDate();
+	if (date.getMonth() < 10) {
+		mouth = '0' + (date.getMonth()+1);
+	} else {
+		data = date.getDate();
+	}
+
+	if(date.getDate()<10) {
+		data = '0' + date.getDate();
+	}else{
+		data = date.getDate();
+	}
+	return year+'-'+mouth+'-'+data;
+}
+function getLocalTime(tm) { 
+      tm = parseInt(tm);
+	  var now = new Date(tm);
+      var   year=now.getFullYear();     
+	  var   month=now.getMonth()+1;     
+	  var   date=now.getDate();            
+      var   hour=now.getHours();     
+	  var   minute=now.getMinutes();  
+	  if(hour<10){
+		  hour='0'+hour;
+	  }else{
+		 hour=hour;
+	  }
+	  if(minute<10){
+		  minute='0'+minute;
+	  }else{
+		 minute=minute;
+	  }
+	  if(second<10){
+		  second='0'+second;
+	  }else{
+		 second=second;
+	  }
+	  var   second=now.getSeconds();     
+	  return   hour+":"+minute+":"+second;    
+}   
+</script>
+</body>
+</html>
