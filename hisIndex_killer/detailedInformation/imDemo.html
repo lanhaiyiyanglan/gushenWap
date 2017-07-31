@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>ImDEMO</title>
+</head>
+<body>
+<textarea id="chatlog" readonly style="width:100%;height:300px">
+</textarea>
+<input id="msg" type="text"  style="width:100%;height: 40px"/>
+<br/>
+<input type="file" id="J_fileInput"></input>
+<br/>
+<!-- 表单提交 -->
+<form method="post" class="form-horizontal" enctype="multipart/form-data">
+	文件：<input type="file"  id="upfile" name="upfile" >
+	<input type="button"  id = "uploadFileBtn" value="提交"/>
+</form>
+
+<button type="button" onclick="sendMsg()">发消息</button>
+<button type="button" onclick="sendGroupMsg()">发群消息</button>
+<button type="button"  onclick="getUnreadMsgCount()">获取未读消息数</button>
+<button type="button" onclick="getGroupInfo()">获取群信息</button>
+<button type="button" onclick = "getGroupMember()">获取群成员</button>
+<button type="button" onclick="getRecentPerson()">查看最近联系人</button>
+<button type="button" onclick="getGroupRoamMsg()">获取群的漫游消息</button>
+<button type="button" onclick="getSingleChatRoamMsg()">获取单聊的漫游消息</button>
+<button type="button" onclick="getUserOnlineStatus()">获取用户在线状态</button>
+<button type="button" onclick="getTribeList()">获取群列表</button>
+<button type="button" onclick="sendPic()">点这个测试，发送图片</button>
+<button type="button" onclick="sendCustomInfo()">发送自定义消息</button>
+<button type="button" onclick="destoryEvent()">终止监听</button>
+</body>
+<!-- IE8及以下支持JSON -->
+    <!--[if lt IE 9]>
+        <script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+    <![endif]-->
+    <!-- WSDK-->
+    <script src="https://g.alicdn.com/aliww/h5.imsdk/2.1.0/scripts/yw/wsdk.debug.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--<script type="text/javascript">-->
+    	<!--$(document).ready(function(){-->
+    		<!--$(document).on("click","#uploadFileBtn",function(){-->
+    			<!--var param = {-->
+    					<!--nick:"yuchengjian"-->
+    			<!--}-->
+    			<!--$.ajaxFileUpload({-->
+        			<!--url:"UploadImageServlet",-->
+        			<!--type:"post",-->
+        			<!--fileElementId: 'upfile',-->
+        			<!--data:param,-->
+        			<!--dataType:"json",-->
+        			<!--success:function(data){-->
+        				<!--console.log("imageServlet",data);-->
+        				<!--sendMsg(1,data.url);-->
+        			<!--},-->
+    				<!--error: function (data, status, e){-->
+    					<!--console.log("imageDataError",data);-->
+                    <!--}-->
+        		<!--});-->
+    		<!--});-->
+    	<!--});-->
+    <!--</script>-->
+    
+    <script type="text/javascript">
+	    var sdk = new WSDK();
+	    // 登录接口
+	    sdk.Base.login({
+	        uid:'imajian01',
+	        appkey: '23307969',
+	        credential: 'qwertyuiop',
+	        timeout: 4000,
+	        success: function(data){
+	           console.log('login success', data);
+	           // 监听接受消息
+	           sdk.Base.startListenAllMsg();
+	        },
+	        error: function(error){
+	           console.log('login fail', error);
+	        }
+	    });
+	    
+	    // 监听kick off
+		sdk.Event.on('KICK_OFF',function(data){
+			console.log('KICK_OFF ',data);
+		});
+	    // 接受消息事件，单聊成功的
+	  	 sdk.Event.on('CHAT.MSG_RECEIVED', function(data){
+			var strArr = data.data.msgs;
+	  		var allMessage = "";
+			for(var i=0;i<strArr.length;i++) {
+				var fromUser = strArr[i].from;
+				allMessage += sdk.Base.getNick(fromUser) + "对你说："+strArr[i].msg;					
+			}
+	  		document.getElementById("chatlog").textContent += allMessage + "\n";
+	  		setReadState();
+	   	});
+		// 发送自定义消息
+	    function sendCustomInfo() {
+	    	sdk.Chat.sendCustomMsg({
+	    	   touid: 'imajian02',
+	    	   msg: '我是自定义消息，我是自定义消息',
+	    	   summary: '演示自定义消息',
+	    	   success: function(data){
+	    	     console.log('send success', data);
+	    	   },
+	    	   error: function(error){
+	    	     console.log('send fail', error);
+	    	   }
+	    	});
+	    }
+		// 销毁			
+		function destoryEvent(){
+			sdk.Base.stopListenAllMsg();
+		} 
+		
+	    // 发送图片
+	    function sendPic() {
+	    	var input = document.getElementById('J_fileInput');
+	    	sdk.Plugin.Image.upload({
+	    	    target: input,
+	    	    timeout: 20000,
+	    	    msgType:1,
+	    	    success: function(data){
+	    	        console.log("sendpic",data);
+	    	        var msg = data.data.url;
+	    	        console.log("imageMsg",data);
+	    	       // sendMsg(1,msg);
+	    	        sendGroupMsg(msg,1);
+	    	    },
+	    	    error: function(error){
+	    	    }
+	    	});
+	    }
+	    // 单聊发消息接口
+	    function sendMsg(msgType,msg){
+	    	 sdk.Chat.sendMsg({
+			   touid: 'imajian02',
+			   msgType:msgType,
+			   msg: document.getElementById('J_fileInput').value,
+			   success: function(data){
+			     console.log('send success', data);
+			    /*  document.getElementById("msg").value = "";
+			     document.getElementById("chatlog").textContent += "你说："+ msg + "\n"; */
+			   },
+			   error: function(error){
+			     console.log('send fail', error);
+			     alert("出错了");
+			   }
+			});
+	    }
+	    
+	    function sendGroupMsg(msg,msgType) {
+	    	//var msg = document.getElementById("msg").value;
+	    	sdk.Tribe.sendMsg({
+	   		   tid: '1644842084',
+	   		   msg: msg,
+	   			 msgType:msgType,
+	   		   success: function(data){
+	   		     document.getElementById("msg").value = "";
+			     document.getElementById("chatlog").textContent += "群内消息："+ msg + "\n";
+	   		   },
+	   		   error: function(error){
+	   		     console.log(error);
+	   		   }
+	   		});
+	    }
+	   
+	    // 设置消息已读
+	    function setReadState() {
+	    	sdk.Chat.setReadState({
+	    		touid:"imajian02",
+	    		success:function(data) {
+						console.log(" msg read ",data);
+	    		},
+	    		error:function(data) {
+	    			console.log(" error : "+data);
+	    		}
+	    	});
+	    }
+	    // 获取未读消息数
+	    function getUnreadMsgCount() {
+	    	sdk.Base.getUnreadMsgCount({
+	    	    count: 30,
+	    	    success: function(data){
+	    	        console.log('未读消息数：' ,data);
+	    	    },
+	    	    error: function(error){
+	    	        console.log('get unread msg count fail' ,error);
+	    	    }
+	    	});
+	    }
+	    // 发送群消息
+	    /* function sendGroupMsgForPic(msg,msgType) {
+	    	sdk.Tribe.sendMsg({
+    		   tid: '1644842084',
+    		   msg: msg,
+    		   msgType:msgType,
+    		   success: function(data){
+    		     document.getElementById("msg").value = "";
+    		     console.log('tribe info ',data);
+			     //document.getElementById("chatlog").textContent += "群内消息： imajian01说： "+ msg + "\n";
+    		   },
+    		   error: function(error){
+    		     console.log(error);
+    		   }
+    		});
+	    } */
+	    // 接受成功的群聊信息
+	    sdk.Event.on('TRIBE.MSG_RECEIVED',function(data){
+			console.log("TRIBE.MSG_RECEIVED ",data);
+	    	var strArr = data.data.msgs;
+	  		var allMessage = "";
+			for(var i=0;i<strArr.length;i++) {
+				var fromUser = strArr[i].from;
+				allMessage += "群聊消息：" + sdk.Base.getNick(fromUser) + " 说："+strArr[i].msg;					
+			}
+	  		document.getElementById("chatlog").textContent += allMessage + "\n";
+	    });
+	    // 获取群信息
+	    function getGroupInfo() {
+	    	sdk.Tribe.getTribeInfo({
+	    	    tid: '1644842084',
+	    	    success: function(data){
+	    	        var groupName = data.data.name;
+	    	        var tid = data.data.tid;
+	    	        var tribeType = data.data.tribeType;
+	    	        var memberCount = data.data.memberCount;
+	    	        alert("群名称为："+groupName+"  TID为："+tid+"  群类型为："+tribeType+"  群人数："+memberCount)
+	    	    },
+	    	    error: function(error){
+	    	        console.log(error);
+	    	    }
+	    	});	    	
+	    }
+	    // 获取群成员
+	    function getGroupMember() {
+	    	sdk.Tribe.getTribeMembers({
+	    	    tid: '1644842084',
+	    	    success: function(data){
+	    	    	console.log(data);
+	    	        var dataList = data.data;
+	    	        var allNick="";
+	    	        for(var i= 0;i<dataList.length;i++) {
+	    	        	var nick = dataList[i].uid;
+	    	        	nick = sdk.Base.getNick(nick);
+	    	        	allNick += "成员："+ nick+"\n";
+	    	        }
+	    	        alert("群成员："+allNick);
+	    	    },
+	    	    error: function(error){
+	    	        console.log(error);
+	    	    }
+	    	});
+	    }
+	    // 获取最近的联系人
+	    function getRecentPerson() {
+	    	sdk.Base.getRecentContact({
+	    	    count: 100,
+	    	    success: function(data){
+	    	    	console.log('get recent contact success',data);
+	    	        var actorPerson = data.data.actor;
+	    	        var cntsArr = data.data.cnts;
+	    	        var allRecentPerson="";
+	    	        for(var i=0;i<cntsArr.length;i++) {
+	    	        	var uid = cntsArr[i].uid;
+	    	        	if(actorPerson != uid) {
+	    	        		allRecentPerson += sdk.Base.getNick(uid) +" ";
+	    	        	}
+	    	        }
+	    	        alert("最近的联系人为:  "+allRecentPerson);
+	    	    },
+	    	    error: function(error){
+	    	        console.log('get recent contact error' ,error);
+	    	    }
+	    	})
+	    }
+	    // 获取群的漫游消息
+	    function getGroupRoamMsg() {
+		    	 sdk.Tribe.getHistory({
+		    	     tid: '1644842084',
+		    	     count: 10,
+		    	     nextkey: nextkey,
+		    	     success: function(data){
+		    	    	 console.log(data);
+		    	         nextkey = data.data && data.data.next_key;
+		    	         tempNextKey = nextkey;
+		    	         var msgsList = data.data.msgs;
+		    	         var allMessage = "";
+		    	         for(var i=0;i<msgsList.length;i++) {
+		    	        	 var fromUser = msgsList[i].from;
+		    	        	 var msgContent = msgsList[i].msg;
+		    	        	 allMessage += "漫游群内消息： "+sdk.Base.getNick(fromUser) +" 说： "+msgContent + "\n";
+		    	         }
+		    	         document.getElementById("chatlog").textContent = allMessage;
+		    	     },
+		    	     error: function(error){
+		    	         console.log('get history msg fail', error);
+		    	     }
+		    	  });
+	    }
+	    
+	    function callbackHistory(){
+	    	 sdk.Tribe.getHistory({
+	    	     tid: '1644842084',
+	    	     count: 10,
+	    	     nextkey: nextkey,
+	    	     success: function(data){
+	    	    	 console.log(data);
+	    	         nextkey = data.data && data.data.next_key;
+	    	         tempNextKey = nextkey;
+	    	         var msgsList = data.data.msgs;
+	    	         var allMessage = "";
+	    	         for(var i=0;i<msgsList.length;i++) {
+	    	        	 var fromUser = msgsList[i].from;
+	    	        	 var msgContent = msgsList[i].msg;
+	    	        	 allMessage += "漫游群内消息： "+sdk.Base.getNick(fromUser) +" 说： "+msgContent + "\n";
+	    	         }
+	    	         document.getElementById("chatlog").textContent = allMessage;
+	    	     },
+	    	     error: function(error){
+	    	         console.log('get history msg fail', error);
+	    	     }
+	    	  });
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    // 获取单聊的漫游消息
+	    function getSingleChatRoamMsg() {
+	    	nextkey = '';
+	    	sdk.Chat.getHistory({
+	    	    touid: 'imajian02',
+	    	    nextkey: nextkey,
+	    	    count: 10,
+	    	    success: function(data){
+	    	    	console.log("getHistory",data);
+	    	        nextkey = data.data && data.data.next_key;
+	    	        var msgsList = data.data.msgs;
+	    	        var allMessage = "";
+	    	        for(var i=0;i<msgsList.length;i++) {
+	    	        	 var fromUser = msgsList[i].from;
+	    	        	 var msgContent = msgsList[i].msg;
+	    	        	 allMessage += "漫游单聊消息： "+sdk.Base.getNick(fromUser) +" 说： "+msgContent + "\n";
+	    	        }
+	    	        document.getElementById("chatlog").textContent = allMessage;
+	    	    },
+	    	    error: function(error){
+	    	        console.log('get history msg fail', error);
+	    	    }
+	    	 });
+	    }
+	    // 获取用户在线状态
+	   function getUserOnlineStatus() {
+		  /*  statusMap = {
+		            0: '离线',
+		            1: '在线'
+		        }; */
+		   sdk.Chat.getUserStatus({
+		       uids: ['imajian02','imajian03'],
+		       appkey: '23307969',
+		       success: function(data){
+		             console.log('imajian02的状态为',data);
+		             console.log('imajian03的状态为',data);
+		       },
+		       error: function(){
+		           console.log('getUserStatus fail');
+		       }
+		    });
+	   }
+	  
+	   function getTribeList() {
+		   sdk.Tribe.getTribeList({
+			    tribeTypes: [0],
+			    success: function(data){
+			        console.log(data);
+			    },
+			    error: function(error){
+			        console.log(error);
+			    }
+			});
+	   }
+    </script>
+</html>

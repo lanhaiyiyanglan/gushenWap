@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title class="toUid"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="../style/js/jquery.min.js"></script>
+    <script src="../style/js/jquery.cookie.js"></script>
+</head>
+<style>
+    .wkit-msg-time{
+        margin-bottom:.5rem;
+    }
+    .wkit-msg-wrap .wkit-msg-inner{
+        margin-top:-0.4rem;
+    }
+
+    .wkit-msg-item{
+        line-height:.7rem;
+    }
+    .wkit-theme-custom .wkit-s .wkit-msg-item{
+        border-radius: 12px!important;
+    }
+    .wkit-msg-item .wkit-emot {
+        display: inline!important;
+        width: 40px!important;
+    }
+    #J_wkitChatWrap .wkit-title{
+        background: #ffaf32;
+    }
+    .wkit-s .wkit-msg .wkit-msg-inner .wkit-msg-item{
+        background: #ffaf32;
+        border-radius: 8px;
+    }
+    .wkit-s .wkit-msg .wkit-msg-inner .wkit-arr{
+        border-color: #ffaf32 transparent transparent!important;
+    }
+    .wkit-r .wkit-msg .wkit-msg-inner .wkit-msg-item{
+        background: #fff;
+        color:#232323;
+        border:1px solid #d8d8d8;
+        border-radius: 8px;
+    }
+    #J_wkitSendBtn{
+        background: #ffaf32;
+    }
+    .wkit-r .wkit-msg .wkit-msg-inner .wkit-arr{
+        border-color: #fff transparent transparent!important;
+    }
+    #J_wkitTitle{
+        font-size: 100%!important;
+        font-weight: bold!important;
+        font-family: '黑体'!important;
+    }
+    #J_wkitTextarea{
+        border-radius:50px;
+        padding-left:15px;
+    }
+    #J_wkitMsgContent{
+        background: #ececec;
+    }
+</style>
+
+<body>
+
+</body>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- 自动适配移动端与pc端 -->
+<script src="https://g.alicdn.com/aliww/??h5.openim.sdk/1.0.6/scripts/wsdk.js,h5.openim.kit/0.3.3/scripts/kit.js" charset="utf-8"></script>
+<script>
+    WKIT.init({
+        uid:'gs539',
+        appkey: 23316858,
+        credential: '111111',
+        touid:'gs1176',
+        imageZoom:true,
+        avatar: $.cookie('usericon'),
+        logo:'http://img.alicdn.com/tps/i3/TB12LD9IFXXXXb3XpXXSyFWJXXX-82-82.png',
+        onAudioReceived: function(content){
+            return '<audio src="' + content + '"  controls="controls"></audio>';
+        },
+        onBack:function(){
+            window.history.go(-1);
+            return true;
+        }
+    });
+</script>
+
+</html>

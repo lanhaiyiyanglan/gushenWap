@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>发布图文直播</title>
+    <link rel="stylesheet" href="../../style/css/common.css" type="text/css">
+    <link rel="stylesheet" href="../../style/css/imgword.css">
+    <link rel="stylesheet" href="../../style/js/skin/layer.css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+    <script src="../../style/js/layer.js"></script>
+    <script src="../../style/js/upfile.js"></script>
+    <script src="../../style/js/addImgWord.js"></script>
+</head>
+
+<body>
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png" alt=""></a>
+    <h1>发布图文直播</h1>
+</header>
+<div class="addText">
+    <textarea  name="picText" id="picText" placeholder="请填写文字描述..."></textarea>
+</div>
+<div class="addBox">
+    <ul id="addImg">
+        <li id="addBtn">
+            <img src="../../style/img/addAlbum.png" id="imagesAdd">
+            <input id="file" type="file"  onChange="upload(event)">
+        </li>
+    </ul>
+</div>
+<div class="sureBtn">
+    <input type="button" value="确认保存" id="addpicSure">
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>交友资料</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/hiswork.css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body style="background: #fff;">
+<div class="topWrapper">
+    <header class="top">
+        <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+        <h1>交友资料</h1>
+    </header>
+</div>
+<ul class="mF">
+    <li class="mF_top">
+        <div class="mF_topImg"><img src="../../style/img/makefriend.png" alt=""></div>
+        <div class="mF_topText">交友资料</div>
+    </li>
+    <li>
+        <div class="mF_tip">交友宣言：</div>
+        <div class="mF_content">我是一个有钱的好孩子，我家有好多好多的钱和用不完的钱。多好多的钱和用不完的</div>
+    </li>
+    <li>
+        <div class="mF_tip">性格：</div>
+        <div class="mF_content">冒险/疯狂;稳重;浪漫/脱俗;好斗;敏感;自由冒险/疯狂;冒险/疯狂;稳重;浪漫/脱俗;好斗;敏感;自由冒险/疯狂;</div>
+    </li>
+    <li>
+        <div class="mF_tip">爱好：</div>
+        <div class="mF_content">情感;文学;时尚;读书;聚会;聊天;书法情感;情感;文学;时尚;读书;聚会;聊天;书法情感;情感;文学;时尚;读书;聚会;聊天;书法情感;</div>
+    </li>
+    <li>
+        <div class="mF_tip">初次见面地点：</div>
+        <div class="mF_content">咖啡厅;茶馆;酒店;</div>
+    </li>
+</ul>
+<script>
+    var urlinfo = window.location.href;
+    var userid = urlinfo.split("?")[1].split("=")[1];
+    console.log(userid)
+    var urlinfo = window.location.href;
+    if(urlinfo.indexOf('app')!==-1) {
+        user_id = urlinfo.split("?")[1].split("&")[0].split('=')[1];
+        if (urlinfo.indexOf('type') !== -1) {
+            var type = urlinfo.split("?")[1].split("&")[1].split('=')[1];
+            $('.topWrapper').hide();
+            $('.di_experience1').css('margin-top', '0')
+        }
+    }else{
+        user_id= $.cookie('user_id');
+    }
+    $(document).ready(function(){
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getMemberFriendDetail',
+                user_id:userid
+            },
+            success:function(data){
+                console.log(data)
+                if(data.data.length!==0){
+                    $('.mF>li:nth-child(2)>.mF_content').html(data.data[0].show_word);
+                    $('.mF>li:nth-child(3)>.mF_content').html(data.data[0].personality.split('\n').join(';'));
+                    $('.mF>li:nth-child(4)>.mF_content').html(data.data[0].interest.split('\n').join(';'));
+                    $('.mF>li:nth-child(5)>.mF_content').html(data.data[0].place.split('\n').join(';'));
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

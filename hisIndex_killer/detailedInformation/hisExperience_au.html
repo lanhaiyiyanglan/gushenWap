@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <title>他的经历</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/hisIndex.css">
+    <script src="../../style/js/jquery.min.js"></script>
+    <script src="../../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="javascript:window.history.go(-1);" class="back"><img src="../../style/img/back.png"></a>
+        <h1>他的经历</h1>
+    </header>
+</div>
+<ul class="di_experience di_experience1 auth">
+    <li class="di_top">
+        <div class="tip_img"><img src="../../style/img/congye.png" alt=""></div>
+        <div class="text">从业经历认证</div>
+    </li>
+    <li><div class="text1 company"></div></li>
+    <li>
+        <div class="text2 company2"></div>
+    </li>
+    <li class="di_top">
+        <div class="tip_img"><img src="../../style/img/jyzs.png" alt=""></div>
+        <div class="text">教育证书认证</div>
+    </li>
+    <li><div class="text1 edu"></div></li>
+    <li><div class="text2 edu2"></div></li>
+    <li class="di_top">
+        <div class="tip_img"><img src="../../style/img/peixun.png" alt=""></div>
+        <div class="text">培训/从业资格证书认证</div>
+    </li>
+    <li><div class="text1 train"></div></li>
+    <li><div class="text2 train2"></div></li>
+</ul>
+<ul class="di_experience workTop">
+    <li class="di_top">
+        <div class="tip_img"><img src="../../style/img/gzjy.png" alt=""></div>
+        <div class="text">工作经验</div>
+    </li>
+    <li>
+        <div class="di_work">工作经历：</div>
+        <div class="di_workContent workhistory">
+
+        </div>
+    </li>
+    <li>
+        <div class="di_work">就职状态：</div>
+        <div class="di_workContent workstatus">在职</div>
+    </li>
+    <li>
+        <div class="di_work">就职公司简介：</div>
+        <div class="di_workContent workcompany">
+
+        </div>
+    </li>
+</ul>
+<ul class="di_experience">
+    <li class="di_top">
+        <div class="tip_img"><img src="../../style/img/mtqt.png" alt=""></div>
+        <div class="text">媒体其他</div>
+    </li>
+    <li>
+        <div class="di_work">媒体报道：</div>
+        <div class="di_workContent media_report">
+
+        </div>
+    </li>
+    <li>
+        <div class="di_work">发表文章：</div>
+        <div class="di_workContent media_article"></div>
+    </li>
+    <li>
+        <div class="di_work">个人荣誉：</div>
+        <div class="di_workContent workhonor">
+
+        </div>
+    </li>
+</ul>
+<ul class="education education1">
+    <li class="ed_top">
+        <div class="ed_img"><img src="../../style/img/jyjl.png" alt=""></div>
+        <div class="ed_text">教育经历</div>
+    </li>
+    <li>
+        <div class="ed_tip">最高学历毕业学校：</div>
+        <div class="ed_tipContent topSchool"></div>
+    </li>
+    <li>
+        <div class="ed_tip">最高学历：</div>
+        <div class="ed_tipContent topeducation"></div>
+    </li>
+    <li>
+        <div class="ed_tip">最高学历所学专业：</div>
+        <div class="ed_tipContent topprofession"></div>
+    </li>
+    <li>
+        <div class="ed_tip">最高学历起止时间：</div>
+        <div class="ed_tipContent"><span class="starTime"></span>-- <span class="endTime"></span></div>
+    </li>
+    <li>
+        <div class="ed_tip">本科毕业学校：</div>
+        <div class="ed_tipContent college_school"></div>
+    </li>
+    <li>
+        <div class="ed_tip">本科所学专业：</div>
+        <div class="ed_tipContent college_profession"></div>
+    </li>
+    <li>
+        <div class="ed_tip">本科起止时间：</div>
+        <div class="ed_tipContent"><span class="college_starttime"></span>--<span class="college_endtime"></span> </div>
+    </li>
+    <li>
+        <div class="ed_tip">培训经历：</div>
+        <div class="ed_tipContent training_experience"></div>
+    </li>
+    <li>
+        <div class="ed_tip">从业资格：</div>
+        <div class="ed_tipContent certificate"></div>
+    </li>
+</ul>
+<script>
+    $.ajaxSetup({
+        async: false
+    });
+    $(document).ready(function(){
+        var urlinfo = window.location.href;
+        if(urlinfo.indexOf('app')!==-1) {
+            user_id = urlinfo.split("?")[1].split("&")[0].split('=')[1];
+            $('.auth').css('margin-top','0');
+            $('.topWrapper').hide();
+            $('.workTop').css('margin-top','0');
+        }else{
+            user_id=urlinfo.split('?')[1].split('=')[1];
+        }
+        console.log(user_id)
+        if(user_id== $.cookie('user_id')){
+            $('.top').children('h1').html('我的经历')
+        }
+        console.log(user_id)
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getMemberExperienceDetail',
+                user_id:user_id
+            },
+           success:function(data){
+               $('.workhistory').html(data.data[0].work_history);
+               $('.workcompany').html(data.data[0].company);
+               if(data.data[0].work_status==0){
+                   $('.workstatus').html('在职');
+               }else{
+                   $('.workstatus').html('自由职业');
+               }
+               $('.media_report').html(data.data[0].media_report);
+               $('.media_article').html(data.data[0].media_article);
+               $('.workhonor').html(data.data[0].honor);
+               console.log(data)
+           }
+        })
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'user',
+                do:'getMemberEduDetail',
+                user_id: user_id
+            },
+            success:function(data){
+                if(data.data.length!==0){
+                    $('.topSchool').html(data.data[0].school);
+                    $('.topeducation').html(data.data[0].education);
+                    $('.topprofession').html(data.data[0].profession);
+                    $('.starTime').html(data.data[0].top_starttime);
+                    $('.endTime').html(data.data[0].top_endtime);
+                    $('.college_school').html(data.data[0].college_school);
+                    $('.college_profession').html(data.data[0].college_profession);
+                    $('.college_starttime').html(data.data[0].college_starttime);
+                    $('.college_endtime').html(data.data[0].college_endtime);
+                    $('.training_experience').html(data.data[0].training_experience);
+                    $('.certificate').html(data.data[0].certificate);
+                }
+                console.log(data)
+            }
+        })
+        $.ajax({
+            url:'http://open.zhengjuan.com/api/app',
+            type:'POST',
+            dataType:'jsonp',
+            data:{
+                module:'auth',
+                do:'job',
+                user_id: user_id
+            },
+            success:function(data){
+                console.log(data)
+                if(!data.data.msg){
+                    if(data.data[0].status==2){
+                        $('.company').html(data.data[0].company);
+                        $('.company2').html(data.data[0].content);
+                    }else{
+                        $('.auth').children('li:nth-child(1)').hide();
+                        $('.auth').children('li:nth-child(2)').hide();
+                        $('.auth').children('li:nth-child(3)').hide();
+                    }
+                }else{
+                    $('.auth').children('li:nth-child(1)').hide();
+                    $('.auth').children('li:nth-child(2)').hide();
+                    $('.auth').children('li:nth-child(3)').hide();
+                }
+                console.log(data)
+                $.ajax({
+                    url:'http://open.zhengjuan.com/api/app',
+                    type:'POST',
+                    dataType:'jsonp',
+                    data:{
+                        module:'auth',
+                        do:'edu',
+                        user_id: user_id
+                    },
+                    success:function(data){
+                        console.log(data)
+                        if(!data.data.msg){
+                            if(data.data.edu.status==2){
+                                $('.edu').html(data.data.edu.content);
+                                $('.edu2').html(data.data.edu.info);
+                            }else{
+                                $('.auth').children('li:nth-child(4)').hide();
+                                $('.auth').children('li:nth-child(5)').hide();
+                                $('.auth').children('li:nth-child(6)').hide();
+                            }
+                            if(data.data.train.status==2){
+                                $('.train').html(data.data.train.content);
+                                $('.train2').html(data.data.train.info);
+                            }else{
+                                $('.auth').children('li:nth-child(7)').hide();
+                                $('.auth').children('li:nth-child(8)').hide();
+                                $('.auth').children('li:nth-child(9)').hide();
+                            }
+                        }else{
+                            $('.auth').children('li:nth-child(7)').hide();
+                            $('.auth').children('li:nth-child(8)').hide();
+                            $('.auth').children('li:nth-child(9)').hide();
+                        }
+                        if(
+                                $('.auth').children('li:nth-child(1)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(2)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(3)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(4)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(5)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(6)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(7)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(8)').css('display')=='none'&&
+                                $('.auth').children('li:nth-child(9)').css('display')=='none'
+                        ){
+                            $('.di_experience1').hide();
+                            $('.workTop').css('margin-top','10rem')
+                            if(urlinfo.indexOf('app')!==-1) {
+                                user_id = urlinfo.split("?")[1].split("&")[0].split('=')[1];
+                                $('.auth').css('margin-top','0');
+                                $('.topWrapper').hide();
+                                $('.workTop').css('margin-top','2rem');
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
+</body>
+</html>
