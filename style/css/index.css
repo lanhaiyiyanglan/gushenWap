@@ -1,0 +1,92 @@
+@charset "utf-8";
+/* CSS Document */
+.swiper-container{height:25rem;}
+.swiper-container a img{display:block;width:100%;height:25rem;}
+/*itemsLink*/
+.itemsLink{ 
+    display: -webkit-box;/* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+    display: -moz-box;/* Firefox 17- */
+	display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+	display: -moz-flex; /* Firefox 18+ */
+	display: -ms-flexbox; /* IE 10 */
+	display: box;  
+	display: flexbox;  
+	display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */ 
+	/*2端对齐*/
+    -webkit-box-align: justify;
+    -moz-box-align: justify;
+    -ms-flex-align: justify;
+    -o-box-align: justify;
+    box-align: justify;
+	padding:2.5rem 3rem;
+	background: #fff;
+}
+.itemsLink li{-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;display: block;width:100%;text-align: center;}
+.itemsLink li > a{display: block;padding: 0.5rem 0;}
+.itemsLink li .itemsIncon {
+	width: 10rem;
+	height: 10rem;
+	overflow: hidden;
+	margin: 0 auto 1.5rem;
+}
+.itemsLink li p {font-size: 3rem;line-height:2.6rem;color: #323232;}
+.items1{background:url(../img/p1.png) no-repeat 0px 0px;}
+.items2{background:url(../img/p2.png) no-repeat 0px 0px;}
+.items3{background:url(../img/p3.png) no-repeat 0px 0px;}
+.items4{background:url(../img/p4.png) no-repeat 0px 0px;}
+.items5{background:url(../img/p5.png) no-repeat 0px 0px;}
+.items6{background:url(../img/p6.png) no-repeat 0px 0px;}
+.items7{background:url(../img/p7.png) no-repeat 0px 0px;}
+.items8{background:url(../img/p8.png) no-repeat 0px 0px;}
+.items1,.items2,.items3,.items4,.items5,.items6,.items7,.items8{-webkit-background-size:10rem 10rem;-moz-background-size:10rem 10rem;-ms-background-size:10rem 10rem;-o-background-size:10rem 10rem;background-size:10rem 10rem;}
+/*recommand*/
+.recommandTit{height:6rem;line-height:6rem;padding-left:3rem;font-size:3rem;color:#333333;background#fff;border-top:2px solid #d8d8d8;border-bottom:2px solid #d8d8d8;}
+.list-block{display:block;position:relative;}
+.list-block li{display:block;border-bottom:2px solid #d8d8d8;min-height:10rem;overflow:hidden;padding: 0 3rem;background: #fff}
+.item{
+	display: -webkit-box;/* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+    display: -moz-box;/* Firefox 17- */
+	display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+	display: -moz-flex; /* Firefox 18+ */
+	display: -ms-flexbox; /* IE 10 */
+	display: box;  
+	display: flexbox;  
+	display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */ 
+	padding:2.5rem 0;
+}
+.img{    width: 13rem;
+	height: 13rem;position: relative;padding:0 1rem;}
+.img a{
+	display: block;
+	width: 13rem;
+	height: 13rem;
+	border-radius: 50%;
+	overflow: hidden;
+	}
+.img .ico{width: 13rem;
+	height: 13rem;border-radius: 50%;}
+.info {-moz-box-flex:1; -webkit-box-flex:1; box-flex:1;display: block;width: 100%;margin-left:3rem;}
+.nameIcon{margin-bottom:1.1rem;}
+.name{font-size:3rem;color: #000;display:inline-block;margin-right:3rem;}
+.brief {font-size:2.6rem;line-height:3rem;margin-bottom:1.1rem;color:#b1b1b1;}
+.price {font-size: 2.6rem;color: #b1b1b1;}
+.orange{color:#ffaf32;}
+.gs1{background:url(../img/rz1.png) no-repeat center bottom;}
+.gs2{background:url(../img/rz2.png) no-repeat center bottom;}
+.gs3{background:url(../img/rz3.png) no-repeat center bottom;}
+.gs4{background:url(../img/rz4.png) no-repeat center bottom;}
+.gs5{background:url(../img/rz5.png) no-repeat center bottom;}
+.gs6{background:url(../img/rz6.png) no-repeat center bottom;}
+.gs7{background:url(../img/rz7.png) no-repeat center bottom;}
+.gs1,.gs2,.gs3,.gs4,.gs5,.gs6,.gs7{display:inline-block;width:3rem;height:3rem;margin-right:1rem; -webkit-background-size:3rem 3rem;-moz-background-size:3rem 3rem;-ms-background-size:3rem 3rem;-o-background-size:3rem 3rem;background-size:3rem 3rem;vertical-align:bottom;}
+.gray{
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: gray;
+}
+.nav{
+	position: relative;
+}

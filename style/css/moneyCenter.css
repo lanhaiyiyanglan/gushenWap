@@ -1,0 +1,123 @@
+@charset "utf-8";
+/* CSS Document */
+.loading{display:none;}
+.moneyCenterList{margin-top:12rem;border-top:0.2rem solid #d8d8d8;}
+.moneyCenterList > li {border-bottom:0.2rem solid #d8d8d8;display:block;background:#ffffff;}
+.moneyCenterList > li a{position: relative;display: -webkit-box;display: box;margin-left:3rem;height:9rem;}
+.moneyCenterIncon {width:3.5rem;height:3.5rem;margin-top:2.75rem;}
+.moneyCenterIncon img{width:100%;height:100%;}
+.moneyCenterText {-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;margin-left:3rem;font-size:3.4rem;color:#323232;}
+.rightDetail{float:right;display:inline-block;margin-right:3rem;width:2rem;height:4rem;margin-top:0.5rem;}
+.rightDetail img{width:2rem;height:4rem;}
+/*财富管理*/
+.moneyCount{position: relative;display: -webkit-box;display: box;height:9rem;padding:0 3rem;border-top:0.2rem solid #d8d8d8;border-bottom:0.2rem solid #d8d8d8;background:#ffffff;margin-top:2.5rem;margin-bottom:3rem;}
+.moneyCount span{width:27rem;height:9rem;line-height:9rem;display:block;font-size:3rem;color:#323232;}
+.moneyCount #countNumber{-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;color:#ffaf32;font-size:3rem;height:9rem;line-height:9rem;}
+.giftListTit{font-size:3rem;padding-left:3rem;color:#323232;}
+.giftList{padding:0 3rem;min-height:10rem;overflow:hidden;}
+.giftList li{display:block;float:left;width:33.33%;text-align:center;margin:3rem auto;}
+.giftList li .giftInfo{width:90%;height:22rem;border:0.1rem solid #ebebeb;background:#fff;margin:0 auto;}
+.giftList li.on .giftInfo{border:0.1rem solid #ffaf32;}
+.giftList li .giftInfo img{width:11rem;height:11rem;display:block;margin:1.8rem auto;}
+.giftList li .giftInfo .giftName{font-size:3rem;color:#333333;}
+.giftList li .giftInfo .giftPrice{font-size:2.6rem;color:#999999;padding-top:0.5rem;}
+.excharge{display:block;width:70%;text-align:center;color:#fff;background:#ffaf32;border-radius:0.8rem;font-size:2.8rem;margin:2rem auto;height:5rem;line-height:5rem;}
+.exchargeAll{padding:0 3rem;}
+.exchargeAll a{height:9rem;line-height:9rem;font-size:3rem;color:#fff;display:block;background:#ffaf32;border-radius:0.8rem;margin-top:10rem;margin-bottom:4rem;text-align:center;}
+.remaindNum{position:absolute;z-index:2;width: 5rem;height:5rem;line-height:5rem;border-radius:50%;margin-top: -14rem;color:#fff;margin-left: 7%;font-size:2rem;background:#fc3015;}
+.exAll p{font-size:3.2rem;color:#323232;padding-bottom:2rem;}
+.exAll p .org{color:#ffaf32;}
+/*充值*/
+.moneyUp{padding:3rem;min-height:10rem;overflow:hidden;margin-top: 11.5rem;}
+.payTit{font-size:3rem;color:#666666;margin-bottom:3rem;}
+.payWay{padding:0 3rem;min-height:5rem;overflow:hidden;margin-bottom:4rem;}
+.payWay li{width:50%;display:block;float:left;text-align:center;}
+.payWay a{display:block;width:90%;height:9.5rem;line-height:9.5rem;font-size:3.6rem;background:#fff;border:0.2rem solid #d8d8d8;}
+.payWay li.selected a{color:#ffaf32;background:#fff url(../img/tt.png) no-repeat bottom right;border:0.2rem solid #ffaf32;}
+.selectCoin{padding:0 3rem;min-height:5rem;overflow:hidden;margin-bottom:4rem;}
+.selectCoin ul{min-height:10rem;overflow:hidden;}
+.selectCoin ul li{width:50%;display:block;float:left;text-align:center;margin-bottom:3rem;}
+.selectCoin ul li span{display:block;width:90%;height:9.5rem;line-height:9.5rem;font-size:3.6rem;background:#fff;border:0.2rem solid #d8d8d8;}
+.selectCoin ul li.on span{color:#ffaf32;border:0.2rem solid #ffaf32;}
+.otherCoin{font-size:3rem;}
+.otherCoin input{height: 8rem;line-height: 8rem;border:0.2rem solid #d8d8d8;width:30rem;display:inline-block;margin:0 2rem;font-size: 3rem;text-align: center;color: #ffaf32;}
+#toCharge{padding:0 3rem;}
+#toCharge input{width:100%;outline:none;border-radius:0.8rem;border:none;display:block;font-size:3rem;background:#ffaf32;color:#fff;height:9rem;line-height:9rem;}
+/*部分兑换*/
+.exgiftInfo{padding:2rem 0;height: 15rem;overflow:hidden;width: 11rem;margin: 1.8rem auto;margin-left: 4.5rem;background: #fff;text-align: center;}
+.exgiftInfo img{width: 9rem;height: 9rem;background: #fff;}
+.exgiftInfo .exgiftName{font-size:3rem;color:#333333;}
+.exgiftInfo .exgiftPrice{font-size:2.6rem;color:#999999;padding-top:0.5rem;}
+.exremaindNum{position:absolute;z-index:2;width: 5rem;height:5rem;line-height:5rem;border-radius:50%;margin-top: -2rem;color:#fff;margin-left: -4rem;font-size:2rem;background:#fc3015;text-align: center;}
+.exchargeNumber{font-size:3rem;color:#323232;padding:0 3rem;height:6rem;line-height:6rem;border-top:0.2rem solid #d8d8d8;border-bottom:0.2rem solid #d8d8d8;background:#fff;}
+.exchargeNumber span{display:inline-block;/* width: 25%; */}
+.exchargeNumber input{display:inline-block;width: 75%;height: 4rem;line-height: 4rem;font-size: 3rem;color: #ffaf32;text-align:left;border: none;outline: none;text-indent: 1rem;}
+.exchargetotals{padding:2rem 0 2rem 3rem;font-size:3rem;color:#323232;}
+.exchargetotals span{color:#ffaf32;padding: 0 1rem;}
+.exchargeBtn{padding:0 3rem;}
+.exchargeBtn a{display:block;height:6rem;line-height:6rem;background:#ffaf32;color:#fff;text-align:center;font-size:3rem;border-radius:0.8rem;}
+.exchargeTips{padding-top:2rem;padding-left:3rem;font-size:3rem;color:#323232;}
+.exchargeTips span{color:#ffaf32;}
+/*送出礼物*/
+.sendGiftList{padding:0 3rem;min-height:10rem;overflow:hidden;margin-top: 11.5rem;}
+.sendGiftList li{border:0.2rem solid #ffaf32;border-radius:0.8rem;position: relative;display: -webkit-box;display: box;margin: 3rem auto;height: 24rem;overflow: hidden;background: #fff;}
+.sendGiftList li .sendPer{width:13.8rem;height:auto;}
+.sendGiftList li .sendPer img{width:9rem;height:9rem;display:block;margin-top:4rem;margin-left:2.5rem;border-radius:50%;}
+.sendGiftList li .sendInfo{-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;}
+.sendMans{color:#ffaf32;font-size:2.8rem;margin-top: 2rem;}
+.sendMans img{width:8rem;vertical-align: middle;height: 8rem;}
+.sendMans .howMany{padding-left: 1rem;}
+.sendMans .who{padding:0 1rem;}
+.sendTime{color:#d0d0d0;font-size:2.4rem;}
+.sendSaying{font-size:2.8rem;color:#333333;line-height: 4rem;height: 8rem;overflow: hidden;padding-right: 3rem;padding-top: 1rem;}
+/*收到礼物*/
+.receiveGiftList{padding:0 3rem;min-height:10rem;overflow:hidden;margin-top: 11.5rem;}
+.receiveGiftList li{border:0.2rem solid #ffaf32;border-radius:0.8rem;position: relative;display: -webkit-box;display: box;margin: 3rem auto;height: 24rem;overflow: hidden;background: #fff;}
+.receiveGiftList li .receivePer{width:13.8rem;height:auto;}
+.receiveGiftList li .receivePer img{width:9rem;height:9rem;display:block;margin-top:4rem;margin-left:2.5rem;border-radius:50%;}
+.receiveGiftList li .receiveInfo{-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;}
+.receiveMans{color:#ffaf32;font-size:2.8rem;margin-top: 2rem;}
+.receiveMans img{width:8rem;vertical-align: middle;height: 8rem;margin-left: 1rem;}
+.receiveMans .howMany{padding-left: 1rem;}
+.receiveMans .who{padding:0 1rem;}
+.receiveTime{color:#d0d0d0;font-size:2.4rem;}
+.receiveSaying{font-size:2.8rem;color:#333333;line-height: 4rem;height: 8rem;overflow: hidden;padding-right: 3rem;padding-top: 1rem;}
+/*我的礼物包裹*/
+.xi_list{margin:0 auto;margin-top:2.5rem;min-height:4rem;overflow:hidden;}
+.xi_list > li{display:block;border-bottom:2px solid #d8d8d8;width:100%;float:left;font-size:3rem;color:#323232;background:#ffffff;}
+.xi_list li .infobox{position: relative;display: -webkit-box;display: box;height:6.6rem;}
+.xi_list li .infobox > span{width: 23rem;color:#323232;font-size:3rem;display:inline-block;height:6.6rem;line-height:6.6rem;padding-left: 3rem;}
+.xi_list li .infobox .infoInput{-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;color:#323232;font-family:"微软雅黑";}
+.xi_list li .infobox .infoInput .eidtorWhere {padding-right: 8rem;}
+.xi_list li .infobox .infoInput .eidtorWhere input{width: 100%;border:none;outline:none;font-size:3rem;color:#323232;white-space: nowrap;text-overflow: ellipsis;text-indent: 3rem;text-align: left;}
+.forEditor{float: right;display: block;margin-top: -3rem;position: absolute;right: 3rem;}
+.forEditor img{width: 1.5rem;height: 3rem;margin-top: 1.5rem;}
+.sendToBtn{width:30rem;height:6.3rem;border:0.1rem solid #ffaf32;margin:1.5rem auto;overflow:hidden;border-radius:0.8rem;}
+.sendToBtn input{display:inline-block;height:6.3rem;color:#ffaf32;outline:none;border:none;font-size:3.6rem;}
+#sendNumber{background:#fff url(../img/send.png) no-repeat right;float:left;width:55%;text-indent:2rem;}
+#sendBtn{color:#fff;background:#ffaf32;float:right;width:45%;text-align:center;}
+.editorText{margin: 2.5rem auto;border-bottom:2px solid #d8d8d8;min-height: 1rem;overflow: hidden;padding: 0 4%;background: #fff;}
+.textarea{height:48rem;border:none;display:block;outline:none;font-size:2.8rem;line-height:5.6rem;width:100%;color:#b1b1b1;}
+.InputTips{font-size:2.8rem;padding:0 3rem;text-align:right;height:9rem;line-height:9rem;color:#b1b1b1;}
+.sureBtn{padding:0 3rem;height:9rem;}
+.sureBtn input{width:100%;outline:none;border:none;display:block;height:9rem;line-height:9rem;color:#fff;background:#ffaf32;border-radius:8px;font-size:3rem;}
+/*好友列表*/
+#friendList{margin-top: 11.5rem;}
+.mglist{margin-top: 2rem;!important;}
+.friendList > li{background: #ffffff;margin-bottom:2px;display:block;overflow: hidden;height: 13rem;border-top: 0.2rem solid #d8d8d8;}
+.friendList > li a{position: relative;display: -webkit-box;display: box;height: 13rem;display: inline-block;width: 100%;float: left;}
+.perIncon {width: 11rem;height: 11rem;display: inline-block;float: left;margin-top: 1rem;margin-right: 2rem;border-radius: 50%;overflow: hidden;margin-left: 3rem;}
+.perIncon img{width:100%;height:100%;}
+.personalText {-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;font-size:3.4rem;color:#323232;margin-right: 3rem;}
+.namePlace{clear:both;}
+.namePlace .friendName{float:left;font-size:3rem;color:#333333;padding-top:4.5rem;}
+.namePlace .friendName .roler{font-size:2.6rem;color:#ffaf32;padding-left:1.5rem;}
+.namePlace .freindPlace{float:right;font-size:2.4rem;color:#b1b1b1;padding-top: 3.5rem;}
+.friendDemand{font-size:3rem;color:#b1b1b1;padding-top: 1.5rem;}
+.friendDemand span{color:#ffaf32;}
+.logDel{display:inline-block;float:left;width: 150px;background:red;height:13rem;line-height:13rem;text-align: center;font-size: 3rem;color: #fff;}
+.initials{width:40px;position: fixed;top: 14rem;right:0;background: rgba(0,0,0,0)!important;}
+.initials li{height: 40px!important;font-size: 2.5rem;text-align: center;width:40px;color: #8d8d8d;}
+.sort_letter{font-size: 3rem;padding-left:5rem;color: #b1b1b1;}
+#friendList .selectOn{background:#fff url(../img/gougou.png) no-repeat 94% 54%;}
+.red{color:#fc3015;margin: 0 5px;display: inline-block;}

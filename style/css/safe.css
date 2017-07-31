@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+.safeScore{padding:0 3rem;min-height:5rem;overflow:hidden;text-align:center;margin-top:10rem;}
+.safeScore .scoreContent{padding-top:4rem;border-bottom:0.2rem dotted #d8d8d8;}
+.safeScore .scoreContent img{display:block;width:12rem;height:14rem;margin:0 auto}
+.safeScore .scoreContent .score{font-size:3rem;padding:3rem 0;}
+.safeScore .scoreContent .score .scoreRed{color:#ff0404;}
+.scoreText{padding-top:4rem;padding-bottom:3rem;color:#d8d8d8;font-size:2.8rem;}
+.safeList{min-height:10rem;overflow:hidden;background:#fff;}
+.safeList > li {border-bottom:1px solid #d8d8d8;}
+.safeList> li a{position: relative;display: -webkit-box;display: box;margin-left:3rem;height:9rem;}
+.safeIncon {width:3.5rem;height:3.5rem;margin-top:2.75rem;}
+.safeIncon img{width:100%;height:100%;}
+.safeText {-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;margin-left:3rem;font-size:3.4rem;color:#323232;}
+.rightDetail{float:right;display:inline-block;margin-right:3rem;width:2rem;height:4rem;margin-top:0.5rem;}
+.rightDetail img{width:2rem;height:4rem;}
+/*修改密码*/
+#updatePaswordForm{
+    margin-top:10rem;
+}
+.updatePassword{margin-top:2.5rem;margin-bottom:4rem;}
+.updatePassword li{display:block;height:9rem;line-height:9rem;padding:0 3rem;border-bottom:0.2rem solid #d8d8d8;background:#fff;}
+.updatePassword li input{height:9rem;line-height:9rem;color:#b1b1b1;width:100%;border:none;outline:none;font-size:3rem;}
+.sureBtn{padding:0 3rem;height:9rem;}
+.sureBtn input{width:100%;outline:none;border:none;display:block;height:9rem;line-height:9rem;color:#fff;background:#ffaf32;border-radius:8px;font-size:3rem;}
+/*手机绑定*/
+#bindPhoneForm{
+    margin-top:10rem;
+}
+.bindPhone{margin-top:2.5rem;margin-bottom:4rem;}
+.bindPhone li{display:block;height:9rem;line-height:9rem;padding:0 3rem;border-bottom:0.2rem solid #d8d8d8;background:#fff;}
+.bindPhone li input{height:9rem;line-height:9rem;color:#b1b1b1;width:100%;border:none;outline:none;font-size:3rem;}
+.aq_bt{display:block;position:absolute;right:3rem;width:17rem!important;height:5rem!important;line-height:4rem!important;border-radius:8px;font-size:2.6rem;background:#ffaf32;color:#fff!important;margin-top:-7rem;}
+/*绑定邮箱*/
+#bindEmailForm{
+    margin-top:10rem;
+}
+.bindEmail{margin-top:2.5rem;margin-bottom:4rem;}
+.bindEmail li{display:block;height:9rem;line-height:9rem;padding:0 3rem;border-bottom:0.2rem solid #d8d8d8;background:#fff;}
+.bindEmail li input{height:9rem;line-height:9rem;color:#b1b1b1;width:100%;border:none;outline:none;font-size:3rem;}
+/*错误提示*/
+.tips .error {padding-left:20px;margin-left:10px;background: url(../img/wrong.png) no-repeat 0px 3px;height:30px;line-height:30px;color: #ffaf32;font-size: 1.8rem;}

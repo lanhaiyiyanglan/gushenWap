@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+.vipStatus{margin-left: 3rem;font-size: 3rem;padding:3rem 0;}
+.orange{color:#ffaf32;}
+.vipTabs {min-height:5rem;overflow:hidden;display:block;/* font-size:3rem; */margin:0;padding:0;}
+.vipTabs .selected {border-bottom: 0.2rem solid #ffaf32;color:#ffaf32;}
+.vipTabs li {width: 50%;height:9rem;line-height:9rem;text-align:center;float: left;color:#323232;font-size: 3rem;display: block;border-bottom:0.2rem solid #d8d8d8;}
+.howMuch{margin-left:3rem;padding:2.5rem 0;font-size: 3rem;}
+.payType{margin-left:3rem;padding-top:3rem;color:#b1b1b1;font-size: 3rem;}
+.payList{min-height:10rem;overflow:hidden;padding:1rem 0;}
+.payList > li {border-bottom:0.2rem solid #d8d8d8;padding:0 3rem;}
+.payList > li a{position: relative;display: -webkit-box;display: box;margin-left:3rem;height:9rem;}
+.payIncon {width: 4.5rem;height: 4.5rem;margin-top: 2.5rem;}
+.payIncon img{width:100%;height:100%;}
+.payText {-webkit-box-flex: 1;box-flex: 1;display: box;display: -webkit-box;-webkit-box-orient: vertical;-webkit-box-pack: center;margin-left:3rem;font-size: 3rem;color:#323232;}
+/*小贴士*/
+.tieshi{width:100%;min-height:10rem;overflow:hidden;margin-top:5rem;text-align: center;}
+.tieshi img{width:100%;height:100%;}
+
+.cardShow{display:none;}
+.cardShow ul{margin-bottom:3rem;border-bottom:0.2rem solid #d8d8d8;min-height:5rem;overflow:hidden;padding:0 3rem;}
+.cardShow li{border-bottom:0.2rem dotted #b1b1b1;}
+.cardShow li.noBorder{border:none;}
+.cardShow li input{width: 60%;height:9rem;line-height:9rem;border:none;font-size:3rem;}
+.sureBtn{padding:0 3rem;height:9rem;}
+.sureBtn input{width:100%;outline:none;border:none;display:block;height:9rem;line-height:9rem;color:#fff;background:#ffaf32;border-radius:8px;font-size:3rem;}
+.sureOperate{padding:0 3rem;height:9rem;text-align:center;}
+.sureOperate a{font-size:3rem;width:100%;outline:none;border:none;display:block;height:9rem;line-height:9rem;color:#fff;background:#ffaf32;border-radius:8px;font-size: 3rem;}
+.perLog {min-height:25rem;overflow:hidden;width: 100%;text-align: center;}
+.perImg {padding-top: 1rem;padding-bottom: 1rem;width:16.8rem;height:16.8rem;margin:0 auto;}
+.perImg img {width:16.8rem;height:16.8rem;border-radius: 50%;display: block;margin: 0 auto;}
+.nameRoler {text-align:center;color:#323232;font-size:3rem;padding-bottom:1rem;}
+.roler{padding-left:1.5rem;font-size:2.4rem;}
+.vipIncon{display:block;position:absolute;z-index:22;width:5rem;height:3rem;background:url(../img/vip.png) no-repeat;background-size: 5rem;margin-top:-4rem;margin-left:12.8rem;}
+.overdueTime{font-size: 3rem;text-align:center;padding:3rem 3rem;}
+#card_name_msg{
+    color:red;
+    font-size: 2rem;
+    margin-left:2rem;
+}

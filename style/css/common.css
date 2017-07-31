@@ -1,0 +1,154 @@
+@charset "utf-8";
+/* CSS Document   */
+*{margin:0;padding:0;}
+p,span,div,li,a{
+    max-height:9999px;
+}
+html {-webkit-text-size-adjust:none;font-size:62.5%;}
+@media screen and (min-width:320px) and (max-width:349px) {html{font-size:12px;}}
+@media screen and (min-width:350px) and (max-width:399px) {html{font-size:13px;}}
+@media screen and (min-width:400px) and (max-width:499px) {html{font-size:14px;}}
+@media screen and (min-width:500px) and (max-width:599px) {html{font-size:16px;}}
+body{font-family:"微软雅黑"; color:#323232;background:#eeeeee;font-size:12px;font-size:1.2rem ;}
+.clear{clear:both;}
+/* 设置HTML5元素为块 */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {display:block;}
+/* 设置图片视频等自适应调整 */
+img {max-width:100%;height:auto;width:auto9; /* ie8 */}
+.video rembed,.video object,.video iframe {width:100%;height:auto;}
+a{text-decoration:none;color: #898484;}
+a:link{text-decoration:none;}
+a:visited{text-decoration:none;}
+a:hover{text-decoration:none;}
+a:active{text-decoration:none;}
+ul li{list-style:none;}
+label,rem{font-weight:normal!important;}
+
+/*header*/
+.topWrapper{
+    position: fixed;
+    top:0;
+    z-index: 9999999;
+    width:100%;
+}
+#wrapper1,#wrapper2,#wrapper3,#wrapper4,#wrapper5,#wrapper6,#wrapper7,#wrapper8,#wrapper9,#wrapper10{
+    margin-top:10rem;
+}
+.searchbar-wrap{
+
+
+}
+.topWrapper{
+    position: fixed;
+    top:0;
+    z-index: 9999999;
+    width:100%;
+}
+.searchbar-wrap{
+
+
+}
+.topWrapper{width:100%;}
+.top{height:9rem;text-align:center;border-bottom:2px solid #d8d8d8;clear:both;background:#f9f9fb;width:100%;position: fixed;top:0;z-index: 999999;}
+.top h1{font-size:4rem;color:#323232;width:50%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;float:left;text-align:center;line-height:9rem;}
+.top a{float:left;width:25%;display:block;height:9rem;}
+.back{text-align:left;}
+.back img{width:2rem;height:4rem;margin-top:2.5rem;display:inline-block;margin-left:3rem;}
+.seIncon{text-align:right;}
+.seIncon img{width:5rem;height:5rem;margin-top:2rem;display:inline-block;margin-right:3rem;}
+.operationBtn{width:25%;display:block;height:9rem;line-height:9rem;float:right;text-align:right;}
+.operationBtn input{border:none;font-size:3rem;color:#323232;display:inline-block;margin-right:3rem;height:9rem;line-height:9rem;background:none;outline:none;}
+.linkOperate{text-align:right;height:9rem;line-height:9rem;}
+.open{text-align:right;
+    height:9rem;
+    line-height:9rem;
+    float: left;
+    width: 22%!important;
+    display: block;
+    height: 9rem;
+    margin-right: 20px;
+}
+.linkOperate span{font-size:3rem;color:#323232;display:inline-block;margin-right:3rem;}
+.open span{font-size:3rem;color:#323232;display:inline-block;margin-right:1rem;}
+.open img{
+    width:40px;
+}
+.linkOperate img{width:4rem;height:1rem;margin-top:2rem;display:inline-block;margin-right:3rem;}
+/*footer*/
+.footer{position: fixed;bottom: 0;left: 0;right: 0;background: #FFF;z-index: 99;border-top:2px solid #d8d8d8;backgroound:#f8f8fa;}
+.footer ul {
+    display: -webkit-box;/* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+    display: -moz-box;/* Firefox 17- */
+    display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */
+    display: -moz-flex; /* Firefox 18+ */
+    display: -ms-flexbox; /* IE 10 */
+    display: box;
+    display: flexbox;
+    display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */
+    /*2端对齐*/
+    -webkit-box-align: justify;
+    -moz-box-align: justify;
+    -ms-flex-align: justify;
+    -o-box-align: justify;
+    box-align: justify;
+}
+.footer li {-moz-box-flex:1;-webkit-box-flex:1;box-flex:1;display: block;width: 100%;text-align: center;    min-height: 12rem;overflow: hidden;}
+.footer li>a {display: block;margin-top: 2.5rem;}
+.footer .nav > div{width: 5rem;height:5rem;overflow: hidden;margin: 0 auto 0.5rem;}
+.footer .firstPage{background:url(../img/home1.png) no-repeat;}
+.footer  a.on .firstPage{background:url(../img/home2.png) no-repeat;}
+.footer .myFriend{background:url(../img/friend1.png) no-repeat;}
+.footer  a.on .myFriend{background:url(../img/friend2.png) no-repeat;}
+.footer .myMsg{background:url(../img/message1.png) no-repeat;}
+.footer  a.on .myMsg{background:url(../img/message2.png) no-repeat;}
+.footer .myPage{background:url(../img/personal1.png) no-repeat;}
+.footer  a.on .myPage{ background:url(../img/personal2.png) no-repeat;}
+.footer  a .myPage1{ background:url(../img/personal1.png) no-repeat!important;background-size: 5rem 5rem !important;}
+.footer .firstPage,.footer  a.on .firstPage,.footer .myFriend,.footer  a.on .myFriend,.footer .myMsg,.footer  a.on .myMsg,.footer .myPage,.footer  a.on .myPage,.footer  a .myPage1{  -webkit-background-size: 5rem 5rem;-moz-background-size:5rem 5rem;-ms-background-size:5rem 5rem;-o-background-size:5rem 5rem;background-size:5rem 5rem;}
+.footer .nav p {font-size:3rem;line-height:2.2rem;color: #999;}
+input[type="button"], input[type="submit"], input[type="reset"],button {
+    -webkit-appearance: none;
+}
+.remarkName{padding:0 3rem;height:9rem;background:#fff;}
+.remarkName input{width:100%;outline:none;border:none;display:block;height:9rem;line-height:9rem;color:#333333;background:#fff;border-radius:8px;font-size:3rem;}
+/****layer插件自定义弹框样式开始***********/
+body .demo-class{border-radius: 20px;}
+body .demo-class .layui-layer-btn{padding-right:4rem!important;}
+body .demo-class .layui-layer-btn a{background:none;color:#516693;border:none;font-size: 3rem;font-family: '黑体';}
+body .demo-class .layui-layer-content{font-size: 3rem;font-family: '黑体';padding-top:6rem;padding-left:6rem;color:#323232;font-weight: bold;}
+body .demo-class .layui-layer-btn .layui-layer-btn0{margin-right:3rem;}
+body .demo-success{background: none!important;border:none;}
+body .demo-success .layui-layer-content{background: rgba(0,0,0,.8);color:#fff;font-family: '黑体';font-size: 3rem;text-align: center;padding:3rem;padding-left:8rem;border-radius: 20px;}
+body .demo-success i{left:25%!important;margin-top:1.5rem;}
+body .demo-error{background: none!important;border:none;}
+body .demo-error .layui-layer-content{background: rgba(0,0,0,.8);color:#fff;font-family: '黑体';font-size: 3rem;text-align: center;padding:3rem;border-radius: 20px;}
+/****layer插件自定义弹框样式结束***********/
+
+.loading{
+    margin-bottom:2rem;
+    margin-top:2rem;
+    font-size: 4rem;
+    font-family: '黑体';
+    text-align: center;
+}
+.loading img{
+    vertical-align: middle;
+}
+.listBlock{
+    margin-bottom:13rem;
+}
+
+.noReadMsg{
+    position: absolute;
+    border-radius: 50%;
+    width:50px;
+    height:50px;
+    color:#fff;
+    overflow: hidden;
+    background: red;
+    font-size: 3rem;
+    line-height:50px;
+    top:-2rem;
+    right:3rem;
+    display:none;
+}
