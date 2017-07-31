@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>找金主</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/find.css" type="text/css">
+<link rel="stylesheet" href="../style/css/mmenu.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/expand/mmenu.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#menu")
+                .mmenu({
+                    navbar: {title: '找金主'},
+                    navbars: [{content: ["prev", "title"]}],
+                    extensions 	: [ "theme-white", "border-full", "effect-listitems-slide" ],
+                    offCanvas: {position: "right"}
+                }).on( 'click','a[href^="#/"]',function() {return false;}
+        );
+    });
+</script>
+</head>
+
+<body>
+<div class="topWrapper">
+    <header class="top">
+       <a href="../index.html" class="back"><img src="../style/img/back.png"></a>
+       <h1>找金主</h1>
+       <a href="#menu" class="seIncon"><img src="../style/img/shaixuan.png"></a>
+    </header>
+</div>
+<!--search-->
+<div class="searchbar-wrap">
+    <div class="searchbar">
+        <i class="icon-search"></i>
+        <div class="searchbar-text">搜索金主</div>
+        <div class="searchbar-input"><input value="" id="search" type="search" placeholder="搜索金主"  autocapitalize="off"></div>
+        <i class="icon-close"></i>
+    </div>
+    <button class="searchbar-cancel">搜索</button>
+</div>
+<!--findList-->
+<div class="scroll_more">
+   <ul id="thelist">
+   </ul>
+   <div class="Loadding" style="margin-bottom:5rem;" id="Loadding">正在加载，请稍候 ...</div>
+</div>
+<!--右侧导航-->
+<form>
+    <nav id="menu">
+        <ul>
+            <li>
+                <span><cite>性别</cite><input type="text"  readonly class="sex" value="不限"  /></span>
+                <ul class="sex_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                    <li><a href="#mm-1">男</a></li>
+                    <li><a href="#mm-1">女</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>所在区域</cite><input type="text"  readonly class="place" value="不限" /></span>
+                <ul class="place_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                    <li><a href="#mm-1" >北京</a></li>
+                    <li><a href="#mm-1">天津</a></li>
+                    <li><a href="#mm-1">河北</a></li>
+                    <li><a href="#mm-1">山西</a></li>
+                    <li><a href="#mm-1">内蒙古</a></li>
+                    <li><a href="#mm-1">辽宁</a></li>
+                    <li><a href="#mm-1">吉林</a></li>
+                    <li><a href="#mm-1">黑龙江</a></li>
+                    <li><a href="#mm-1">上海</a></li>
+                    <li><a href="#mm-1">江苏</a></li>
+                    <li><a href="#mm-1">浙江</a></li>
+                    <li><a href="#mm-1">安徽</a></li>
+                    <li><a href="#mm-1">福建</a></li>
+                    <li><a href="#mm-1">江西</a></li>
+                    <li><a href="#mm-1">山东</a></li>
+                    <li><a href="#mm-1">河南</a></li>
+                    <li><a href="#mm-1">湖北</a></li>
+                    <li><a href="#mm-1">湖南</a></li>
+                    <li><a href="#mm-1">广东</a></li>
+                    <li><a href="#mm-1">广西</a></li>
+                    <li><a href="#mm-1">海南</a></li>
+                    <li><a href="#mm-1">重庆</a></li>
+                    <li><a href="#mm-1">四川</a></li>
+                    <li><a href="#mm-1">贵州</a></li>
+                    <li><a href="#mm-1">云南</a></li>
+                    <li><a href="#mm-1">西藏</a></li>
+                    <li><a href="#mm-1">陕西</a></li>
+                    <li><a href="#mm-1">甘肃</a></li>
+                    <li><a href="#mm-1">青海</a></li>
+                    <li><a href="#mm-1">宁夏</a></li>
+                    <li><a href="#mm-1">新疆</a></li>
+                    <li><a href="#mm-1">台湾</a></li>
+                    <li><a href="#mm-1">香港</a></li>
+                    <li><a href="#mm-1">澳门</a></li>
+                    <li><a href="#mm-1">海外</a></li>
+                    <li><a href="#mm-1">其他</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>是否认证</cite><input type="text" readonly class="renzhen" value="不限" /></span>
+                <ul class="renzhen_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                    <li><a href="#mm-1">未认证</a></li>
+                    <li><a href="#mm-1" >全部已认证</a></li>
+                    <li><a href="#mm-1" >资金实力认证</a></li>
+                    <li><a href="#mm-1">身份证认证</a></li>
+                    <li><a href="#mm-1">教育证书认证</a></li>
+                    <li><a href="#mm-1">培训经历认证</a></li>
+                </ul>
+            </li>
+              <li>
+                <span><cite>闲置合作资金</cite><input type="text" readonly class="IdleMoney" value="不限"  /></span>
+                <ul class="idle_item">
+				    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                    <li><a href="#mm-1">100万以下</a></li>
+                    <li><a href="#mm-1">100-300万</a></li>
+                    <li><a href="#mm-1" >300-500万</a></li>
+                    <li><a href="#mm-1">500-1000万</a></li>
+                    <li><a href="#mm-1">千万以上</a></li>
+                    <li><a href="#mm-1">亿元以上</a></li>
+                </ul>
+            </li>
+            <li>
+                <span><cite>需求年化收益率</cite><input type="text" readonly class="demandAnnual" value="不限" /></span>
+                <ul class="demandAnnual_item">
+                    <li><a href="#mm-1" class="alread_on">不限</a></li>
+                    <li><a href="#mm-1">50%以下</a></li>
+                    <li><a href="#mm-1">50%-100%</a></li>
+                    <li><a href="#mm-1">100%-150%</a></li>
+                    <li><a href="#mm-1">150%-200%</a></li>
+                    <li><a href="#mm-1">200%以上</a></li>
+                </ul>
+            </li>
+            <div class="findBtn">
+               <input type="button" class="findSure" value="确定" /> 
+               <input type="reset" class="findReset" value="取消" /> 
+            </div>
+        </ul>
+    </nav>
+</form>
+<script src="../style/js/findGold.js"></script>
+</body>
+</html>
