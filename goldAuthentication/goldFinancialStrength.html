@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>金融资产</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+    <link rel="stylesheet" href="../style/css/goldAuth.css">
+    <script src="../style/js/jquery-1.7.min.js"></script>
+    <script src="../style/js/layer.js"></script>
+    <script src="../style/js/upfile.js"></script>
+    <script src="../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="financialStrength.html" class="back"><img src="../style/img/back.png"></a>
+        <h1>金融资产</h1>
+    </header>
+</div>
+<div>
+    <textarea name="financialAssets" id="financialAssets" placeholder="请对金融资产进行描述..."></textarea>
+    <div class="orcer_img">
+        <ul id="orcer_img">
+            <li id="file_btn" class="file_btn">
+                <img src="../style/img/btn_bt.png" alt="">
+                <input onchange="upload(event)" id="upfile" type="file">
+            </li>
+        </ul>
+    </div>
+    <button class="article_btn">保存</button>
+    <div class="tip">
+        <p>示例</p>
+        <p>您可提供1.实盘账户的开户机构名称、账户名称、账户密码，以便核实账户资产和账户保证金等。2.信托、债权、理财产品等</p>
+    </div>
+</div>
+<script src="../style/js/goldFinancialStrength.js"></script>
+</body>
+</html>
