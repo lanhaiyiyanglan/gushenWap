@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>图文直播</title>
+<script src="../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/directSeeding.css" type="text/css">
+<script src="../style/js/layer.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png" alt=""></a>
+   <h1>图文直播</h1>
+</header>
+<!--sendingList-->
+ <ul class="sendingList">
+</ul>
+<div class="loading">
+      <img src="../style/img/loading.gif" alt="">
+      <span>正在加载中...</span>
+</div>
+<script>
+	if (!NeuF) var NeuF = {};
+	NeuF.ScrollPage = function (obj, options, callback) {
+		var _defaultOptions = { delay: 500, marginBottom: 200 }; //默认配置：延迟时间delay和滚动条距离底部距离marginBottom
+		options = $.extend(_defaultOptions, options);
+		this.isScrolling = false; //是否在滚动
+		this.oriPos = 0; //原始位置
+		this.curPos = 0; //当前位置
+		var me = this; //顶层
+		var $obj = (typeof obj == "string") ? $("#" + obj) : $(obj);
+		//绑定滚动事件
+		$obj.scroll(function (ev) {
+			me.curPos = $obj.scrollTop();
+			if ($(window).height() + $(window).scrollTop() >= $(document.body).height() - options.marginBottom) {
+				if (me.isScrolling == true) return;
+				me.isScrolling = true;
+				setTimeout(function () { me.isScrolling = false;}, options.delay); //重复触发间隔毫秒;
+				if (typeof callback == "function") callback.call(null, me.curPos - me.oriPos);
+			};
+			me.oriPos = me.curPos;
+		});
+	};
+$(function(){
+         var page=0;
+		 var user_id=$.cookie('user_id');
+		 console.log(user_id);
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'searchLiveShow',
+                  page:(page++)*10,
+				  user_id:user_id
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					     console.log(data);
+					      html+='<li>';
+						  html+='<div class="item">';
+						  html+='<div class="img"><a href="../hisIndex_killer/index.html?uid='+data.data[i].user_id+'"><img src="'+data.data[i].usericon+'" class="ico"></a></div>';
+						  html+='<a class="info" href="../hisIndex_killer/detailedInformation/graphicLive.html?uid='+data.data[i].user_id+'&groupid='+data.data[i].groupid+'&liveid='+data.data[i].live_id+'">';
+					  	  html+='<div>';
+						  html+='<div class="sendingLeft">';
+						  html+='<div class="name">'+data.data[i].username+'</div>';
+						  html+='<div class="perIcon">';
+						   if(data.data[i].mobile!==''){
+								html+='<i href="#"class="gs1"></i>';
+							}else{
+							}
+							if(data.data[i].is_idcard==1){
+								html+='<i href="#" class="gs2"></i>';
+							}else{
+							}
+							if(data.data[i].is_edu==1){
+								html+='<i href="#" class="gs3"></i>';
+							}else{
+							}
+							if(data.data[i].is_touzi==1){
+								html+='<i href="#" class="gs4"></i>';
+							}else{
+							}
+							if(data.data[i].is_work==1){
+								html+='<i href="#" class="gs5"></i>';
+							}else{
+							}
+							if(data.data[i].is_peixun==1){
+								html+='<i href="#" class="gs6"></i>';
+							}else{
+							}
+						  html+='</div>';
+						  html+='</div>';
+						  html+='<div class="sendingRight">';
+						  html+='观看人数：<span>'+data.data[i].view_num+'</span>';
+						  html+='</div>';
+						  html+='</div>';
+					      html+='</a>';
+						  html+='</div>';
+						  html+='</li>';
+                  }
+                 $(".sendingList").append(html);
+				  if($('.sendingList').find("li").length<5){
+					  $('.loading').hide();
+				  }
+              }
+          })
+	if($('.sendingList').find("li").length<5){
+		$('.loading').hide();
+	}
+	var p=2;
+	new NeuF.ScrollPage(window, { delay: 1000, marginBottom:500}, function (offset) {
+		if (offset > 0) {
+			$(".loadding").show(); //加载提示.
+			setTimeout(function(){$.ajax({
+				url:'http://open.zhengjuan.com/api/app',
+				data:{
+					module:'user',
+					do:'searchLiveShow',
+					page:(page++)*10,
+					user_id:user_id
+				},
+				dataType:'jsonp',
+				jsonp:"callback",
+				jsonpCallback:"success_jsonpCallback",
+				type:'POST',
+				success:function(data){
+					var html='';
+					for (var i=0;i<data.data.length;i++){
+						html+='<li>';
+						html+='<div class="item">';
+						html+='<div class="img"><a href="../hisIndex_killer/index.html?uid='+data.data[i].user_id+'"><img src="'+data.data[i].usericon+'" class="ico"></a></div>';
+						html+='<a class="info" href="../hisIndex_killer/detailedInformation/graphicLive.html?uid='+data.data[i].user_id+'&groupid='+data.data[i].groupid+'&liveid='+data.data[i].live_id+'">';
+						html+='<div class="sendingLeft">';
+						html+='<div class="name">'+data.data[i].username+'</div>';
+						html+='<div class="perIcon">';
+						if(data.data[i].is_money==1){
+							html+='<i href="#"class="gs1"></i>';
+						}else{
+						}
+						if(data.data[i].is_idcard==1){
+							html+='<i href="#" class="gs2"></i>';
+						}else{
+						}
+						if(data.data[i].is_edu==1){
+							html+='<i href="#" class="gs3"></i>';
+						}else{
+						}
+						if(data.data[i].is_peixun==1){
+							html+='<i href="#" class="gs4"></i>';
+						}else{
+						}
+						if(data.data[i].is_touzi==1){
+							html+='<i href="#" class="gs5"></i>';
+						}else{
+						}
+						if(data.data[i].is_work==1){
+							html+='<i href="#" class="gs6"></i>';
+						}else{
+						}
+						html+='</div>';
+						html+='</div>';
+						html+='<div class="sendingRight">';
+						html+='观看人数：<span>'+data.data[i].view_num+'</span>';
+						html+='</div>';
+						html+='</a>';
+						html+='</div>';
+						html+='</li>';
+					}
+					$(".sendingList").append(html);
+					if(data.data.length==0){
+						$('.loading span').html('没有更多了...')
+						$('.loading img').remove();
+					}
+				}
+			})},1000);
+
+		}
+	});
+//	   $(window).scroll(function(){
+//          var height1=$(document).height();
+//          var height2=$(window).height();
+//          if($(window).scrollTop()+1==(height1-height2)){
+//              $('.loading').show();
+//              $.ajax({
+//                  url:'http://open.zhengjuan.com/api/app',
+//                  data:{
+//                      module:'user',
+//                      do:'searchLiveShow',
+//                      page:(page++)*10,
+//					  user_id:user_id
+//                  },
+//                  dataType:'jsonp',
+//                  jsonp:"callback",
+//                  jsonpCallback:"success_jsonpCallback",
+//                  type:'POST',
+//                  success:function(data){
+//                      var html='';
+//                      for (var i=0;i<data.data.length;i++){
+//                          html+='<li>';
+//						  html+='<div class="item">';
+//						  html+='<div class="img"><a href="../hisIndex_killer/index.html?uid='+data.data[i].user_id+'"><img src="'+data.data[i].usericon+'" class="ico"></a></div>';
+//						  html+='<a class="info" href="../hisIndex_killer/detailedInformation/graphicLive.html?uid='+data.data[i].user_id+'&groupid='+data.data[i].groupid+'&liveid='+data.data[i].live_id+'">';
+//						  html+='<div class="sendingLeft">';
+//						  html+='<div class="name">'+data.data[i].username+'</div>';
+//						  html+='<div class="perIcon">';
+//						   if(data.data[i].is_money==1){
+//								html+='<i href="#"class="gs1"></i>';
+//							}else{
+//							}
+//							if(data.data[i].is_idcard==1){
+//								html+='<i href="#" class="gs2"></i>';
+//							}else{
+//							}
+//							if(data.data[i].is_edu==1){
+//								html+='<i href="#" class="gs3"></i>';
+//							}else{
+//							}
+//							if(data.data[i].is_peixun==1){
+//								html+='<i href="#" class="gs4"></i>';
+//							}else{
+//							}
+//							if(data.data[i].is_touzi==1){
+//								html+='<i href="#" class="gs5"></i>';
+//							}else{
+//							}
+//							if(data.data[i].is_work==1){
+//								html+='<i href="#" class="gs6"></i>';
+//							}else{
+//							}
+//						  html+='</div>';
+//						  html+='</div>';
+//						  html+='<div class="sendingRight">';
+//						  html+='观看人数：<span>'+data.data[i].view_num+'</span>';
+//						  html+='</div>';
+//						  html+='</a>';
+//						  html+='</div>';
+//						  html+='</li>';
+//                      }
+//                      $(".sendingList").append(html);
+//                      if(data.data.length==0){
+//                          $('.loading span').html('没有更多了...')
+//                          $('.loading img').remove();
+//                      }
+//                  }
+//              });
+//          }else{
+//              $('.loading').hide();
+//          }
+//      });
+});
+</script>
+</body>
+</html>
