@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html style="font-size: 12px;">
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>晒单广场</title>
+<!--公共-->
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/shareSquare.css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<!--独有-->
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>晒单广场</h1>
+       <a href="../personalCenter/orderManagement/addOrder.html" class="linkOperate"><span>我要晒单</span></a>
+    </header>
+</div>
+<!--search-->
+<div class="searchbar-wrap">
+    <div class="searchbar">
+        <i class="icon-search"></i>
+        <div class="searchbar-text">搜索关键字</div>
+        <div class="searchbar-input"><input value="" id="search" type="search" onchange="search(event)" placeholder="搜索关键字" autocapitalize="off"></div>
+        <i class="icon-close"></i>
+    </div>
+    <button class="searchbar-cancel">取消</button>
+</div>
+<!--shareList-->
+<ul class="shareList">
+</ul>
+<div class="loading">
+    <img src="../style/img/loading.gif" alt="">
+    <span>正在加载中...</span>
+</div>
+<script src="../style/js/shareSquare.js"></script>
+</body>
+</html>
