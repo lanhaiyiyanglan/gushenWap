@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title class="toUid"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="../style/js/jquery-1.7.min.js"></script>
+    <script>
+
+    </script>
+</head>
+<style>
+    .wkit-msg-time{
+        margin-bottom:.5rem;
+    }
+    .wkit-msg-item{
+        line-height:.7rem;
+    }
+    .wkit-theme-custom .wkit-s .wkit-msg-item{
+        border-radius: 12px!important;
+    }
+    .wkit-msg-item .wkit-emot {
+        width: 10% !important;
+    }
+    #J_wkitChatWrap .wkit-title{
+        background: #ffaf32;
+    }
+    .wkit-s .wkit-msg .wkit-msg-inner .wkit-msg-item{
+        background: #ffaf32;
+        border-radius: 15px;
+    }
+    .wkit-s .wkit-msg .wkit-msg-inner .wkit-arr{
+        border-color: #ffaf32 transparent transparent!important;
+    }
+    .wkit-r .wkit-msg .wkit-msg-inner .wkit-msg-item{
+        background: #fff;
+        color:#232323;
+        border:1px solid #d8d8d8;
+        border-radius: 15px;
+    }
+    .wkit-msg-time{
+        display:none;
+    }
+    #J_wkitSendBtn{
+        background: #ffaf32;
+    }
+    .wkit-r .wkit-msg .wkit-msg-inner .wkit-arr{
+        border-color: #fff transparent transparent!important;
+    }
+    #J_wkitTitle{
+        font-size: 100%!important;
+        font-weight: bold!important;
+        font-family: '黑体'!important;
+    }
+    #J_wkitTextarea{
+        border-radius:50px;
+        padding-left:50px;
+    }
+    #J_wkitMsgContent{
+        background: #ececec;
+    }
+</style>
+
+<body>
+
+</body>
+<!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- 强制使用移动端版本的kit -->
+<script src="https://g.alicdn.com/aliww/??h5.openim.sdk/1.0.6/scripts/wsdk.js,h5.openim.kit/0.3.3/scripts/kit.js?mobile=1" charset="utf-8"></script>
+
+<script>
+    $(document).ready(function(){
+        WKIT.init({
+            uid:'visitor1000',
+            appkey: 23015524,
+            credential: 'taobao1234',
+            touid: 'visitor1',
+            logo:'http://img.alicdn.com/tps/i3/TB12LD9IFXXXXb3XpXXSyFWJXXX-82-82.png',
+            onAudioReceived: function(content){
+                return '<audio src="' + content + '"  controls="controls"></audio>';
+            },
+            title:'adfsadsfd',
+            onBack:function(){
+                window.history.go(-1);
+                return true;
+            },
+            onLoginSuccess:function(){
+                console.log($('.wkit-title'))
+                $('.wkit-title').append('<a href=""><img src="../style/img/centerTalk.png" id="center"></a>');
+            }
+        });
+    })
+</script>
+
+</html>
