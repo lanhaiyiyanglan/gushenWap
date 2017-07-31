@@ -1,0 +1,26 @@
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+<title>感谢举报</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>感谢举报</h1>
+       <span class="operationBtn"><input type="button" value="完成" id="jb_finish"></span>
+    </header>
+    <div class="jubaoImg"><img src="../style/img/jubao.png"></div>
+    <div class="alreadjb">您的举报已提交审核</div>
+    <div class="thanksjb">您的举报已提交审核,感谢您的支持！</div>
+    <script>
+	$(function(){
+		 $("#jb_finish").click(function(){
+		   window.location.href="javascript:window.history.go(-1);";	 
+		 });
+    });
+	</script>
+</body>
+</html>

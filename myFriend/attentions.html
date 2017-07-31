@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>关注</title>
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script src="../style/expand/jquery.event.move.js"></script>
+<script src="../style/expand/jquery.event.swipe.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+<script src="../style/js/jquery.cookie.js"></script>
+</head>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>关注</h1>
+</header>
+<ul  class="friendList">
+</ul>
+<div class="loading">
+      <img src="../style/img/loading.gif" alt="">
+      <span>正在加载中...</span>
+</div>
+<script>
+$(function(){
+	var page=0;
+	console.log($.cookie('user_id'));
+	var user_id=$.cookie('user_id');
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'getMyFocusList',
+				  page:(page++)*10,
+				  follower_id: $.cookie('user_id')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data);
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					  html+='<li id="'+data.data[i].leader_id+'">';
+                      html+='<a href="../hisIndex_killer/index.html?user_id='+data.data[i].uid+'">';
+                      html+='<div class="perIncon"><img src="'+data.data[i].usericon+'"></div>';
+                      html+='<div class="personalText">';
+                      html+='<div class="namePlace">';
+                      html+='<div class="friendName">'+data.data[i].leader_name+'<span>';
+					  if(data.data[i].role==1){
+						   html+='高手</span></div>';
+					  }else{
+						   html+='金主</span></div>';
+					  }
+                      html+='<div class="freindPlace">'+data.data[i].resideprovince+'&nbsp;&nbsp;&nbsp;&nbsp;'+data.data[i].residecity+'</div>';
+                      html+='</div>';
+					  if(data.data[i].role==1){
+						 html+='<div class="friendDemand">年化收益率:<span>'+data.data[i].nianhua+'</span></div>';  
+					  }else{
+						 html+='<div class="friendDemand">需求年化收益率:<span>'+data.data[i].nianhua+'</span></div>';  
+					  }
+                      html+='</div>';
+                      html+='</a>';//<span class="logDel" onclick="del(this)">删除</span>
+                      html+='</li>';
+                  }
+                 $(".friendList").append(html);	
+				 swiperLi();	 
+              }
+          })
+	if (!NeuF) var NeuF = {};
+	NeuF.ScrollPage = function (obj, options, callback) {
+		var _defaultOptions = { delay: 500, marginBottom: 200 }; //默认配置：延迟时间delay和滚动条距离底部距离marginBottom
+		options = $.extend(_defaultOptions, options);
+		this.isScrolling = false; //是否在滚动
+		this.oriPos = 0; //原始位置
+		this.curPos = 0; //当前位置
+		var me = this; //顶层
+		var $obj = (typeof obj == "string") ? $("#" + obj) : $(obj);
+		//绑定滚动事件
+		$obj.scroll(function (ev) {
+			me.curPos = $obj.scrollTop();
+			if ($(window).height() + $(window).scrollTop() >= $(document.body).height() - options.marginBottom) {
+				if (me.isScrolling == true) return;
+				me.isScrolling = true;
+				setTimeout(function () { me.isScrolling = false;}, options.delay); //重复触发间隔毫秒;
+				if (typeof callback == "function") callback.call(null, me.curPos - me.oriPos);
+			};
+			me.oriPos = me.curPos;
+		});
+	};
+	$(function () {
+		if($('.friendList').find("li").length<20){
+			$('.loading').hide();
+		}
+		var p=2;
+		new NeuF.ScrollPage(window, { delay: 1000, marginBottom:500}, function (offset) {
+			if (offset > 0) {
+				$(".loading").show(); //加载提示.
+				setTimeout(function(){$.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					data:{
+						module:'user',
+						do:'getMyFocusList',
+						page:(page++)*10,
+						follower_id: $.cookie('user_id')
+					},
+					dataType:'jsonp',
+					jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+					jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+					type:'POST',
+					success:function(data){
+						var html='';
+						for (var i=0;i<data.data.length;i++){
+							html+='<li id="'+data.data[i].leader_id+'">';
+							html+='<a href="../hisIndex_killer/index.html?user_id=='+user_id+'">';
+							html+='<div class="perIncon"><img src="'+data.data[i].usericon+'"></div>';
+							html+='<div class="personalText">';
+							html+='<div class="namePlace">';
+							html+='<div class="friendName">'+data.data[i].leader_name+'<span>';
+							if(data.data[i].role==1){
+								html+='高手</span></div>';
+							}else{
+								html+='金主</span></div>';
+							}
+							html+='<div class="freindPlace">'+data.data[i].resideprovince+'&nbsp;&nbsp;&nbsp;&nbsp;'+data.data[i].residecity+'</div>';
+							html+='</div>';
+							if(data.data[i].role==1){
+								html+='<div class="friendDemand">年化收益率:<span>'+data.data[i].nianhua+'</span></div>';
+							}else{
+								html+='<div class="friendDemand">需求年化收益率:<span>'+data.data[i].nianhua+'</span></div>';
+							}
+							html+='</div>';
+							html+='</a><span class="logDel" onclick="del(this)">删除</span>';
+							html+='</li>';
+						}
+						$(".friendList").append(html);
+						swiperLi();
+						if(data.data.length==0){
+							$('.loading span').html('没有更多了...')
+							$('.loading img').remove();
+						}
+					}
+				});}, 1000);
+			}
+		});
+	});
+});
+function swiperLi(){
+      var cont=$(".mglist li");
+	  cont.on('swipeleft', function(e) {$(this).find("a").css("margin-left",-150);});
+      cont.on('swiperight', function(e){$(this).find("a").css("margin-left",0);});	
+}
+function del(obj){
+	var leader_id=$(obj).parent().attr("id");
+	layer.confirm("确定取消关注吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+		}, function(){
+			layer.closeAll();
+			$(obj).parent().find("a").css("margin-left",0);
+		}, function(){
+			   $.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					data:{
+						  module:'user',
+						  do:'',
+						  leader_id:leader_id
+					 },
+					dataType:'jsonp',
+                    jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+                    jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                    type:'POST',
+					success:function(data){
+						if(data.code ==1){
+							layer.msg('取消关注成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.reload();});	 
+						}else{
+							layer.msg("取消关注失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+						}
+					}
+				});
+	});
+}
+</script>
+</body>
+</html>

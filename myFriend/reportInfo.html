@@ -1,0 +1,31 @@
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+<title>选择举报原因</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>选择举报原因</h1>
+    </header>
+    <div class="freindRemark">请选择举报原因</div>
+    <ul class="reportCause">
+      <li><input type="radio" class="radio_1" name="case" id="radio_a1" value="色情低俗" checked="true"><label for="radio_a1">色情低俗</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a2" value="广告骚扰"><label for="radio_a2">广告骚扰</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a3" value="政治敏感"><label for="radio_a3">政治敏感</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a4" value="欺诈骗钱"><label for="radio_a4">欺诈骗钱</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a5" value="违法(暴力恐怖、违禁品等)"><label for="radio_a5">违法(暴力恐怖、违禁品等)</label></li>
+      <li><input type="radio" class="radio_1" name="case" id="radio_a6" value="侵权"><label for="radio_a6">侵权</label></li>
+    </ul>
+    <script>
+	$(function(){
+		 $(".reportCause li").click(function(){
+		   window.location.href="thankReport.html";	 
+		 });
+    });
+	</script>
+</body>
+</html>

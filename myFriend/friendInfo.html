@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>他人主页</title>
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+	<link rel="stylesheet" href="../style/js/skin/layer.css">
+	<script src="../style/js/layer.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+  <h1></h1>
+   <a href="" class="linkOperate"><img src="../style/img/more.png"></a>
+</header>
+<!--friendInfoList-->
+<div class="friendMain">
+</div>
+<!--hopeList-->
+<ul class="hopeList">
+</ul>
+<div class="friendPhoto">
+   <div class="photoTit">个人相册</div>
+   <div class="photos">
+     <ul>
+     </ul>
+   </div>
+</div>
+<div class="sureBtn">
+   <a id="sendMsg">发送消息</a>
+</div>
+<script>
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+$(function(){
+		  $(".top h1").text(decodeURI(GetQueryString("friend_name")));//他的姓名
+		  var user_id=GetQueryString("friend_id");//他的id
+		  var userName=$(".top h1").text();
+		  var sendMsg="../Mymesaage/message.html?uid="+GetQueryString("friend_id")+"&userName="+userName;
+		  //$("#sendMsg").attr("href",sendMsg);
+		  var links="friendRemark.html?user_id="+user_id+"&userName="+encodeURI(encodeURI(userName));
+          $("a.linkOperate").attr("href",links);
+			$('.sureBtn').click(function(){
+				$.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					type:'POST',
+					dataType:'jsonp',
+					data:{
+						user_id: $.cookie('user_id'),
+						module:'user',
+						do:'getMyVipInfo'
+					},
+					success:function(data){
+						console.log(data)
+						if(data.data[0].end_time*1000<new Date().getTime()){
+							layer.msg('您不是VIP会员，不能发送消息！', {
+								time: 2000,
+								area: '80%',
+								shade: [0.3, '#000'],
+								skin: 'demo-success',
+								shadeClose: true,
+								scrollbar: false
+							});
+						}else{
+							window.location.href=sendMsg;
+						}
+					}
+				})
+			})
+		   $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'getFriendDetail',
+				  user_id:user_id
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data)
+                  var html='';
+				  var likes='';
+                  for (var i=0;i<data.data.length;i++){
+						html+='<div class="item">';
+						 html+='<div class="img"><a href="../hisIndex_killer/index.html?user_id='+user_id+'"><img src="'+data.data[i].usericon+'" class="ico"></a></div>';
+						 html+='<div class="info"> ';
+							html+='<div class="sendingLeft">';
+							   html+='<div class="name">'+ eval("'" + data.data[i].username + "'")+'<span>';
+							   if(data.data[i].role==1){
+								  html+='高手</span></div>';
+								   html+='<div class="perIcon">';
+								   if(data.data[i].mobile!=""){
+										html+='<a href=""  title="手机已认证" class="gs1"></a>';
+									}else{
+										html+='<a href=""  title="手机未认证" class="gs1 gray"></a>';
+									}
+									if(data.data[i].is_idcard==1){
+										html+='<a href="" title="身份证已认证" class="gs2"></a>';
+									}else{
+										html+='<a href="" title="身份证未认证" class="gs2 gray"></a>';
+									}
+									if(data.data[i].is_edu==1){
+										html+='<a href="" title="教育证书已认证" class="gs3"></a>';
+									}else{
+										html+='<a href="" title="教育证书未认证" class="gs3 gray"></a>';
+									}
+									if(data.data[i].is_touzi==1){
+										html+='<a href="" title="投资业绩已认证" class="gs4"></a>';
+									}else{
+										html+='<a href="" title="投资业绩未认证" class="gs4 gray"></a>';
+									}
+									if(data.data[i].is_work==1){
+										html+='<a href="" title="工作经历已认证" class="gs5"></a>';
+									}else{
+										html+='<a href="" title="工作经历未认证" class="gs5 gray"></a>';
+									}
+									if(data.data[i].is_peixun==1){
+										html+='<a href="" title="培训/从业资格已认证" class="gs6"></a>';
+									}else{
+										html+='<a href="" title="培训/从业资格未认证" class="gs6 gray"></a>'
+									}
+								   html+='</div>';
+							   }else{
+								  html+='金主</span></div>'; 
+								   html+='<div class="perIcon">';
+							   if(data.data[i].mobile!=""){
+									html+='<a href=""  title="手机已认证" class="gs1"></a>';
+								}else{
+									html+='<a href=""  title="手机未认证" class="gs1 gray"></a>';
+								}
+								if(data.data[i].is_idcard==1){
+									html+='<a href="" title="身份证已认证" class="gs2"></a>';
+								}else{
+									html+='<a href="" title="身份证未认证" class="gs2 gray"></a>';
+								}
+								if(data.data[i].is_money==1){
+									html+='<a href=""  title="资金实力已认证" class="gs7"></a>';
+								}else{
+									html+='<a href=""  title="资金实力未认证" class="gs7 gray"></a>';
+								}
+								if(data.data[i].is_edu==1){
+									html+='<a href="" title="教育证书已认证" class="gs3"></a>';
+								}else{
+									html+='<a href="" title="教育证书未认证" class="gs3 gray"></a>';
+								}
+								if(data.data[i].is_peixun==1){
+									html+='<a href="" title="培训/从业资格已认证" class="gs6"></a>';
+								}else{
+									html+='<a href="" title="培训/从业资格未认证" class="gs6 gray"></a>'
+								}
+							    html+='</div>';
+							   }
+							  
+							html+='</div>';
+							html+='<div class="sendingRight">'+data.data[i].resideprovince+' '+data.data[i].residecity+' '+data.data[i].residedist+'</div>';
+						 html+='</div>';
+						html+='</div>';
+						if(data.data[i].style==null){
+							var style='';
+						}else{
+							var style=data.data[i].style;
+						}
+						if(data.data[i].type==null){
+							var type='';
+						}else{
+							var type=data.data[i].type;
+						}
+						if(data.data[i].nianhua==null){
+							var nianhua='';
+						}else{
+							var nianhua=data.data[i].nianhua;
+						}
+						likes+='<li>';
+						if(data.data[i].gender==1){
+						    likes+='<div class="hopeTit">操作风格</div>';
+							likes+='<div class="hopeDetail">'+style+'</div>';
+							likes+='</li>';
+							likes+='<li>';
+							likes+='<div class="hopeTit">年化收益率</div>';
+							likes+='<div class="hopeDetail">'+nianhua+'</div>';
+							likes+='</li>';
+							likes+='<li>';
+							likes+='<div class="hopeTit">合作模式</div>';
+							likes+='<div class="hopeDetail">'+type+'</div>';
+					    }else{
+							likes+='<div class="hopeTit">喜好高手操作风格</div>';
+							likes+='<div class="hopeDetail">'+style+'</div>';
+							likes+='</li>';
+							likes+='<li>';
+							likes+='<div class="hopeTit">需求年化收益率</div>';
+							likes+='<div class="hopeDetail">'+nianhua+'</div>';
+							likes+='</li>';
+							likes+='<li>';
+							likes+='<div class="hopeTit">希望合作模式</div>';
+							likes+='<div class="hopeDetail">'+type+'</div>';
+					   }
+					    likes+='</li>';
+                  }
+                 $(".friendMain").append(html);
+				 $(".hopeList").append(likes);
+              }
+          })
+		  $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'getAlbumList',
+				  user_id:user_id
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+				  console.log(data)
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					   if(data.data[i].coverpic.indexOf('http')==-1){
+                             html+='<li><a  href="../personalCenter/myAlbum/albumList.html?albumid='+data.data[i].albumid+'&almbuname='+encodeURI(encodeURI(data.data[i].albumname))+'&type=his"><img src="http://static.gushen178.com/upload/record/'+data.data[i].coverpic+'"></a></li>';
+					   }else{
+							 html+='<li><a  href="../personalCenter/myAlbum/albumList.html?albumid='+data.data[i].albumid+'&almbuname='+encodeURI(encodeURI(data.data[i].albumname))+'&type=his"><img src="'+data.data[i].coverpic+'"></a></li>';
+					   }
+                  }
+                 $(".photos ul").append(html);
+              }
+          })
+});
+</script>
+</body>
+</html>

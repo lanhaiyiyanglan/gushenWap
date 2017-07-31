@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>资料设置</title>
+<!--公共样式和js文件-->
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+<script src="../style/js/layer.js"></script>
+</head>
+
+<body>
+<div id="wrapper1">
+    <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+       <h1>资料设置</h1>
+       <a href="#" class="linkOperate"><img src="../style/img/more.png"></a>
+    </header>
+    <!--好友资料设置-->
+    <!--<ul class="remarkList">
+       <li onclick="showHide('wrapper2','wrapper1');">
+          <div class="infobox">
+              <span>设置备注</span>
+              <div class="infoInput">
+                <input id="remarkName" type="text"  readonly class="eidtorWhere" value="张超羊"><span class="forEditor"><img src="../style/img/right.png"></span>
+              </div>
+          </div>
+       </li>
+    </ul>-->
+    <ul class="remarkList">
+        <li>
+          <div class="infobox">
+              <span>加入黑名单</span>
+              <div class="infoInput">
+                 <label for="#" class="ui-switch">
+                          <input type="checkbox" onChange="addBlack(this)">
+                 </label>
+              </div>
+          </div>
+       </li>
+       <li>
+          <div class="infobox">
+              <span>举报</span>
+              <div class="infoInput">
+                 <a href="reportInfo.html"> <input type="text"  class="eidtorWhere" readonly><span class="forEditor"><img src="../style/img/right.png"></span></a>
+              </div>
+          </div>
+       </li>
+    </ul>
+    <div class="sureBtn delSure">
+       <input type="button" value="删除" id="delfriendSure">
+    </div>
+</div>
+<!--<div id="wrapper2" style="display:none;">
+     <header class="top">
+       <a href="javascript:window.history.go(-1);" class="back" onClick="showHide('wrapper2','wrapper1')"><img src="../style/img/back.png"></a>
+       <h1>资料设置</h1>
+       <span class="operationBtn"><input type="button" value="完成" id="freindRemarkName"></span>
+    </header>
+    <div class="freindRemark">备注名</div>
+    <div class="remarkName">
+         <input type="text" value="" placeholder="请输入备注名" class="remarkValue">
+    </div>
+</div>-->
+<script>
+/*显示隐藏*/
+function showHide(page1,page2){
+	$("#"+page1).toggle();	
+    $("#"+page2).toggle();	
+}
+function GetQueryString(name)//获取地址栏参数
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+//加入黑名单
+function addBlack(obj){
+	if($(obj).is(':checked'))
+		{
+		   layer.confirm("确定要加入黑名单吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+			}, function(){
+				layer.closeAll();
+			}, function(){
+				   $.ajax({
+						url:'http://open.zhengjuan.com/api/app',
+						data:{
+							  module:'user',
+							  do:'addFriend2Black',
+							  block_user_id:GetQueryString("user_id"),
+							  login_user_id:$.cookie('user_id')
+						 },
+						dataType:'jsonp',
+						jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+						jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+						type:'POST',
+						success:function(data){
+							if(data.code ==1){
+								layer.msg('加入黑名单成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.href="blacklist.html";});	
+							}else{
+								layer.msg("加入黑名单失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+							}
+						}
+					});
+		});	
+      }
+}
+$(function(){
+	//初始化用户姓名
+	//$("#remarkName").val(decodeURI(GetQueryString("userName")));	
+	//设置备注
+	/*$("#freindRemarkName").click(function(){
+	      if($('.remarkValue').val().length>0){
+		  showHide('wrapper2','wrapper1');
+		  $("#remarkName").val($('.remarkValue').val());
+		  $('.remarkValue').val('');
+		  }else{
+			 layer.msg('备注名不能为空', {
+				time:2000,
+				area:'80%',
+				shade: [0.3, '#000'],
+				skin:'demo-error',
+				shadeClose:true,
+				scrollbar: false
+			});
+		  }	
+    });*/
+	//删除好友
+	$("#delfriendSure").click(function(){
+	layer.confirm("确定删除好友吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+		}, function(){
+			layer.closeAll();
+		}, function(){
+			   $.ajax({
+					url:'http://open.zhengjuan.com/api/app',
+					data:{
+						  module:'user',
+						  do:'delFriend',
+						  friend_id:GetQueryString("user_id"),
+						  owner_id:$.cookie('user_id')
+					 },
+					dataType:'jsonp',
+                    jsonp:"callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+                    jsonpCallback:"success_jsonpCallback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+                    type:'POST',
+					success:function(data){
+						if(data.code ==1){
+							layer.msg('删除成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.location.href="index.html";});	
+						}else{
+							layer.msg("删除失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+						}
+					}
+				});
+	});	
+	});
+});
+</script>
+</body>
+</html>

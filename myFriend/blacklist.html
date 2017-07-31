@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>黑名单</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/jquery.cookie.js"></script>
+    <script src="../style/js/layer.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>黑名单</h1>
+</header>
+<!--blackList-->
+<ul  class="blackList">
+</ul>
+<div class="loading">
+      <img src="../style/img/loading.gif" alt="">
+      <span>正在加载中...</span>
+</div>
+<script>
+$(function(){
+	var page=0;
+	console.log($.cookie('user_id'));
+	var user_id=$.cookie('user_id');
+          $.ajax({
+              url:'http://open.zhengjuan.com/api/app',
+              data:{
+                  module:'user',
+                  do:'getMyBlackList',
+				  page:(page++)*10,
+				  user_id: $.cookie('user_id')
+              },
+              type:'POST',
+              dataType:'jsonp',
+              success:function(data){
+                  var html='';
+                  for (var i=0;i<data.data.length;i++){
+					     html+='<li>';
+						 html+='<a>';
+						 html+='<div class="blackIncon"><img src="'+data.data[i].usericon+'"></div>';
+						 html+='<div class="blackText"><span style="display:none;">'+data.data[i].uid+'</span>'+data.data[i].username+'<span class="blackDelete"><img src="../style/img/close.png"></span></div>';
+						 html+='</a>';
+						 html+='</li>';
+                  }
+                 $(".blackList").append(html);	 
+              }
+          })
+    if (!NeuF) var NeuF = {};
+    NeuF.ScrollPage = function (obj, options, callback) {
+        var _defaultOptions = { delay: 500, marginBottom: 200 }; //默认配置：延迟时间delay和滚动条距离底部距离marginBottom
+        options = $.extend(_defaultOptions, options);
+        this.isScrolling = false; //是否在滚动
+        this.oriPos = 0; //原始位置
+        this.curPos = 0; //当前位置
+        var me = this; //顶层
+        var $obj = (typeof obj == "string") ? $("#" + obj) : $(obj);
+        //绑定滚动事件
+        $obj.scroll(function (ev) {
+            me.curPos = $obj.scrollTop();
+            if ($(window).height() + $(window).scrollTop() >= $(document.body).height() - options.marginBottom) {
+                if (me.isScrolling == true) return;
+                me.isScrolling = true;
+                setTimeout(function () { me.isScrolling = false;}, options.delay); //重复触发间隔毫秒;
+                if (typeof callback == "function") callback.call(null, me.curPos - me.oriPos);
+            };
+            me.oriPos = me.curPos;
+        });
+    };
+    $(function () {
+        if($('.blackList').children("li").length<10){
+            $('.loading').hide();
+        }
+        var p=2;
+        new NeuF.ScrollPage(window, { delay: 1000, marginBottom:500}, function (offset) {
+            if (offset > 0) {
+                $(".loading").show(); //加载提示.
+                setTimeout(function(){ $.ajax({
+                    url:'http://open.zhengjuan.com/api/app',
+                    data:{
+                        module:'user',
+                        do:'getMyBlackList',
+                        page:(page++)*10,
+                        user_id: $.cookie('user_id')
+                    },
+                    dataType:'jsonp',
+                    jsonp:"callback",
+                    jsonpCallback:"success_jsonpCallback",
+                    type:'POST',
+                    success:function(data){
+                        var html='';
+                        for (var i=0;i<data.data.length;i++){
+                            html+='<li>';
+                            html+='<a href="../hisIndex_killer/index.html?user_id=='+user_id+'">';
+                            html+='<div class="blackIncon"><img src="'+data.data[i].usericon+'"></div>';
+                            html+='<div class="blackText">'+data.data[i].username+'<span class="blackDelete"><img src="../style/img/close.png"></span></div>';
+                            html+='</a>';
+                            html+='</li>';
+                        }
+                        $(".blackList").append(html);
+                        if(data.data.length==0){
+                            $('.loading span').html('没有更多了...')
+                            $('.loading img').remove();
+                        }
+                    }
+                });}, 1000);
+            }
+        });
+    });
+    $(document).on('click','.blackIncon',function (){
+        window.location.href='../hisIndex_killer/index.html?userid='+$(this).children('span').html();
+    })
+
+    $(document).on('click','.blackDelete',function(){
+        event.stopPropagation();
+        var mythis=$(this);
+        layer.confirm("确定要移除黑名单吗？", {btn: ['取消','确定'],shade: [0.3, '#000'],title:false,area:['50rem','25rem'],closeBtn: 0,skin:'demo-class',scrollbar: false
+        }, function(){
+            layer.closeAll();
+        }, function(){
+            $.ajax({
+                url:'http://open.zhengjuan.com/api/app',
+                data:{
+                    module:'user',
+                    do:'delFriendBlack',
+                    block_user_id:mythis.prev('span').html(),
+                    login_user_id:$.cookie('user_id')
+                },
+                dataType:'jsonp',
+                type:'POST',
+                success:function(data){
+                    if(data.code ==1){
+                        layer.msg('移出黑名单成功', {icon: 7,time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-success',shadeClose:true,scrollbar: false},function(){window.history.go(0);});
+                    }else{
+                        layer.msg("移出黑名单失败", {time:2000,area:'80%',shade: [0.3, '#000'],skin:'demo-error',shadeClose:true,scrollbar: false});
+                    }
+                }
+            });
+        });
+    })
+});
+</script>
+</body>
+</html>

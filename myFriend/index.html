@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+    <title>我的好友</title>
+<!--gong-->
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<!--duyou-->
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+
+<script src="../style/js/jquery.cookie.js"></script>
+<!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- 强制使用移动端版本的kit -->
+    <script src="https://g.alicdn.com/aliww/h5.imsdk/2.1.0/scripts/yw/wsdk.js" charset="utf-8"></script>
+</head>
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png" alt=""></a>
+   <h1>我的好友</h1>
+   <a href="#" class="seIncon"></a>
+</header>
+<!--tabs-->
+<ul class="friendTabs">
+    <li class="selected"><a href="index.html">我的好友</a></li>
+    <li><a href="attentionFans.html">关注和粉丝</a></li>
+</ul>
+<div class="newFriend">
+  <a href="newFriend.html">
+     <img src="../style/img/newfriend.png">
+     <div class="friendNum">新的朋友<span></span></div>
+  </a>
+</div>
+<!--freindList-->
+<div id="letter" ></div>
+<div  class="friendList sort_box" id="friendList">
+</div>
+<div class="initials">
+    <ul>
+    </ul>
+</div>
+
+<!--footer-->
+<div class="footer">
+   <ul>
+        <li><a href="../index.html"><div class="nav"><div class="ispr firstPage"></div><p>首页</p></div></a></li>
+        <li><a href="index.html"  class="on"><div class="nav"><div class="ispr myFriend"></div><p>我的好友</p></div></a></li>
+        <li><a><div class="nav"><div class="ispr myMsg"></div><span class="noReadMsg">0</span><p>我的消息</p></div></a></li>
+        <li><a href="../personalCenter/index.html"><div class="nav"><div class="ispr myPage"></div><p>个人中心</p></div></a></li>
+   </ul>
+</div>
+<script src="../style/js/jquery.charfirst.pinyin.js"></script>
+<script src="../style/js/myfriend.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>关注和粉丝</title>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/friend.css" type="text/css">
+<script src="../style/js/jquery.min.js"></script>
+<script src="../style/expand/contact.js"></script>
+    <script src="../style/js/jquery.cookie.js"></script>
+<!--[if lt IE 9]>
+<script src="https://g.alicdn.com/aliww/ww/json/json.js" charset="utf-8"></script>
+<![endif]-->
+<!-- 强制使用移动端版本的kit -->
+<script src="https://g.alicdn.com/aliww/h5.imsdk/2.1.5/scripts/yw/wsdk.js" charset="utf-8"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png" alt=""></a>
+   <h1>我的好友</h1>
+   <a href="#" class="seIncon"></a>
+</header>
+<!--tabs-->
+<ul class="friendTabs">
+    <li><a href="index.html">我的好友</a></li>
+    <li class="selected"><a>关注和粉丝</a></li>
+</ul>
+<!--attenttion-->
+<ul class="attenttion">
+  <li>
+    <a href="attentions.html">
+    <div class="attentionIncon"><img src="../style/img/a1.png"></div>
+        <div class="attentionText">关注<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="fans.html">
+    <div class="attentionIncon"><img src="../style/img/a2.png"></div>
+        <div class="attentionText">粉丝<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="footSite.html">
+    <div class="attentionIncon"><img src="../style/img/a3.png"></div>
+        <div class="attentionText">访问足迹<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+  <li>
+    <a href="blacklist.html">
+    <div class="attentionIncon"><img src="../style/img/a4.png"></div>
+        <div class="attentionText">黑名单<span class="rightDetail"><img src="../style/img/right.png"></span></div>
+    </a>
+  </li>
+</ul>
+</div>
+<!--footer-->
+  <div class="footer">
+       <ul>
+        <li><a href="../index.html"><div class="nav"><div class="ispr firstPage"></div><p>首页</p></div></a></li>
+        <li><a href="index.html"  class="on"><div class="nav"><div class="ispr myFriend"></div><p>我的好友</p></div></a></li>
+        <li><a href="../Mymesaage/index.html"><div class="nav"><div class="ispr myMsg"></div><span class="noReadMsg">0</span><p>我的消息</p></div></a></li>
+        <li><a href="../personalCenter/index.html"><div class="nav"><div class="ispr myPage"></div><p>个人中心</p></div></a></li>
+       </ul>
+  </div>
+<script>
+    var sdk = new WSDK();
+    console.log($.cookie('password'))
+    sdk.Base.login({
+        uid: 'gs'+ $.cookie('uid'),
+        appkey: 23316858,
+        credential: '111111',
+        timeout: 5000,
+        success: function (data) {
+            var recentTribe = [];
+            sdk.Base.getUnreadMsgCount({
+                count: 99,
+                success: function(data){
+                    console.log(data);
+                    var list = data.data;
+                    console.log(list)
+                    var noread=0;
+                    for(var i=0;i<list.length;i++){
+                        if(list[i].contact.substring(0, 8) !== 'chntribe'){
+                            noread+=parseInt(list[i].msgCount);
+                        }
+                    }
+                    if(noread>=99){
+                        noread=99;
+                    }else{
+                        noread=noread;
+                    }
+                    if(noread==0){
+                        $('.noReadMsg').hide();
+                        $('.noReadMsg').html(noread)
+                    }else{
+                        $('.noReadMsg').show();
+                        $('.noReadMsg').html(noread)
+                    }
+                    recentTribe.length && console.log('最近给我发消息的群', recentTribe);
+                },
+                error: function(error){
+                    console.log('获取未读消息的条数失败' ,error);
+                }
+            });
+        },
+        error: function (error) {
+            // {code: 1002, resultText: 'TIMEOUT'}
+            console.log('login fail', error);
+        }
+    });
+</script>
+</body>
+</html>
