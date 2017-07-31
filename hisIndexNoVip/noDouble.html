@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>张朝阳的主页</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/hisIndex.css">
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="#" class="back"><img src="../style/img/back.png"></a>
+        <h1>张朝阳</h1>
+    </header>
+</div>
+<div class="container">
+    <img src="../style/img/bg_hisIndex.jpg" alt="">
+    <div class="head_left">
+        <div class="head_img">
+            <img src="../image/roler1.png" alt="">
+        </div>
+        <div class="head_text">
+            <h1>张朝阳</h1>
+            <span>金主</span>
+        </div>
+    </div>
+    <div class="head_right">
+        <ul>
+            <li><img src="../style/img/authe.png" alt=""><span>诚信认证：</span><a><img src="../style/img/rz1.png" alt=""><img src="../style/img/rz7.png" alt=""><img src="../style/img/rz2.png" alt=""><img src="../style/img/rz3.png" alt=""><img src="../style/img/rz5.png" alt=""></a></li>
+            <li><img src="../style/img/sexy.png" alt=""><span>性别：</span><a class="sex">男</a></li>
+            <li><img src="../style/img/age.png" alt=""><span>年龄：</span><a class="age">25岁</a></li>
+            <li><img src="../style/img/education.png" alt=""><span>最高学历：</span><a class="education">本科</a></li>
+            <li><img src="../style/img/phone.png" alt=""><span>手机号码：</span><a class="phone">1521543****</a><a class="look" href="javascript:;">查看</a></li>
+            <li><img src="../style/img/qq.png" alt=""><span>QQ号码：</span><a class="qq">15485****</a><a class="look" href="javascript:;">查看</a></li>
+            <li><img src="../style/img/em.png" alt=""><span>邮箱号码：</span><a class="email">fux****</a><a class="look" href="javascript:;">查看</a></li>
+            <li><img src="../style/img/region.png" alt=""><span>所在地区：</span><a class="region">浙江省 杭州市 西湖区</a></li>
+        </ul>
+    </div>
+</div>
+<div class="expect">
+    <div class="expect_head">
+        <div class="expectImg"><img src="../style/img/investment.png" alt=""></div>
+        <div class="expectText">投资期望</div>
+    </div>
+    <div class="expectTip1">
+        <div class="expectTip_text">需求年化收益率：</div><div class="expectTip_text1">100%-150%</div>
+    </div>
+    <div class="expectTip2">
+        <div class="expectTip_text">喜好高手操作风格：</div><div class="expectTip_text1">短线；短中结合；短中结合；</div>
+    </div>
+    <div class="expectTip3">
+        <div class="expectTip_text">希望合作模式：</div><div class="expectTip_text1">远程喊单；转户理财；现场喊单；</div>
+    </div>
+</div>
+<ul class="detailed">
+    <li>
+        <div class="img_f"><img src="../style/img/experience.png" alt=""></div>
+        <a href="">他的经历</a>
+        <b><img src="../style/img/right.png" alt=""></b>
+    </li>
+    <li>
+        <div class="img_f"><img src="../style/img/mf.png" alt=""></div>
+        <a href="">交友资料</a>
+        <b><img src="../style/img/right.png" alt=""></b>
+    </li>
+    <li>
+        <div class="img_f"><img src="../style/img/sun.png" alt=""></div>
+        <a href="">他的晒单</a>
+        <b><img src="../style/img/right.png" alt=""></b>
+    </li>
+    <li>
+        <div class="img_f"><img src="../style/img/img_word.png" alt=""></div>
+        <a href="">他的相册</a>
+        <b><img src="../style/img/right.png" alt=""></b>
+    </li>
+    <li>
+        <div class="img_f"><img src="../style/img/journal1.png" alt=""></div>
+        <a href="">他的日志</a>
+        <b><img src="../style/img/right.png" alt=""></b>
+    </li>
+    <li>
+        <div class="img_f"><img src="../style/img/cooperation.png" alt=""></div>
+        <a href="">他愿合作</a>
+    </li>
+</ul>
+<div class="no_cooperation">
+    <div><img src="../style/img/age.png" alt=""><span>他还没有发布合作，敬请期待！</span></div>
+</div>
+<ul class="foot">
+    <li class="li1">
+        <b></b>
+        <span>发送消息</span>
+    </li>
+    <li class="li2">
+        <b></b>
+        <span>添加好友</span>
+    </li>
+    <li class="li3">
+        <b></b>
+        <span>添加关注</span>
+    </li>
+</ul>
+<script src="../style/js/jquery-1.7.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script>
+    var li=$('.foot li');
+    for(var i=0;i<li.length;i++){
+        (function(p){
+            $(li[p]).click(function(){
+                $(this).children('b').css('background-position','0 -93px');
+                $('li').not(this).children('b').css('background-position','0 0')
+            })
+        })(i)
+    }
+    var li_look=$('.look');
+    for(var j=0;j<li_look.length;j++){
+        (function(n){
+            $(li_look[n]).click(function(){
+                layer.msg('您还不是VIP，不能查看联系方式', {
+                    time:2000,
+                    area:'80%',
+                    shade: [0.3, '#000'],
+                    skin:'demo-class1',
+                    shadeClose:true,
+                    scrollbar: false
+                });
+            })
+        })(j)
+    }
+    $('.li3').click(function(){
+        layer.msg('您还不是VIP，不能添加关注', {
+            time:2000,
+            area:'80%',
+            shade: [0.3, '#000'],
+            skin:'demo-class1',
+            shadeClose:true,
+            scrollbar: false
+        });
+    })
+    $('.li2').click(function(){
+        layer.msg('您还不是VIP，不能添加好友', {
+            time:2000,
+            area:'80%',
+            shade: [0.3, '#000'],
+            skin:'demo-class2',
+            shadeClose:true,
+            scrollbar: false
+        });
+    })
+    $('.li1').click(function(){
+        layer.msg('您还不是VIP，不能发起聊天', {
+            time:2000,
+            area:'80%',
+            shade: [0.3, '#000'],
+            skin:'demo-class2',
+            shadeClose:true,
+            scrollbar: false
+        });
+    })
+</script>
+
+</body>
+</html>
