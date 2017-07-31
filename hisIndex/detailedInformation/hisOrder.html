@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>他的晒单</title>
+    <link rel="stylesheet" href="../../style/css/common.css">
+    <link rel="stylesheet" href="../../style/css/hisIndex.css">
+    <script src="../../style/js/jquery-1.7.min.js"></script>
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="#" class="back"><img src="../../style/img/back.png"></a>
+        <h1>他的晒单</h1>
+    </header>
+</div>
+<div class="order_top">
+    <div class="order_topImg"><img src="../../style/img/hisOrder.png" alt=""></div>
+    <div class="order_topText">他的晒单</div>
+</div>
+<ul class="order_list">
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>1554</span></span><span><b class="b2"></b><span>1554</span></span><span><b class="b3"></b><span>1554</span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>1554</span></span><span><b class="b2"></b><span>1554</span></span><span><b class="b3"></b><span>1554</span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>1554</span></span><span><b class="b2"></b><span>1554</span></span><span><b class="b3"></b><span>1554</span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>1554</span></span><span><b class="b2"></b><span>1554</span></span><span><b class="b3"></b><span>1554</span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>1554</span></span><span><b class="b2"></b><span>1554</span></span><span><b class="b3"></b><span>1554</span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <div class="order_contentTip">
+                <div class="order_contentTop">谋转型 信托卡位新三板我要发晒单了我要发晒单了我要发晒单了。</div>
+                <div class="order_contentData">2016-02-19</div>
+            </div>
+            <div class="order_contentImage">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+                <img src="../../image/roler2.png" alt="">
+            </div>
+            <div class="order_contentComment">
+                <span><b class="b1"></b><span>0</span></span><span><b class="b2"></b><span>0</span></span><span><b class="b3"></b><span>0</span></span>
+            </div>
+        </a>
+    </li>
+</ul>
+<script>
+    $(document).ready(function(){
+        var img=$('.order_contentImage');
+        for(var i=0;i<img.length;i++){
+            (function(p){
+                console.log($(img[p]).children('img').length==1)
+                if($(img[p]).children('img').length==1){
+                    $(img[p]).children('img').css('width','100%');
+                }else if($(img[p]).children().length>1){
+                    $(img[p]).children('img').css({'width':'49%','margin-bottom':'1rem'});
+                }
+            })(i)
+        }
+
+        var b1=$('.b1');
+        console.log(b1)
+        for(var j=0;j<b1.length;j++){
+            (function(n){
+                if($(b1[n]).next('span').html()=='0'){
+                    $(b1[n]).css('background-position','0 -32px');
+                }else{
+                    $(b1[n]).css('background-position','0 0');
+                }
+            })(j)
+        }
+        var b2=$('.b2');
+        console.log(b2)
+        for(var m=0;m<b2.length;m++){
+            (function(c){
+                if($(b2[c]).next('span').html()=='0'){
+                    $(b2[c]).css('background-position','0 -36px');
+                }else{
+                    $(b2[c]).css('background-position','0 0');
+                }
+            })(m)
+        }
+        var b3=$('.b3');
+        console.log(b3)
+        for(var q=0;q<b3.length;q++){
+            (function(s){
+                if($(b3[s]).next('span').html()=='0'){
+                    $(b3[s]).css('background-position','0 -35px');
+                }else{
+                    $(b3[s]).css('background-position','0 0');
+                }
+            })(q)
+        }
+
+    })
+</script>
+</body>
+</html>

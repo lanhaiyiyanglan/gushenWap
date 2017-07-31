@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>他的日志</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+        <script src="../../style/js/jquery-1.7.min.js"></script>
+        <script src="../../style/js/layer.js"></script>
+        <style>
+            *{
+                padding:0;
+                margin:0;
+            }
+            i{
+                color:#aaa;
+            }
+            header{
+                background: #f9f9fb!important;
+            }
+            body{
+                font-size: 16px;
+                font-family: '黑体';
+                background: #f7f7f8;
+            }
+            a{
+                color:#232323!important;
+            }
+            .title{
+                z-index: 10!important;
+                width:60%!important;
+                margin-left:18%;
+            }
+            .more{
+                margin-top:.5rem;
+            }
+            .content{
+                padding-left:4%;
+                padding-right:4%;
+                background: #fff;
+            }
+            .content>ul>li{
+                list-style-type: none;
+                width:100%;
+                height:2.7rem;
+                background: #fff;
+                border-bottom: 1px dotted #aaa;
+                white-space:nowrap;
+            }
+            .content>ul>li>a{
+                display:inline-block;
+                width:70%;
+            }
+            .s1 span{
+                width:100%!important;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                font-size:.8rem;
+                display:inline-block;
+                margin-top:.8rem;
+            }
+            .content i{
+                color:#cc7c01!important;
+            }
+            .btn{
+                position: absolute;
+                left:0;
+                bottom:0;
+                right:0;
+                top:0;
+                background: rgba(0,0,0,.7);
+                z-index: 99;
+                display:none;
+            }
+            .ul {
+                width:100%;
+                position: absolute;
+                bottom:0;
+                z-index: 999;
+                left:0;
+                display:none;
+            }
+            .ul li{
+                width:100%;
+                text-align: center;
+                list-style-type: none;
+                height:3rem;
+                line-height:3rem;
+                background: #fff;
+
+            }
+            .ul li:first-child{
+                color:red;
+                border-bottom: 1px solid #aaa;
+            }
+            .data{
+                position: relative;
+                display:inline-block;
+                font-size: .8rem;
+                margin-left:.5rem;
+                margin-right:2px;
+                line-height:2rem;
+                height:2rem;
+                top:-.3rem;
+            }
+            body .demo-class{
+                border-radius: 8px;
+            }
+
+            body .demo-class .layui-layer-content{
+                margin-top:.5rem;
+                color:#323232;
+                font-weight: bold;
+                font-size: .8rem;
+            }
+            body .demo-class .layui-layer-btn{border:none;background: none;margin-top:1rem;}
+            body .demo-class .layui-layer-btn a{background:none;border:none;color:#516691!important;}
+            body .demo-class .layui-layer-btn .layui-layer-btn1{background:none;}
+            .content_top{
+                display:-moz-box; /* Firefox */
+                display:-webkit-box; /* Safari and Chrome */
+                display:box;
+                height:2em!important;
+                line-height:2rem!important;
+                border:none!important;
+                margin-top:.5rem;
+            }
+            .contentImg img{
+                width: 20px;
+                margin-top:.4rem;
+            }
+            .contentImg{
+                width:20px;
+                margin-right:.5rem;
+
+            }
+            .contentText{
+                -moz-box-flex:1.0; /* Firefox */
+                -webkit-box-flex:1.0; /* Safari and Chrome */
+                box-flex:1.0;
+                font-family: '黑体';
+                font-size: 1rem;
+                color:#ffae36;
+            }
+        </style>
+        <header class="bar bar-nav">
+            <a onclick="window.history.go(-1);" class="icon icon-left pull-left "></a>
+            <h1 class="title pull-center">日志管理</h1>
+            <div class="more pull-right" id="more" ><a>发表</a></div>
+        </header>
+        <div class="content">
+            <ul>
+                <li class="content_top">
+                    <div class="contentImg"><img src="../../style/img/hisOrder.png" alt=""></div>
+                    <div class="contentText">他的日志</div>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="articleDetails.html">
+                        <div class="s1">
+                            <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                            <div class="data">2016-02-19</div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+                <li>
+                        <a href="articleDetails.html">
+                            <div class="s1">
+                                <span>谋转型 信托卡位新三板信托卡位新三板信托卡位新三板</span>
+                                <div class="data">2016-02-19</div>
+                            </div>
+                        </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script>
+</script>
+</body>
+</html>

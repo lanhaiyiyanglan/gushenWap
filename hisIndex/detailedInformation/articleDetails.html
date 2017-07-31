@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>日志详情</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+        <script src="../../style/js/jquery-1.7.min.js"></script>
+        <script src="../../style/js/layer.js"></script>
+        <style>
+            *{
+                padding:0;
+                margin:0;
+            }
+            i{
+                color:#aaa;
+            }
+            header{
+                background: #f9f9fb!important;
+            }
+            body{
+                font-size: 16px;
+                font-family: '黑体';
+                background: #f7f7f8;
+            }
+            a{
+                color:#232323!important;
+            }
+            .title{
+                z-index: 10!important;
+                width:60%!important;
+                margin-left:18%;
+            }
+            .more{
+                margin-top:.5rem;
+            }
+            .content{
+                padding-left:4%;
+                padding-right:4%;
+                background: #fff;
+            }
+            .tip{
+                text-align: center;
+                padding-top:.5rem;
+                padding-bottom:.5rem;
+                border-bottom: 1px dotted #aaa;
+            }
+            .tip p{
+                font-family: '黑体';
+                font-size: 1rem;
+                color:#232323;
+                margin:0 !important;
+            }
+            .tip span{
+                font-family: '黑体';
+                font-size: .8rem;
+                color:#aaa;
+            }
+            #more a img{
+                width:.8rem;
+            }
+            .share{
+                width:100%;
+                padding-top:4%;
+                margin-left:-4%;
+                display:none;
+                position: fixed;
+                bottom:0;
+            }
+            .share ul{
+                background: #f1f1f1;
+                padding-top:2rem;
+
+            }
+            .share li{
+                float:left;
+                list-style-type: none;
+                width:25%;
+                text-align: center;
+            }
+            .share li img{
+                width:40%;
+            }
+            .share li p{
+                margin-top:0;
+                font-family: '黑体';
+                font-size: .5rem;
+                color:#8d8d8d;
+            }
+            .closed{
+                width:100%;
+                text-align: center;
+                color:#232323;
+                font-family: '黑体';
+                font-size: .8rem;
+                background: #f1f1f1;
+                padding-bottom:1rem;
+                line-height:1.8rem;
+                height:1.8rem;
+                border-top:1px solid #d8d8d8;
+            }
+        </style>
+        <header class="bar bar-nav">
+            <a onclick="window.history.go(-1);" class="icon icon-left pull-left "></a>
+            <h1 class="title pull-center">日志详情</h1>
+            <div class="more pull-right" id="more" ><a href="#">分享 <img src="../../style/img/share.png" alt=""></a></div>
+        </header>
+        <div class="content">
+            <div class="tip">
+                <p>谋转型 信托卡位新三板</p>
+                <span>2016-02-19</span>
+            </div>
+            <div class="container">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores beatae cupiditate doloremque eaque expedita explicabo, illum impedit labore numquam repellat sunt vel. Alias et fugit quo repellat ullam voluptatibus?<br><br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. At beatae cumque eum harum inventore laborum necessitatibus odit perspiciatis porro quibusdam quis reiciendis, tempora, veritatis. Esse et mollitia nihil nostrum quod
+                <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis distinctio eum ipsa ipsum quos, ut voluptatum. Assumenda dolor ex facere magni maxime nobis possimus, quibusdam quisquam quos vel voluptas voluptatum.
+                <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dolorem est harum id iusto mollitia, provident quas. A, autem, cumque dolore doloremque impedit itaque natus, numquam provident quia quisquam velit?
+                <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias asperiores blanditiis debitis et incidunt laboriosam, libero molestias natus, placeat praesentium quasi quis quod sequi sit soluta tempora unde voluptatem!
+                <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi debitis laborum molestiae molestias nemo, officia perferendis praesentium ratione repudiandae sequi vel voluptatem. Beatae dolor enim ex labore non optio vero.
+            </div>
+            <div class="share">
+                <ul>
+                    <li><img src="../../style/img/weixin.png" alt=""><p>微信好友</p></li>
+                    <li><img src="../../style/img/pyq.png" alt=""><p>朋友圈</p></li>
+                    <li><img src="../../style/img/tencent.png" alt=""><p>QQ好友</p></li>
+                    <li><img src="../../style/img/Qzone.png" alt=""><p>QQ空间</p></li>
+                    <li><img src="../../style/img/weibo.png" alt=""><p>新浪微博</p></li>
+                    <li><img src="../../style/img/tencent_weibo.png" alt=""><p>腾讯微博</p></li>
+                    <div style="clear:both;"></div>
+                </ul>
+                <div class="closed">取消</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script src="../../style/js/jquery-1.7.min.js"></script>
+<script>
+    jQuery('#more').click(function(){
+        jQuery('.share').slideToggle(500);
+        jQuery('.container').animate({marginBottom:'12rem'},'slow')
+    });
+    jQuery('.closed').click(function(){
+        jQuery('.share').slideToggle(500);
+        jQuery('.container').animate({marginBottom:'0'},'slow')
+    })
+</script>
+<script>
+</script>
+</body>
+</html>
