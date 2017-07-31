@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>从业经历</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a class="back"><img src="../style/img/back.png"></a>
+        <h1>从业经历</h1>
+        <span class="submitAll">完成</span>
+    </header>
+</div>
+<div class="addFirm" id="addFirm1">
+    <div class="addEle"><img src="../style/img/add.png" alt=""><input type="button" value="添加从业经历"></div>
+</div>
+<script src="../style/js/jquery-1.7.min.js"></script>
+<script>
+    var arr=['一','二','三','四','五'];
+    var n=0;
+    var i = 0 ;
+    var accountName='';
+    $('.addEle').on('click',function() {
+        var num=3;
+        if ($('.addFirmA1').length < 5) {
+            $('#addFirm1').append('<div class="addFirmA1"><div><span>从业经历' + arr[n++] + '</span><span class="PassOrNot"><img src="../style/img/audit.png" alt=""><span>认证审核中</span></span><img src="../style/img/right.png" alt=""></div></div>');
+        } else {
+            console.log($('.addFirmA').length)
+        }
+        if(num==0){
+            $('.PassOrNot').css({'background-color':'#f1ffe7','border-color':'#48bc00'});
+            $('.PassOrNot').children('img').attr('src','../style/img/adopt.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证已通过');
+        }else if(num==1){
+            $('.PassOrNot').css({'background-color':'#fff2f2','border-color':'#ff7f32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/pass.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证未通过');
+        }else if(num==2){
+            $('.PassOrNot').css({'background-color':'#ffefe1','border-color':'#ffaf32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/audit.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证审核中');
+        }else if (num==3){
+            $('.PassOrNot').hide();
+        }
+    })
+    $(document).on('click','.addFirmA1',function(){
+        accountName=$(this).children('div').children('span:nth-child(1)').html();
+        console.log($(this))
+        var url='experienceEditing.html';
+        console.log(accountName);
+        window.open(encodeURI(url + "?accountName=" + accountName),'_self');
+    });
+    $('.back').click(function(){
+        window.history.go(-1);
+    });
+</script>
+</body>
+</html>

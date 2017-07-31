@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>教育/培训/从业资格</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+    <script src="../style/js/jquery.min.js"></script>
+    <script src="../style/js/upfile.js"></script>
+</head>
+<style>
+    .article_btn{
+        margin-bottom:10rem;
+        font-size: 4rem;
+    }
+    .PassOrNot{
+
+    }
+    .PassOrNot img, .PassOrNot1 img, .PassOrNot2 img, .PassOrNot3 img {
+        float: none;
+        vertical-align: middle;
+        margin-top: -15px;
+        margin-left: 2rem;
+    }
+    .PassOrNot span, .PassOrNot1 span, .PassOrNot2 span, .PassOrNot3 span {
+        font-family: '黑体';
+        font-size: 3rem;
+        color: #232323;
+        line-height: 6rem;
+        margin-left: 2rem;
+    }
+    .PassOrNot, .PassOrNot1, .PassOrNot2, .PassOrNot3 {
+        padding:0;
+        background: #f1ffe7;
+        border: 1px solid #48bc00;
+        display: none;
+        width: 30%;
+        margin: 0 auto;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a class="back"><img src="../style/img/back.png"></a>
+        <h1>教育/培训/从业资格</h1>
+        <span class="submitAll">完成</span>
+    </header>
+</div>
+<div class="orcer_img dottedBorder">
+    <p class="orcer_p">上传教育证书：</p>
+    <ul id="orcer_img">
+        <li id="file_btn" class="file_btn">
+            <img src="../style/img/btn_bt.png" alt="">
+            <input onchange="upload(event)" id="upfile" type="file">
+        </li>
+    </ul>
+    <span style="display:block;" class="PassOrNot"><img src="../style/img/adopt.png" alt=""><span>认证审核中</span></span>
+</div>
+<div class="otherBackground">
+    <img src="../style/img/shili1.png" alt="">
+</div>
+<div>
+    <div class="orcer_img1 dottedBorder">
+        <p class="orcer_p1">上传培训/从业资格证书：</p>
+        <ul id="orcer_img1">
+            <li id="file_btn1" class="file_btn1">
+                <img src="../style/img/btn_bt.png" alt="">
+                <input onchange="upload1(event)" id="upfile1" type="file">
+            </li>
+        </ul>
+        <span style="display:block;" class="PassOrNot"><img src="../style/img/adopt.png" alt=""><span>认证审核中</span></span>
+    </div>
+    <div class="otherBackground">
+        <img src="../style/img/shili1.png" alt="">
+    </div>
+</div>
+<button class="article_btn">保存</button>
+<script src="../style/js/jquery-1.7.min.js"></script>
+<script>
+    var uploader = uploadJSSDK;
+    function upload(e) {
+        var files = e.target.files;
+        var mythis=e;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '2048000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn");
+                        if ($("#orcer_img>li").length >= 6) {//限制图片张数
+                            $("#file_btn").css('display','none');
+                        } else {
+                            $("#file_btn").css('display','inline-block');
+                        }
+                    } else {
+                        layer.msg(result)
+                    }
+                }
+            });
+        }
+    }
+    function upload1(e) {
+        var files = e.target.files;
+        var mythis=e;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '2048000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del1(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn1");
+                        if ($("#orcer_img1>li").length >= 6) {//限制图片张数
+                            $("#file_btn1").css('display','none');
+                        } else {
+                            $("#file_btn1").css('display','inline-block');
+                        }
+                    } else {
+                        layer.msg(result)
+                    }
+                }
+            });
+        }
+    }
+    function del(obj) {
+        if ($("#orcer_img>li").length <=6 ) {//限制图片张数
+            $("#file_btn").show();
+        } else {
+            $("#file_btn").hide();
+        }
+        $(obj).parent().remove();
+    }
+    function del1(obj) {
+        if ($("#orcer_img1>li").length <=6 ) {//限制图片张数
+            $("#file_btn1").show();
+        } else {
+            $("#file_btn1").hide();
+        }
+        $(obj).parent().remove();
+    }
+    $('.back').click(function(){
+        window.history.go(-1);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>从业经历</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+</head>
+<body>
+<style>
+
+</style>
+<div class="topWrapper">
+    <header class="top">
+        <a class="back"><img src="../style/img/back.png"></a>
+        <h1>从业经历</h1>
+        <span class="submitAll">删除</span>
+        <span class="zhegai"></span>
+    </header>
+</div>
+<ul class="editingAll">
+    <li class="editingName">
+        <div>公司名称</div>
+        <div><input type="text" placeholder="某某公司"></div>
+    </li>
+    <li class="editingTime">
+        <div>从业时间</div>
+        <div><input type="text" id="editingTime1" placeholder="2010-08-10"><span>至</span><input type="text"  id="editingTime2"  placeholder="2014-08-10"></div>
+    </li>
+</ul>
+<div class="orcer_img">
+    <p class="orcer_p">相关证明：</p>
+    <ul id="orcer_img">
+        <li id="file_btn" class="file_btn">
+            <img src="../style/img/btn_bt.png" alt="">
+            <input id="upfile" type="file">
+        </li>
+    </ul>
+</div>
+<button class="article_btn">保存</button>
+<div class="tipFooter">
+    <p>示例</p>
+    <span>劳动合同（需包括：劳动合同第一页、合同公章页、劳动合同证明页）、工作证、工作名片、社保原件照片等，均可单独或部分或全部。</span>
+</div>
+<ul class="delete">
+    <li class="del">删除</li>
+    <li class="close">取消</li>
+</ul>
+<div class="ceng"></div>
+<script src="../style/js/jquery-1.7.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script>
+    var url=window.location.href;
+    var accountName = url.split("?")[1].split("=")[1];
+    $('.top h1').html(decodeURI(accountName));
+    var tempStr = $('.top').children('h1').html();
+    var bool = tempStr.indexOf('模拟');
+    $('.submitAll').click(function(){
+        $('.ceng').fadeIn(100);
+        $('.delete').slideToggle();
+        $('.zhegai').show();
+    });
+    $('.del').click(function(){
+        $('.ceng').fadeOut();
+        $('.delete').slideToggle();
+        layer.confirm('确定要删除此信息吗？', {
+            btn: ['取消','确定'],
+            closeBtn:false,
+            title:0,
+            skin:'demo-class'
+        }, function(){
+            layer.closeAll();
+        }, function(){
+            alert('发起ajax请求');
+            window.open('businessExperience.html','_self')
+        });
+    })
+    $('.close').click(function(){
+        $('.delete').slideToggle();
+        $('.ceng').fadeOut(100);
+        $('.zhegai').hide();
+    })
+    document.querySelector('#upfile').onchange = function (evt) {
+        var files = evt.target.files;
+        for(var i = 0, f; f = files[i]; i++){
+            if(!f.type.match('image.*')) continue;
+            var reader = new FileReader();
+            reader.onload = (function(theFile){
+                return function(e){
+                    var upfile=document.querySelector('#file_btn');
+                    var img = document.createElement('img');
+                    img.title = theFile.name;
+                    img.src = e.target.result;
+                    var li = document.createElement('li');
+                    var b=document.createElement('b');
+                    li.appendChild(img);
+                    li.appendChild(b);
+                    $('#upfile').val('');
+                    document.querySelector('#orcer_img').insertBefore(li,upfile); //这里你想插哪插哪
+                    var del_btn = $('#orcer_img li b');
+                    for (var j = 0; j < del_btn.length; j++) {
+                        (function (n) {
+                            $(del_btn[n]).click(function () {
+                                $(this).parent().remove();
+                            })
+                        })(j)
+                    }
+                }
+            })(f);
+            reader.readAsDataURL(f);
+        }
+    };
+
+</script>
+<link href="../style/css/mobiscroll.css" rel="stylesheet"/>
+<link href="../style/css/mobiscroll_data.css" rel="stylesheet"/>
+<script src="../style/js/mobiscroll_data.js"></script>
+<script src="../style/js/mobiscroll.js"></script>
+<script>
+    $(function () {
+        var currYear = (new Date()).getFullYear();
+        var opt={};
+        opt.date = {preset : 'date'};
+        opt.datetime = {preset : 'datetime'};
+        opt.time = {preset : 'time'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 50, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+
+        $("#editingTime1").mobiscroll($.extend(opt['date'], opt['default']));
+
+    });
+    $(function () {
+        var currYear = (new Date()).getFullYear();
+        var opt={};
+        opt.date = {preset : 'date'};
+        opt.datetime = {preset : 'datetime'};
+        opt.time = {preset : 'time'};
+        opt.default = {
+            theme: 'android-ics light', //皮肤样式
+            display: 'modal', //显示方式
+            mode: 'scroller', //日期选择模式
+            dateFormat: 'yyyy-mm-dd',
+            lang: 'zh',
+            showNow: true,
+            nowText: "今天",
+            startYear: currYear - 50, //开始年份
+            endYear: currYear + 10 //结束年份
+        };
+
+        $("#editingTime2").mobiscroll($.extend(opt['date'], opt['default']));
+
+    });
+    $('.back').click(function(){
+        window.history.go(-1);
+    });
+
+</script>
+<script>
+</script>
+
+
+</body>
+</html>

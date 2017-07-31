@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>金融资产</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+    <script src="../style/js/jquery-1.7.min.js"></script>
+    <script src="../style/js/layer.js"></script>
+    <script src="../style/js/upfile.js"></script>
+</head>
+<style>
+    .topTip{
+        width:20rem;
+        padding:2rem 0;
+        background: #2ac845;
+        border:1px solid green;
+        font-family: '黑体';
+        font-size: 3rem;
+        color:#fff;
+        text-align: center;
+        margin:3rem auto;
+        display:none;
+    }
+    .topTip img{
+        margin-right:1rem;
+        display:inline-block;
+        vertical-align: top;
+    }
+    .photoTip{
+        width:92%;
+        padding:4%;
+        background: #fff;
+        font-family: '黑体';
+        font-size: 4rem;
+        color:#ffaf32;
+        margin:10rem 0 10rem 0;
+    }
+    .orcer_img{
+        width:92%;
+        padding:4%;
+        margin-top:1.5rem;
+    }
+    .orcer_img>img{
+        width:45%;
+        margin-bottom:1rem;
+    }
+    .orcer_img>img:nth-child(odd){
+        margin-right:10%;
+    }
+
+    .file_btn{
+        width:45% !important;
+        position: relative !important;
+    }
+    .file_btn input{
+        display: inline-block !important;
+        position: absolute !important;
+        width:100% !important;
+        height:100% !important;
+        opacity: 0 !important;
+        top:0;
+        left:0;
+    }
+    #orcer_img{
+        width:100%;
+    }
+    #orcer_img li{
+        background: none;
+        list-style-type: none;
+        width:45%;
+        display: inline-block;
+        position: relative;
+        margin-right:3%;
+        margin-bottom:1rem;
+    }
+    #orcer_img li img{
+        width:100%;
+    }
+    #orcer_img li b{
+        position: absolute;
+        top:-2.8rem;
+        right:-2.2rem;
+        width:60px;
+        height:60px;
+        background-image: url(../style/img/x.png);
+        background-repeat: no-repeat;
+    }
+    .article_btn{
+        width:90%;
+        margin-left:5%;
+        border:none;
+        color:#fff;
+        font-family: '黑体';
+        padding-top:3rem;
+        padding-bottom:3rem;
+        border-radius: 12px;
+        background: #ffaf32;
+        font-size: 5rem;
+    }
+    .footTip span{
+        color:#ffaf32;
+        font-family: '黑体';
+        font-size: 4rem;
+        margin-left:4%;
+        display:block;
+        padding-top:2rem;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+        <h1>金融资产</h1>
+    </header>
+</div>
+<div>
+    <textarea name="content" id="textContent" placeholder="请输入您的资产信息..."></textarea>
+</div>
+<div>
+    <div class="orcer_img">
+        <p>相关证明</p>
+        <ul id="orcer_img">
+            <li id="file_btn" class="file_btn">
+                <img src="../style/img/btn_bt.png" alt="">
+                <input id="upfile" onchange="upload(event)" type="file">
+            </li>
+        </ul>
+    </div>
+    <button class="article_btn">保存</button>
+</div>
+<div class="footTip">
+    <span>示例:</span>
+    <p>您可提供1.实盘账户的开户机构名称、账户名称、账户密码，以便核实账户资产和账户保证金等。2.信托、债券、理财产品等，最多可以上传5张照片。</p>
+</div>
+<script>
+    $(document).ready(function(){
+        var url=window.location.href;
+        console.log(url)
+        if(url.indexOf('?')!==-1){
+            var text=url.split('?')[1].split('=')[1];
+            if(text=='非上市股权资产'){
+                $('.top h1').html('非上市股权资产');
+                $('.footTip p').html('您可提供某非上市企业名称组织机构代码证号码或有限合伙股权凭证等 注：最多可上传5张照片');
+            }else if(text=='不动产'){
+                $('.top h1').html('不动产');
+                $('.footTip p').html('您可提供住宅、商业地产等产权证明或评估机构出具的估值报告 注：最多可上传5张照片');
+            }else if(text=='其他资产'){
+                $('.top h1').html('其他资产');
+                $('.footTip p').html('您可提供类似私人银行卡、高尔夫球会会籍卡、私人游艇船席泊位、民航私用驾驶员执照等一些证明财富的相关原件或照片 注：最多可上传5张照片');
+            }
+        }
+    })
+    var uploader = uploadJSSDK;
+    function upload(e) {
+        var files = e.target.files;
+        var mythis=e;
+        //上传
+        for (var i = 0; i < files.length; i++) {
+            uploader({
+                file: files[i],   //文件，必填,html5 file类型，不需要读数据流
+                token: 'UPLOAD_AK_TOP MjMzMTY4NTg6ZXlKa1pYUmxZM1JOYVcxbElqb2lNU0lzSW1sdWMyVnlkRTl1YkhraU9pSXdJaXdpYm1GdFpYTndZV05sSWpvaVozVnphR1Z1YW1saGIzbHZkU0lzSW1WNGNHbHlZWFJwYjI0aU9pMHhmUTplZWY1Nzc5Y2YzNDNmYjRhNzRmYjAyMDQ5OGU3YWZlMGJmNmI0MmUw',  //token，必填
+                name: new Date().getTime(),
+                dir: '/pic',  //目录，选填，默认根目录''
+                retries: '0',  //重试次数，选填，默认0不重试
+                maxSize: '2048000',  //上传大小限制，选填，默认0没有限制
+                callback: function (percent, result) {
+                    //percent（上传百分比）：-1失败；0-100上传的百分比；100即完成上传
+                    //result(服务端返回的responseText，json格式)
+                    console.log(result)
+                    $('#upfile').val('');
+                    if (result.code == 'OK') {
+                        var doms = $('<li><img src=' + result.url + '><i onClick="del(this);"></i></li>');
+                        $(doms).insertBefore("#file_btn");
+                        if ($("#orcer_img>li").length >= 4) {//限制图片张数
+                            $("#file_btn").css('display','none');
+                        } else {
+                            $("#file_btn").css('display','inline-block');
+                        }
+                    } else {
+                        layer.msg(result)
+                    }
+                }
+            });
+        }
+    }
+    function del(obj) {
+        if ($("#orcer_img>li").length <= 5) {//限制图片张数
+            $("#file_btn").show();
+        } else {
+            $("#file_btn").hide();
+        }
+        $(obj).parent().remove();
+    }
+    $('.article_btn').click(function(){
+        console.log($('#orcer_img').children('li').not('#file_btn').children('img'));
+    })
+    $('.back').click(function(){
+        window.history.go(-1);
+    });
+</script>
+</body>
+</html>

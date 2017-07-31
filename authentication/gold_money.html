@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>资金实力</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+    <script src="../style/js/jquery.min.js"></script>
+    <script src="../style/js/upfile.js"></script>
+</head>
+<style>
+    .article_btn{
+        margin-bottom:10rem;
+        font-size: 4rem;
+    }
+    .PassOrNot{
+
+    }
+    .PassOrNot img, .PassOrNot1 img, .PassOrNot2 img, .PassOrNot3 img {
+        float: none;
+        vertical-align: middle;
+        margin-left: 2rem;
+    }
+    .PassOrNot span, .PassOrNot1 span, .PassOrNot2 span, .PassOrNot3 span {
+        font-family: '黑体';
+        font-size: 3rem;
+        color: #232323;
+        line-height: 6rem;
+        margin-left: 2rem;
+        width:15rem!important;
+    }
+    .PassOrNot, .PassOrNot1, .PassOrNot2, .PassOrNot3 {
+        background: #f1ffe7;
+        border: 1px solid #48bc00;
+        display: none;
+        width: 30%!important;
+        margin: 0 auto;
+        height:8rem;
+        line-height:8rem;
+    }
+</style>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a class="back"><img src="../style/img/back.png"></a>
+        <h1>资金实力</h1>
+        <span class="submitAll">完成</span>
+    </header>
+</div>
+<ul class="gold_moneyList">
+    <li><a href="money_zm.html?text=金融资产"><span>金融资产</span><span class="PassOrNot"><img src="../style/img/pass.png" alt=""><span>认证未通过</span></span><img src="../style/img/right.png" alt=""></a></li>
+    <li><a href="money_zm.html?text=非上市股权资产"><span>非上市股权资产</span><span class="PassOrNot"><img src="../style/img/pass.png" alt=""><span>认证未通过</span></span><img src="../style/img/right.png" alt=""></a></li>
+    <li><a href="money_zm.html?text=不动产"><span>不动产</span><span class="PassOrNot"><img src="../style/img/pass.png" alt=""><span>认证未通过</span></span><img src="../style/img/right.png" alt=""></a></li>
+    <li><a href="money_zm.html?text=其他资产"><span>其他资产</span><span class="PassOrNot"><img src="../style/img/pass.png" alt=""><span>认证未通过</span></span><img src="../style/img/right.png" alt=""></a></li>
+</ul>
+<script>
+    var num=0;
+    if(num==0){
+        $('.PassOrNot').css({'background-color':'#f1ffe7','border-color':'#48bc00'});
+        $('.PassOrNot').children('img').attr('src','../style/img/adopt.png');
+        $('.PassOrNot').show();
+        $('.PassOrNot').children('span').html('认证已通过');
+    }else if(num==1){
+        $('.PassOrNot').css({'background-color':'#fff2f2','border-color':'#ff7f32'});
+        $('.PassOrNot').children('img').attr('src','../style/img/pass.png');
+        $('.PassOrNot').show();
+        $('.PassOrNot').children('span').html('认证未通过');
+    }else if(num==2){
+        $('.PassOrNot').css({'background-color':'#ffefe1','border-color':'#ffaf32'});
+        $('.PassOrNot').children('img').attr('src','../style/img/audit.png');
+        $('.PassOrNot').show();
+        $('.PassOrNot').children('span').html('认证审核中');
+    }else if (num==3){
+        $('.PassOrNot').hide();
+    }
+</script>
+</body>
+</html>

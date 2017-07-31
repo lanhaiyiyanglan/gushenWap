@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>投资业绩</title>
+    <link rel="stylesheet" href="../style/css/common.css">
+    <link rel="stylesheet" href="../style/css/authentication.css">
+    <link rel="stylesheet" href="../style/js/skin/layer.css">
+</head>
+<body>
+<div class="topWrapper">
+    <header class="top">
+        <a href="#" class="back"><img src="../style/img/back.png"></a>
+        <h1>投资业绩</h1>
+        <span class="submitAll" href="">完成</span>
+    </header>
+</div>
+<div id="index">
+    <p class="tipTop">亲，建议您将密码修改后，再提交资料申请认证，我们的认证人员会在收盘后开始认证，以确保认证安全。</p>
+    <div class="addFirm" id="addFirm1">
+        <div class="addEle"><img src="../style/img/add.png" alt=""><input type="button" value="添加实盘账户"></div>
+    </div>
+    <div class="addFirm" id="addFirm2">
+        <div  class="addEle1"><img src="../style/img/add.png" alt=""><input type="button" value="添加模拟账户" /></div>
+    </div>
+</div>
+</body>
+<script src="../style/js/jquery-1.7.min.js"></script>
+<script src="../style/js/layer.js"></script>
+<script>
+        var num=1;
+
+    /****************增加账户开始******************/
+    var arr=['一','二','三','四','五'];
+    var n=0;
+    var i = 0 ;
+    var accountName='';
+    $('.addEle').on('click',function(){
+            if($('.addFirmA1').length<5){
+                $('#addFirm1').append('<div class="addFirmA1"><div><span>实盘账户'+arr[n++]+'</span><span class="PassOrNot"><img src="../style/img/audit.png" alt=""><span>认证审核中</span></span><img src="../style/img/right.png" alt=""></div></div>');
+            }else{
+                console.log($('.addFirmA').length)
+            }
+        if(num==0){
+            $('.PassOrNot').css({'background-color':'#f1ffe7','border-color':'#48bc00'});
+            $('.PassOrNot').children('img').attr('src','../style/img/adopt.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证已通过');
+        }else if(num==1){
+            $('.PassOrNot').css({'background-color':'#fff2f2','border-color':'#ff7f32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/pass.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证未通过');
+        }else if(num==2){
+            $('.PassOrNot').css({'background-color':'#ffefe1','border-color':'#ffaf32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/audit.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证审核中');
+        }else if (num==3){
+            $('.PassOrNot').hide();
+        }
+    })
+    $(document).on('click','.addFirmA1',function(){
+        accountName=$(this).children('div').children('span:nth-child(1)').html();
+        console.log($(this))
+        var url='accountEditor.html';
+        console.log(accountName);
+        window.open(encodeURI(url + "?accountName=" + accountName),'_self');
+    })
+    $('.addEle1').click(function(){
+        if($('.addFirmA').length<5){
+            $('#addFirm2').append('<div class="addFirmA"><div><span>模拟账户'+arr[i++]+'</span><span class="PassOrNot"><img src="../style/img/pass.png" alt=""><span>审核未通过</span></span><img src="../style/img/right.png" alt=""></div></div>');
+        }else{
+            console.log($('.addFirmA').length)
+        }
+        if(num==0){
+            $('.PassOrNot').css({'background-color':'#f1ffe7','border-color':'#48bc00'});
+            $('.PassOrNot').children('img').attr('src','../style/img/adopt.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证已通过');
+        }else if(num==1){
+            $('.PassOrNot').css({'background-color':'#fff2f2','border-color':'#ff7f32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/pass.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证未通过');
+        }else if(num==2){
+            $('.PassOrNot').css({'background-color':'#ffefe1','border-color':'#ffaf32'});
+            $('.PassOrNot').children('img').attr('src','../style/img/audit.png');
+            $('.PassOrNot').show();
+            $('.PassOrNot').children('span').html('认证审核中');
+        }else if (num==3){
+            $('.PassOrNot').hide();
+        }
+    })
+    $(document).on('click','.addFirmA',function(){
+        accountName=$(this).children('div').children('span:nth-child(1)').html();
+        console.log($(this))
+        var url='accountEditor.html';
+        console.log(accountName);
+        window.open(encodeURI(url + "?accountName=" + accountName),'_self');
+    })
+        $('.back').click(function(){
+            window.history.go(-1);
+        });
+</script>
+</html>
