@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+    <title>登录</title>
+    <script src="../style/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../style/css/common.css" type="text/css">
+    <link rel="stylesheet" href="../style/css/logRegPassword.css" type="text/css">
+    <script src="../style/js/layer.js"></script>
+    <script src="../style/js/jquery.cookie.js"></script>
+</head>
+<body style="background:#fff;">
+<header class="top">
+    <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+    <h1>登录</h1>
+</header>
+<form class="login_form">
+    <div class="loginItem">
+        <div class="loginImg"><img src="../style/img/name.png"></div>
+        <div class="loginInput"><input type="text" id="userCode" name="userCode" placeholder="请输入您的用户名/手机号/邮箱"></div>
+    </div>
+    <div class="tips" id="userCodeTips"><span></span></div>
+    <div class="loginItem">
+        <div class="loginImg"><img src="../style/img/password .png"></div>
+        <div class="loginInput"><input type="password" id="userPassword" name="userPassword" placeholder="请输入密码"></div>
+    </div>
+    <div class="tips"></div>
+    <div class="sureBtn">
+        <input type="button" value="登录" id="login_btn">
+    </div>
+    <div class="froget">
+        <a href="findPassword1.html">忘记密码</a>
+    </div>
+</form>
+<script src="../style/js/indexLogin.js"></script>
+</body>
+</html>

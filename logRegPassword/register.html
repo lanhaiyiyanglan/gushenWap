@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="textml" charset="utf-8">
+
+<title>注册</title>
+<script src="../style/js/jquery.min.js"></script>
+<link rel="stylesheet" href="../style/css/common.css" type="text/css">
+<link rel="stylesheet" href="../style/css/logRegPassword.css" type="text/css">
+<link rel="stylesheet" href="../style/css/sm.css">
+<link rel="stylesheet" href="../style/css/sm-extend.css">
+<script src="../style/expand/jquery.validate.js"></script>
+<script src="../style/expand/jquery.validate.message_cn.js"></script>
+<script src="../style/js/layer.js"></script>
+    <script src="../style/js/jquery.cookie.js"></script>
+<script src="../style/js/logReg.js"></script>
+</head>
+
+<body>
+<header class="top">
+   <a href="javascript:window.history.go(-1);" class="back"><img src="../style/img/back.png"></a>
+   <h1>注册</h1>
+</header>
+<!--tabs-->
+<ul class="rolerTabs">
+    <li class="selected"><a href="#">注册高手</a></li>
+    <li><a href="#">注册金主</a></li>
+</ul>
+<form id="reg_form">
+   <ul class="registerList">
+     <li>
+          <div class="infobox">
+              <span>用户名</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="text"  id="username" name="username" placeholder="请输入您的用户名"></div>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li>
+          <div class="infobox">
+              <span>性别</span>
+              <div class="infoInput">
+                  <ul>
+                    <li><input name="sex" type="radio" id="radio_b1" class="radio_1" value="男" checked><label for="radio_b1"></label><i>男</i></li>
+                    <li><input name="sex" type="radio" id="radio_b2" class="radio_1" value="女"><label for="radio_b2"></label><i>女</i></li>
+                  </ul>
+              </div>
+          </div>
+      </li>
+      <li>
+          <div class="infobox">
+              <span>所在地区</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input name="address" type="text" id='city-picker' value="北京 北京市 东城区"></div>
+              </div>
+          </div>
+     </li>
+     <li>
+          <div class="infobox">
+              <span>注册方式</span>
+              <div class="infoInput">
+                  <ul>
+                    <li id="isPhone"><input name="rgType" type="radio" id="radio_b3" class="radio_1" value="手机注册" checked><label for="radio_b3"></label><i>手机注册</i></li>
+                    <li id="isEmail"><input name="rgType" type="radio" id="radio_b4" class="radio_1" value="邮箱注册"><label for="radio_b4"></label><i>邮箱注册</i></li>
+                  </ul>
+              </div>
+          </div>
+     </li>
+     <li id="byPhone">
+          <div class="infobox">
+              <span>手机号码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="text"  id="mobile" name="mobile" placeholder="请输入手机号码"></div>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li id="byEmail" style="display:none;">
+          <div class="infobox">
+              <span>邮箱号码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="text"  id="email" name="email" placeholder="请输入邮箱号码"></div>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li>
+          <div class="infobox">
+              <span>密码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="password"  id="password" name="password" placeholder="请输入密码"></div>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li>
+          <div class="infobox">
+              <span>确认密码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="password"  id="password2" name="password2" placeholder="请再次确认密码"></div>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li id="phoneYzm">
+          <div class="infobox">
+              <span>验证码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="text"  id="yzm" name="yzm"  readonly="readonly" placeholder="请输入手机验证码"></div>
+                <span><input type="button" value="获取验证码" class="aq_bt" name="aq1"></span>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+     <li id="emailYzm" style="display:none;">
+          <div class="infobox">
+              <span>验证码</span>
+              <div class="infoInput">
+                <div  class="InputWhere"><input type="text"  id="yzm2" name="yzm2" readonly  placeholder="请输入邮箱验证码"></div>
+                <span><input type="button" value="获取验证码" class="aq_bt" name="aq2"></span>
+              </div>
+          </div>
+     </li>
+     <div class="tips"></div><!--错误提示-->
+   </ul>
+   <div class="xieyi">
+        <input class="chk_1" type="checkbox" name="agree" id="checkbox_a1" checked="true"><label for="checkbox_a1"></label>
+        <span class="alreadRead">我已阅读并接受<a href="" target="_blank">《股神交友网用户协议》</a></span><span class="tips"></span>
+   </div>
+   <div class="sureBtn">
+     <input type="button" value="免费注册">
+   </div>
+</form>
+<script type='text/javascript'  src="../style/expand/zepto.js" charset='utf-8'></script>
+<script type='text/javascript' src="../style/expand/sm.js" charset='utf-8'></script>
+<script type='text/javascript'  src="../style/expand/sm-extend.js" charset='utf-8'></script>
+<script type="text/javascript" src="../style/expand/sm-city-picker.js" charset="utf-8"></script>
+<script type="text/javascript">
+Zepto(function($){
+ $("#city-picker").cityPicker({
+	toolbarTemplate: '<header class="bar bar-nav"><button class="button button-link pull-right close-picker">确定</button><h1 class="title">选择所在地区</h1>\</header>'
+  });
+ $("#birthday").calendar({value: ['2015-12-05'],onChange: function(p, v, d) {console.log(p, v, d);}});
+});
+</script>
+</body>
+</html>
